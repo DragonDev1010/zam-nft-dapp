@@ -1,0 +1,54 @@
+.site-header {
+  padding: 20px 25px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+  background: #0e1017;
+  border-bottom: 1px solid #282C42;
+
+  &__nav {
+    ul {
+      display: flex;
+      flex-flow: row;
+      align-items: center;
+
+      li {
+        padding: 0 10px;
+
+        a {
+          color: #fff;
+          font-weight: bold;
+          font-size: 16px;
+          text-decoration: none;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+
+    .nav-app {
+      color:#CCCFE1;
+      &.nav-app--apple {
+        position: relative;
+        top: -2px;
+        padding-left: 20px;
+      }
+      &:hover {
+        color: #fff;
+      }
+      svg {
+        width: 26px;
+      }
+    }
+  }
+
+  &__right {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+  }
+}

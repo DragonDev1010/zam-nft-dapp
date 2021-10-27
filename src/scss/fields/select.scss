@@ -1,0 +1,62 @@
+.select-field {
+  width: 100%;
+  &__control {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    min-height: 66px;
+    padding: 2px 10px;
+    background: rgba(14, 16, 23, 0.76);
+    backdrop-filter: blur(13px);
+    border-radius: 15px;
+  }
+
+  &__indicator {
+    color: #383856 !important;
+  }
+
+  &__value-container {
+    padding: 2px 0 !important;
+  }
+
+  &__token {
+    display: flex;
+    align-items: center;
+    padding: 5px 0;
+    color: #fff;
+
+    img {
+      margin-right: 10px;
+    }
+
+    .select-field__menu & {
+      color: #151824
+    }
+  }
+
+  &__token-v {
+    .select-field__single-value .select-field__token {
+      flex-flow: column;
+      align-items: baseline;
+      height: 70px;
+      justify-content: space-between;
+    }
+    .select-field__value-container {
+      height: 90px;
+    }
+  }
+
+  &-transparent {
+    .select-field__control {
+      background: transparent;
+      backdrop-filter: none;
+    }
+  }
+
+  &__menu {
+    background: rgba(14, 16, 23, 0.76);
+    z-index: 10 !important;
+  }
+
+}

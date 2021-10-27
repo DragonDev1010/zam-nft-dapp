@@ -1,0 +1,52 @@
+.button-logout {
+  background: rgba(70, 221, 131, 0.06);
+  box-sizing: border-box;
+  border-radius: 12px;
+  font-weight: bold;
+  font-size: 15px;
+  line-height: 14px;
+  text-align: center;
+  color: #FFFFFF;
+  border: 0;
+  padding: 9px 25px;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
+  justify-content: center;
+  font-family: Nunito, sans-serif;
+  margin-right: 20px;
+
+  &:hover {
+    background: #1c264a;
+    cursor: pointer;
+  }
+
+  img {
+    margin-left: 10px;
+  }
+}
+
+.button-wallet {
+  @extend .button-logout;
+  border: 2px solid #46DD83;
+  padding: 6px 25px;
+}
+
+.button-green {
+  color: #fff;
+  background: #21C162;
+  border-radius: 16.5455px;
+  font-family: Nunito, sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 16px;
+  text-align: center;
+  padding: 20px;
+  cursor: pointer;
+  border: 0;
+  transition: all .4s ease;
+  &:hover {
+    background: #1b9e50;
+    transition: all .4s ease;
+  }
+}

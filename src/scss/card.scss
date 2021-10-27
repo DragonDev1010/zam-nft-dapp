@@ -1,0 +1,39 @@
+.cards {
+  display: flex;
+}
+
+.card {
+  width: 50%;
+  min-height: 50px;
+  background: rgba(49, 56, 85, 0.61);
+  border: 1px solid rgba(47, 41, 84, 0.09);
+  backdrop-filter: blur(18px);
+  border-radius: 20px;
+  padding: 40px;
+  margin: 15px;
+
+  &-narrow {
+    width: 452px;
+  }
+
+  &-glow {
+    position: relative;
+    z-index: 1;
+
+    &:after {
+      content: '';
+      position: absolute;
+      display: block;
+      width: 340px;
+      height: 340px;
+      z-index: -1;
+      background: #2FB6EE;
+      filter: blur(140px);
+      border-radius: 100%;
+      right: -120px;
+      top: 0;
+    }
+  }
+}
+
+
