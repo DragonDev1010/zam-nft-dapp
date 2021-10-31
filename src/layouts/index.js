@@ -8,6 +8,7 @@ import {
     Route,
 } from "react-router-dom";
 import {BridgePage} from "@src/pages/bridge";
+import { FarmPage } from "../pages/farming";
 
 
 export const IndexLayout = () =>
@@ -18,6 +19,7 @@ export const IndexLayout = () =>
             <Switch>
                 <Route path="/swap" component={SwapPage}/>
                 <Route path="/bridge" component={BridgePage}/>
+                <Route path="/farming" component={FarmPage}/>
             </Switch>
 
         </main>
