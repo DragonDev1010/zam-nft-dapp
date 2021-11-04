@@ -39,7 +39,7 @@ export const CustomBarChart = (props) => {
                     >
                         <XAxis tick={{ fontSize: 15 }} dataKey="name" />
                         <Tooltip />
-                        <Bar dataKey="amt" radius={[10, 10, 10, 10]} fill="#5bbc6d" />
+                        <Bar dataKey="amt" radius={[10, 10, 10, 10]} fill="#4A9DFB" />
                     </BarChart>
                 </ResponsiveContainer>
 

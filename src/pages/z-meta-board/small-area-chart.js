@@ -19,11 +19,11 @@ export const SmallAreaChart = (props) => {
                 >
                     <XAxis tick={{ fontSize: 13 }} dataKey="name" />
                     <Tooltip />
-                    <Area type="monotone" dataKey="uv" stroke="#2CDD74" fill="url(#graph-gradient)" strokeWidth="2" />
+                    <Area type="monotone" dataKey="uv" stroke="#4A9DFB" fill="url(#graph-gradient)" strokeWidth="2" />
                     <defs>
                         <linearGradient id="graph-gradient" gradientTransform="rotate(90)">
-                            <stop offset="0" stopColor="#5bbc6d" />
-                            <stop offset="1" stopColor="#5bbc6d" stopOpacity="0" />
+                            <stop offset="0" stopColor="#4A9DFB" />
+                            <stop offset="1" stopColor="#4A9DFB" stopOpacity="0" />
                         </linearGradient>
                     </defs>
                 </AreaChart>
