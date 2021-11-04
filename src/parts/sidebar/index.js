@@ -29,11 +29,14 @@ const Sidebar = (props) => {
                 <nav className="sidebar__nav">
 
                     <ul>
-                        <li><a className="sidebar__nav-item disabled">
-                            <div className="sidebar__nav-icon">
-                                <IconDashboard />
-                            </div>
-                            <span>zMetaBoard</span></a></li>
+                        <li>
+                            <Link to="/z-meta-board" className={`sidebar__nav-item ${props.location?.pathname === '/z-meta-board' ? `active` : ''}`}>
+                                <div className="sidebar__nav-icon">
+                                    <IconDashboard />
+                                </div>
+                                <span>zMetaBoard</span>
+                            </Link>
+                        </li>
                         <li><a className="sidebar__nav-item disabled">
                             <div className="sidebar__nav-icon">
                                 <IconWallet />
