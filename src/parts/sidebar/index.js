@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useContext, useState} from 'react';
 import {
     IconAppApple, IconAppGoogle,
     IconBridge,
@@ -16,12 +16,12 @@ import {
     NavLink,
     withRouter
 } from "react-router-dom";
+import {RateContext} from "@src/context";
 
 
 const Sidebar = (props) => {
     const [navIsOpen, setNavIsOpen] = useState(false);
-    console.log(
-        props)
+    const {rate} = useContext(RateContext);
 
     return <aside className="sidebar">
         <div className={`sidebar__container ${navIsOpen ? 'sidebar__container-active' : ''}`}>
@@ -81,8 +81,8 @@ const Sidebar = (props) => {
             <div className="sidebar__footer">
                 <div className="sidebar__zamwallet">
                     <img className="sidebar__zamwallet-image"
-                        src="/images/icon_app_big.png"
-                        srcSet="/images/icon_app_big.png 1x, /images/icon_app_big@2x.png 2x" />
+                        src="images/icon_app_big.png"
+                        srcSet="images/icon_app_big.png 1x, images/icon_app_big@2x.png 2x" />
                     <div className="sidebar__zamwallet-text">
                         <b>Get ZamWallet</b>
                         <div className="sidebar__zamwallet-apps">
@@ -99,11 +99,11 @@ const Sidebar = (props) => {
                 </div>
                 <div className="sidebar__balance">
                     <div className="sidebar__balance-token">
-                        <img src="/images/icon_token_zam.svg" height="30px" width="30px" />
+                        <img src="images/tokens/icon_token_zam.svg" height="30px" width="30px" />
                         ZAM
                     </div>
                     <div className="sidebar__balance-price">
-                        $10,984
+                        ${rate}
                     </div>
                 </div>
             </div>

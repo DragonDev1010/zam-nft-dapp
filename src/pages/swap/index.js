@@ -1,20 +1,21 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {SwapContext} from "@src/context";
 import {SwapSwitcher} from "@src/pages/swap/swap-switcher";
 import {SwapChart} from "@src/pages/swap/swap-chart";
-import {TOKEN_ETH, TOKEN_ZAM} from "@src/constants";
+import {TOKEN_USDT, TOKEN_ZAM} from "@src/constants";
+import {getPrice} from "@src/actions/swap";
 
 
 export const SwapPage = () => {
     const [swapFrom, setSwapFrom] = useState(TOKEN_ZAM);
-    const [swapTo, setSwapTo] = useState(TOKEN_ETH);
+    const [swapTo, setSwapTo] = useState(TOKEN_USDT);
 
     return (
         <article>
             <div className="cards">
                 <SwapContext.Provider value={{swapFrom, setSwapFrom, swapTo, setSwapTo}}>
-                    <SwapChart/>
-                    <SwapSwitcher/>
+                    <SwapChart mainToken={TOKEN_ZAM}/>
+                    <SwapSwitcher mainToken={TOKEN_ZAM}/>
                 </SwapContext.Provider>
             </div>
         </article>

@@ -1,18 +1,24 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import {WalletContext} from "@src/context";
+import Web3 from "web3";
 
 
 export const BridgeTransactions = () => {
     const [transactions, setTransactions] = useState([]);
-    // useEffect(() => {
-    //     provider.getTransactions(setTransactions);
-    // }, [provider.address])
+    const {wallet} = useContext(WalletContext);
+
+    useEffect(() => {
+        wallet.getTransactions(setTransactions);
+    }, [wallet.address]);
+
 
     return (
         <div className="card bridge-transactions">
             <header className="flex justify-between mb-40">
                 <h3 className="title">Transactions</h3>
-                <button className="bridge-transactions__refresh" onClick={() => provider.getTransactions(setTransactions)}>
-                    Refresh <img src="/images/icon_refresh.svg" />
+                <button className="bridge-transactions__refresh"
+                        onClick={() => wallet.getTransactions(setTransactions)}>
+                    Refresh <img src="images/icon_refresh.svg"/>
                 </button>
             </header>
             <div className="card__table-wrapper">
@@ -28,9 +34,9 @@ export const BridgeTransactions = () => {
                     </thead>
                     <tbody>
                     {
-                        transactions?.map(transaction => (
-                            <tr>
-                                <td className="col">{transaction.value}</td>
+                        transactions.map((transaction, index) => (
+                            <tr key={`trans-${index}`}>
+                                <td className="col">{Web3.utils.fromWei(transaction.value.toString())} Ether</td>
                                 <td className="col">{`${String(transaction.from).substring(0, 6)}...${String(transaction.from).substring(38)}`}</td>
                                 <td className="col">{`${String(transaction.to).substring(0, 6)}...${String(transaction.to).substring(38)}`}</td>
                                 <td className="col">{new Date(transaction.timeStamp * 1000).toLocaleDateString("en-US")}</td>

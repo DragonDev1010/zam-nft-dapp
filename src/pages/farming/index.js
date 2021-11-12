@@ -1,18 +1,18 @@
 import React from 'react';
 import { CardComponent } from './card';
 import { Header } from "./header"
-import { cardSettings } from './card-settings';
+import { pairs } from './pairs';
 
 
 export const FarmPage = () => {
     return (
-        <article>
+        <article className="farming">
             <div className="general-container">
                 <Header />
                 <div className="farming-cards">
                     {
-                        cardSettings.map(_ =>
-                            <CardComponent background={_.background} leftCoin={_.leftCoin} rightCoin={_.rightCoin} key={_.number} />
+                        pairs.map((item, index) =>
+                            <CardComponent {...item} key={`card-${index}`}/>
                         )
                     }
                 </div>

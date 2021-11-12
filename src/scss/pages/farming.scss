@@ -1,3 +1,6 @@
+.farming {
+    padding: 0;
+}
 .card-container {
     width: 451px;
     height: 523px;
@@ -16,17 +19,24 @@
     height: 91px;
     display: flex;
     justify-content: center;
+
+    &-left-container {
+        margin-right: 1em;
+        width: 130px;
+        text-align: center;
+    }
+    &-right-container {
+        margin-left: 1em;
+        width: 130px;
+        text-align: center;
+    }
+    &-center-container {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+    }
 }
-.card-header-left-container {
-    margin-right: 1em;
-    width: 130px;
-    text-align: center;
-}
-.card-header-right-container {
-    margin-left: 1em;
-    width: 130px;
-    text-align: center;
-}
+
 p {
     color: white;
     margin-bottom: 0.5em;
@@ -35,14 +45,12 @@ p {
     margin-top: 1.5em;
 }
 .top-p-container {
-    font-family: Maven Pro;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 120%;
 }
 .bottom-p-container {
-    font-family: Maven Pro;
     font-style: normal;
     font-weight: bold;
     font-size: 18px;
@@ -51,7 +59,6 @@ p {
 .title-container {
     text-align: center;
     margin-top: 1em;
-    font-family: Maven Pro;
     font-style: normal;
     font-weight: bold;
     font-size: 22px;
@@ -64,7 +71,6 @@ p {
 .content-left {
     margin-left: 2em;
     margin-top: 1em;
-    font-family: Maven Pro;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -75,7 +81,6 @@ p {
     text-align: right;
     margin-right: 2em;
     margin-top: 1em;
-    font-family: Maven Pro;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
@@ -89,6 +94,7 @@ p {
     display: flex;
     justify-content: center;
     margin-top: 1em;
+    padding: 0 26px;
 }
 .connect-wallet-button {
     width: 375px;
@@ -104,18 +110,16 @@ p {
     color: #ffffff;
 }
 .header-container {
-    width: 1570px;
     height: 213px;
     display: flex;
-    background: rgba(60, 67, 100, 0.49);
-    display: flex;
     justify-content: space-between;
-    backdrop-filter: blur(92px);
+    background-color: rgba(60, 67, 100, 0.49);
+    background-image: url(../images/farming/header-background.png);
+    background-size: cover;
 }
 .farming-container {
     width: 200px;
     height: 59px;
-    font-family: Maven Pro;
     font-style: normal;
     font-weight: bold;
     font-size: 50px;
@@ -124,7 +128,7 @@ p {
 }
 .farming-cards {
     display: flex;
-    justify-content: space-around;
+    justify-content: start;
     flex-wrap: wrap;
     margin-top: 2em;
 }
@@ -143,7 +147,6 @@ p {
 .activity-container-title {
     width: 92.74px;
     height: 23.1px;
-    font-family: Maven Pro;
     font-style: normal;
     font-weight: 500;
     font-size: 13px;
@@ -168,7 +171,6 @@ p {
     border-radius: 15px;
 }
 .activity-nutton-content {
-    font-family: Maven Pro;
     font-style: normal;
     font-weight: 500;
     font-size: 13px;
@@ -180,4 +182,7 @@ p {
 .coins-container{
     display: flex;
     margin-top: -1em;
+    img {
+        width: 64px;
+    }
 }

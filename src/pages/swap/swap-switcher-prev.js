@@ -1,10 +1,9 @@
 import React, {useContext, useState, useMemo, useEffect} from 'react';
 import {SelectComponent} from "@src/components/fields/Select";
-import {CHAIN_ID_BINANCE, TOKEN_USDT, TOKEN_ZAM, TOKENS} from "@src/constants";
+import {TOKEN_USDT, TOKEN_ZAM, TOKENS} from "@src/constants";
 import {ModalWalletContext, SwapContext, WalletContext} from "@src/context";
 import {actionSwap, getPrice} from "@src/actions/swap";
 import {toFixed} from "@src/utils";
-import {swapAction} from "@src/actions/swapAction";
 
 const optionsTokens = [
     {
@@ -24,49 +23,25 @@ const optionsTokens = [
 const getOptionByValue = (token) => optionsTokens[optionsTokens.findIndex(option => option.value === token)];
 
 export const SwapSwitcher = ({mainToken}) => {
-    const {rate} = useContext(RateContext);
-    const {swapFrom, swapTo, setSwapFrom, setSwapTo} = useContext(SwapContext);
+    const {swapFrom, swapTo, setSwapFrom, setSwapTo, rate} = useContext(SwapContext);
     const [valueFrom, setValueFrom] = useState(0);
     const [valueTo, setValueTo] = useState(0);
     const inputRefFrom = React.createRef();
     const inputRefTo = React.createRef();
     const {setModalOpen} = useContext(ModalWalletContext);
-    const {wallet, setWallet, walletError, setWalletError} = useContext(WalletContext);
+    const {wallet} = useContext(WalletContext);
     const [lastInput, setLastInput] = useState('from');
-    const [allowance, setAllowance] = useState({});
 
     useEffect(() => {
-        return () => {
-            setWalletError(null)
-        }
-    }, []);
+        calculate();
+    }, [rate, valueTo, valueFrom])
 
-    useEffect(async () => {
-        const allowance = await new swapAction(wallet, swapFrom, swapTo).getAllowance();
-        setAllowance(allowance);
-
-        const chainId = await wallet.getChainId();
-
-        if (chainId !== CHAIN_ID_BINANCE) {
-            setWalletError('Please switch you wallet to Binance Smart Chain network.');
-        }
-
-    }, [wallet]);
-
-    useEffect(async () => {
-        const swap = new swapAction(wallet, swapFrom, swapTo);
-
-        if (lastInput === 'from') {
-            const amountB = await swap.getAmountB(valueFrom);
-            setValueTo(amountB);
-        } else if (lastInput === 'to') {
-            const amountA = await swap.getAmountA(valueTo);
-            setValueFrom(amountA);
-        }
-    }, [valueTo, valueFrom, swapFrom, swapTo])
-
+    const swap = () => {
+        actionSwap(wallet, swapFrom, swapTo, valueFrom, valueTo);
+    }
 
     const handleChange = (option, type) => {
+
         if (type === 'from') {
             if (option.value === swapTo) {
                 setSwapTo(swapFrom);
@@ -86,6 +61,22 @@ export const SwapSwitcher = ({mainToken}) => {
         setSwapTo(swapFrom);
     }
 
+    const calculate = () => {
+        if (lastInput === 'from') {
+            if (swapFrom === TOKEN_ZAM) {
+                setValueTo(toFixed(valueFrom * rate));
+            } else {
+                setValueTo(toFixed(valueFrom / rate));
+            }
+        } else if (lastInput === 'to') {
+            if (swapFrom === TOKEN_ZAM) {
+                setValueFrom(toFixed(valueTo / rate));
+            } else {
+                setValueFrom(toFixed(valueTo * rate));
+            }
+        }
+    }
+
     const changeValueFrom = (event) => {
         setValueFrom(parseInt(event.target.value))
         setLastInput('from');
@@ -93,27 +84,6 @@ export const SwapSwitcher = ({mainToken}) => {
     const changeValueTo = (event) => {
         setValueTo(parseInt(event.target.value))
         setLastInput('to');
-    }
-    const approve = async () => {
-        await new swapAction(wallet, swapFrom, swapTo).approve();
-    }
-    const swapHandler = async () => {
-        if (!valueFrom || !valueTo) {
-            return;
-        }
-        await new swapAction(wallet, swapFrom, swapTo).swap(valueFrom, valueTo);
-    }
-
-    let partAppove;
-
-    if (!Object.keys(allowance).length) {
-        partAppove = null;
-    } else if (!allowance.allowanceA && !allowance.allowanceB) {
-        partAppove = 0;
-    } else if (!allowance.allowanceA || !allowance.allowanceB) {
-        partAppove = 1;
-    } else {
-        partAppove = 2;
     }
 
     return (
@@ -178,32 +148,13 @@ export const SwapSwitcher = ({mainToken}) => {
             </div>
 
             <div className="swap-switcher__rate">
-                1 {TOKENS[swapFrom].name} ≈ {swapFrom === mainToken ? rate : toFixed(1 / rate)} {TOKENS[swapTo].name}
+                1 {TOKENS[swapFrom].name} ≈ {swapFrom === mainToken ? rate : toFixed(1/rate) } {TOKENS[swapTo].name}
             </div>
 
             {
-                !walletError ?
-                    wallet?.address ?
-                        (
-                            partAppove === 2 ?
-                                <button className="button-green w-full" onClick={swapHandler}>Swap</button>
-                                :
-                                (
-                                    partAppove !== null ?
-                                        <>
-                                            <div className="swap-switcher__approve">
-                                                <span>Approved progress:</span>
-                                                <span>{partAppove}/2</span>
-                                            </div>
-                                            <button className="button-green w-full" onClick={approve}>Approve</button>
-                                        </>
-                                        : ''
-                                )
-                        )
-                        :
-                        <button className="button-green w-full" onClick={() => setModalOpen(true)}>Connect
-                            Wallet</button>
-                    : ''
+                !wallet?.address
+                    ? <button className="button-green w-full" onClick={() => setModalOpen(true)}>Connect Wallet</button>
+                    : <button className="button-green w-full" onClick={swap}>Swap</button>
             }
 
         </div>

@@ -76,3 +76,9 @@ export const IconAppGoogle = () => (
         </g>
     </svg>
 );
+
+export const IconCheckMark = () => (
+    <svg width="16" height="12" viewBox="0 0 16 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path fillRule="evenodd" clipRule="evenodd" d="M2.23077 5.4L0.5 7.2L5.11538 12L15.5 1.8L13.7692 0L5.11538 8.4L2.23077 5.4Z" fill="#2DFF82"/>
+    </svg>
+);

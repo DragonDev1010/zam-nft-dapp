@@ -1,0 +1,93 @@
+import React, {useRef, useEffect, useState, useContext} from 'react';
+import {WalletContext} from "@src/context";
+import {IconCheckMark} from "@src/icons/icons";
+import {WalletFactory} from "@src/wallets/wallet-factory";
+
+export const ModalWalletConnect = (props) => {
+    const ref = useRef(null);
+    const refOutside = useRef(null);
+    const {wallet, setWallet, setWalletError} = useContext(WalletContext);
+    const [agreement, setAgreement] = useState(wallet?.address !== '');
+
+    useEffect(() => {
+        setAgreement(wallet.address !== '');
+    }, [wallet.address]);
+
+    useEffect(() => {
+        function handleClickOutside(event) {
+            if (ref.current && !ref.current.contains(event.target)) {
+                props.onClose();
+            }
+        }
+
+        if (props.isOpen) {
+            document.addEventListener("mousedown", handleClickOutside);
+        } else {
+            document.removeEventListener("mousedown", handleClickOutside);
+        }
+
+    }, [props.isOpen, wallet]);
+
+    const connectWallet = async (type) => {
+        if (!agreement) {
+            return false;
+        }
+
+        const walletConnector = WalletFactory.getWallet(type);
+        await walletConnector.connect();
+
+        if (walletConnector.address) {
+            setWallet(walletConnector);
+            setWalletError(null);
+
+            props.onClose();
+        }
+    };
+
+    return (
+        <div className="modal" style={{display: props.isOpen ? 'block' : 'none'}}>
+            <div className="modal__overlay" ref={refOutside}>
+                <div className="modal__wallet" ref={ref}>
+                    <h4>Connect Wallet</h4>
+
+                    <p className="label">
+                        1. Accept Terms and Conditions and Privacy Policy
+                    </p>
+
+                    <label className="modal__wallet-agreement">
+                        <div className="checkbox">
+                            <input type="checkbox" checked={agreement} onChange={() => setAgreement(!agreement)}/>
+                            <IconCheckMark/>
+                        </div>
+                        <div className="checkbox-label">By using zam.io you agree to our <a href="https://zam.io/docs/debe5b38c66e212ac7afddf8293af433.pdf" target="_blank">
+                                Terms and Conditions</a> along with our <a href="https://zam.io/docs/5e7b377cde8403176232a4cff7b679b4.pdf" target="_blank">Privacy
+                                Policy</a> and any other applicable documents.
+                        </div>
+                    </label>
+
+                    <p className="label">
+                        2. Choose Wallet
+                    </p>
+
+                    <div className="modal__wallets">
+                        <div className={`wallet ${agreement ? 'active' : ''} ${wallet.type === 'metamask' ? 'current' : ''}`}
+                             onClick={() => connectWallet('metamask')}>
+                            <img src="images/icon_metamask.svg" alt="wallet"/>
+                            <span className="wallet__name">Metamask</span>
+                        </div>
+                        <div className={`wallet ${agreement ? 'active' : ''} ${wallet.type === 'binance' ? 'current' : ''}`}
+                             onClick={() => connectWallet('binance')}>
+                            <img src="images/tokens/icon_token_bsc.svg" alt="wallet"/>
+                            <span className="wallet__name">Binance Wallet</span>
+                        </div>
+                    </div>
+
+                    <a href="#" onClick={(event) => {event.preventDefault(); props.onClose()}}
+                        className="modal__close">
+                        <img src="images/icon_close.svg"/>
+                    </a>
+                </div>
+            </div>
+        </div>
+    );
+}

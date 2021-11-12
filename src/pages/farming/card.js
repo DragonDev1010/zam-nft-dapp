@@ -1,7 +1,16 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {ModalWalletContext, WalletContext} from "@src/context";
+import {farmingReducer} from "@src/reducers/farming";
 
 
 export const CardComponent = (props) => {
+    const {setModalOpen} = useContext(ModalWalletContext);
+    const {walletAddress} = useContext(WalletContext);
+
+
+    const poolLength = farmingReducer('getPoolLength')
+
+
     return (
         <>
             <div className="card-container">
@@ -66,7 +75,11 @@ export const CardComponent = (props) => {
                         </div>
                     </div>
                     <div className="button-container">
-                        <button className="connect-wallet-button" >Connect Wallet</button>
+                        {
+                            !walletAddress
+                                ? <button className="button-green w-full" onClick={() => setModalOpen(true)}>Connect Wallet</button>
+                                : <button className="button-green w-full">Swap</button>
+                        }
                     </div>
                 </div>
             </div>

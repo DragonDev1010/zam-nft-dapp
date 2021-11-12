@@ -12,6 +12,8 @@
     font-size: 15px;
     color: #838699;
     margin: 30px 0;
+
+
   }
 
   .input-field__column--token-name {
@@ -19,6 +21,15 @@
     white-space: nowrap;
     padding-left: 5px;
     margin-right: 15px;
+  }
+
+  &__approve {
+    color: #fff;
+    font-size: 13px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    margin-bottom: 8px;
   }
 }
 
@@ -37,6 +48,7 @@
         transform: none !important;
       }
     }
+
   }
 
 
@@ -108,6 +120,10 @@
     font-size: 13px;
     line-height: 16px;
     color: #26E072;
+
+    &.red {
+      color: #a52a2a;
+    }
     span {
       color: #fff;
     }
@@ -128,4 +144,16 @@
   .recharts-cartesian-axis-line {
     display: none;
   }
+  .recharts-tooltip-cursor {
+    display: none !important;
+  }
+}
+
+
+
+.nomics-ticker-widget-embedded.nomics-ticker-widget-bg-light {
+  background: none !important;
+}
+iframe .nomics-asset-widget a.asset-link.heavy {
+  display: none !important;
 }
