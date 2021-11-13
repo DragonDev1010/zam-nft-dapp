@@ -10,6 +10,7 @@ import {
 import {BridgePage} from "@src/pages/bridge";
 import { FarmPage } from "../pages/farming";
 import { ZMetaBoardPage } from "../pages/z-meta-board";
+import { StakingPage } from "../pages/staking";
 
 
 export const IndexLayout = () =>
@@ -22,6 +23,7 @@ export const IndexLayout = () =>
                 <Route path="/bridge" component={BridgePage}/>
                 <Route path="/farming" component={FarmPage}/>
                 <Route path="/z-meta-board" component={ZMetaBoardPage}/>
+                <Route path="/staking" component={StakingPage}/>
             </Switch>
         </main>
     </Router>

@@ -58,11 +58,14 @@ const Sidebar = (props) => {
                                 <span>Zamio Bridge</span>
                             </Link>
                         </li>
-                        <li><a className="sidebar__nav-item disabled">
-                            <div className="sidebar__nav-icon">
-                                <IconStacking />
-                            </div>
-                            <span>Staking</span></a></li>
+                        <li>
+                            <Link to="/staking" className={`sidebar__nav-item ${props.location?.pathname === '/staking' ? `active` : ''}`}>
+                                <div className="sidebar__nav-icon">
+                                    <IconStacking />
+                                </div>
+                                <span>Staking</span>
+                            </Link>
+                        </li>
                         <li>
                             <Link to="/farming" className={`sidebar__nav-item ${props.location?.pathname === '/farming' ? `active` : ''}`}>
                                 <div className="sidebar__nav-icon">

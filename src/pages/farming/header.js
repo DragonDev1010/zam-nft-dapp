@@ -13,7 +13,7 @@ export const Header = () => {
             document.getElementById('active-button').style.border = "none";
             document.getElementById('ended-button').style.border = "2px solid #2dff82";
         }
-    }
+    }   
 
     return (
         <>
