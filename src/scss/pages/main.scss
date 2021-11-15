@@ -1,0 +1,96 @@
+.header-title {
+    width: 900px;
+}
+.header-title-body {
+    font-family: Maven Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 138%;
+    color: #38fa87;
+}
+.main-header-flex {
+    justify-content: flex-start;
+}
+.main-body-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    margin-right: 15em;
+    margin-top: 2em;
+}
+.main-card-container {
+    width: 293px;
+    margin: 1em;
+    height: 248px;
+    background: linear-gradient(133.76deg, #312f3f 1.56%, #312f3f 28.02%, #000000 84.83%);
+    backdrop-filter: blur(18px);
+    border-radius: 20px;
+    // display: flex;
+    // align-items: flex-end;
+    // justify-content: center;
+}
+.main-card-container:hover {
+    box-shadow: 0px 0px 27px rgba(17, 255, 141, 0.78);
+}
+.main-card-button {
+    width: 243px;
+    height: 42px;
+    background: #0092e5;
+    border-radius: 15px;
+    border: none;
+    margin-top: 1.3em;
+    margin-left: 2em;
+    margin-right: 2em;
+}
+.main-card-button:hover {
+    width: 244px;
+    height: 43px;
+}
+.main-card-button-content {
+    font-family: Maven Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 17px;
+    text-align: center;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+}
+.swap-card-header-span {
+    color: #2dff6b;
+}
+.swap-card-header {
+    width: 50%;
+    margin: 1em;
+    margin-top: 1.5em;
+    font-family: Maven Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 120%;
+    color: #ffffff;
+}
+.swap-card-body-coins {
+    display: flex;
+    justify-content: center;
+}
+.swap-card-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.swap-card-body-text {
+    font-family: Maven Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 17.7703px;
+    line-height: 21px;
+    text-align: center;
+    margin-right: 0.9em;
+    color: #ffffff;
+}
+.bridge-card-body {
+    margin-left: 2em;
+    margin-right: 2em;
+}
