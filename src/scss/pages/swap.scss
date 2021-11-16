@@ -10,10 +10,8 @@
     text-align: center;
     font-weight: 600;
     font-size: 15px;
-    color: #838699;
+    color: #fff;
     margin: 30px 0;
-
-
   }
 
   .input-field__column--token-name {
@@ -31,26 +29,74 @@
     justify-content: space-between;
     margin-bottom: 8px;
   }
+
+  &__settings {
+    background: none;
+    position: absolute;
+    border: 0;
+    right: 39px;
+    top: 45px;
+    color: #fff;
+    cursor: pointer;
+
+    &:hover {
+      color: #45dd82;
+    }
+  }
+}
+
+.swap-settings {
+  padding: 0;
+
+  .swap-settings__header {
+    padding-top: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .swap-settings__content {
+    padding: 40px;
+  }
+
+  &__arrow {
+    background: none;
+    position: absolute;
+    border: 0;
+    left: 35px;
+    top: 45px;
+    color: #fff;
+    cursor: pointer;
+    width: 30px;
+
+    &:hover {
+      color: #45dd82;
+    }
+  }
+  &__slippage {
+    font-size: 18px;
+
+    button {
+      width: 100%;
+      height: 58px;
+      display: flex;
+      border-radius: 12px;
+      border: 0;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 18px;
+      color: #fff;
+      background: none;
+      cursor: pointer;
+
+      &.active {
+        color: #0E1017;
+        background: #2DFC87;
+      }
+    }
+  }
 }
 
 .swap-chart {
-  .ReactChart {
-    .Series {
-      g, + g {
-        transform: none !important;
-      }
-    }
-    .axes {
-      .domainAndTicks {
-        display: none;
-      }
-      .Axis-Group {
-        transform: none !important;
-      }
-    }
-
-  }
-
 
   header {
     display: flex;
@@ -86,35 +132,7 @@
       }
     }
   }
-  &__ranges {
-    ul {
-      display: flex;
-      align-items: center;
-      li {
-        padding: 5px 15px;
-        font-weight: 500;
-        font-size: 14px;
-        color: #838699;
-        cursor: pointer;
-        &.active {
-          background: #46DD83;
-          border-radius: 50px;
-          color: #0E1017;
-        }
-      }
-    }
-  }
 
-  &__rate {
-    font-weight: bold;
-    font-size: 30px;
-    color: #FFFFFF;
-    margin-top: 25px;
-    margin-bottom: 20px;
-    span {
-      color: #838699;
-    }
-  }
   &__rate-change {
     font-weight: 500;
     font-size: 13px;
@@ -129,24 +147,7 @@
     }
   }
 
-  &__chart {
-    width: calc(100% + 30px);
-    height: 300px;
-    margin-top: 30px;
-  }
 
-  .recharts-default-tooltip {
-    background: #151F2C !important;
-    border-radius: 11px !important;
-    border: 0 !important;
-    color: #fff !important;
-  }
-  .recharts-cartesian-axis-line {
-    display: none;
-  }
-  .recharts-tooltip-cursor {
-    display: none !important;
-  }
 }
 
 

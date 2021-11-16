@@ -4,7 +4,6 @@ import contractPancakeFactoryAbi from '@src/contracts/pancake/IPancakeFactory_AB
 import contractPancakePairAbi from '@src/contracts/pancake/IPancakePair_ABI.json';
 import contractPancakeRouterAbi from '@src/contracts/pancake/PancakeRouter_ABI.json';
 import contractPancakeIerc20 from '@src/contracts/pancake/IERC20.json';
-import contractPancakeBep20Impl from '@src/contracts/pancake/BEP20Impl.json';
 import {PancakeAddresses, TOKEN_ADDRESES} from "@src/config";
 import {ENV} from "@src/env";
 import {dec2hex, sortTokens} from "@src/utils";
@@ -47,7 +46,7 @@ export class swapAction {
         const contractRouter = new (web3.eth.Contract)(contractPancakeRouterAbi, this.addressRouter);
         const {reserveA, reserveB} = await this.getReserves(this.addressPair, this.tokenA, this.tokenB);
 
-        return await contractRouter.methods.getAmountOut(amountA, reserveA, reserveB).call()
+        return parseInt(await contractRouter.methods.getAmountOut(amountA, reserveA, reserveB).call())
     }
 
     getAmountA = async (amountB) => {
@@ -59,58 +58,7 @@ export class swapAction {
         const contractRouter = new (web3.eth.Contract)(contractPancakeRouterAbi, this.addressRouter);
         const {reserveA, reserveB} = await this.getReserves(this.addressPair, this.tokenA, this.tokenB);
 
-        return await contractRouter.methods.getAmountOut(amountB, reserveA, reserveB).call()
-    }
-
-    swapold = async (swapFrom, swapTo, amountFrom, amountTo) => {
-        if (!amountFrom || !amountTo) {
-            return false;
-        }
-
-        const tokenA = TOKEN_ADDRESES[ENV][swapTo];
-        const tokenB = TOKEN_ADDRESES[ENV][swapFrom];
-
-        const web3 = new Web3(this.network);
-
-        const contractFactory = new (web3.eth.Contract)(contractPancakeFactoryAbi, this.addressFactory);
-        const addressPair = await contractFactory.methods.getPair(tokenA, tokenB).call();
-
-        const contractPair = new (web3.eth.Contract)(contractPancakePairAbi, addressPair);
-
-        async function getReserves(pair, tokenA, tokenB) {
-            const [token0, _] = sortTokens(tokenA, tokenB);
-            const {reserve0, reserve1} = await contractPair.methods.getReserves().call();
-
-            const [reserveA, reserveB] = (token0 === tokenA) ? [reserve0, reserve1] : [reserve1, reserve0];
-            return {reserveA, reserveB}
-        }
-
-
-        const {reserveA, reserveB} = await getReserves(addressPair, tokenA, tokenB);
-
-        const contractRouter = new (web3.eth.Contract)(contractPancakeRouterAbi, this.addressRouter);
-        // const transactionParameters = {
-        //     to: this.addressRouter,
-        //     from: this.wallet.address,
-        //     data: contractRouter.methods.addLiquidity(
-        //         tokenA,
-        //         tokenB,
-        //         amountFrom * Math.pow(10, 18),
-        //         amountTo * Math.pow(10, 18),
-        //         amountAMin,
-        //         amountBMin,
-        //         wallet.address,
-        //         deadline
-        //     ).encodeABI()
-        // }
-
-        const amountB = await contractRouter.methods.quote(amountFrom, reserveA, reserveB).call();
-        const amountB2 = await contractRouter.methods.getAmountOut(amountFrom, reserveA, reserveB).call();
-
-        console.log(amountFrom)
-        console.log(reserveA, reserveB)
-        console.log(amountB)
-        console.log(amountB2)
+        return parseInt(await contractRouter.methods.getAmountOut(amountB, reserveA, reserveB).call())
     }
 
     getAllowance = async () => {
@@ -145,7 +93,7 @@ export class swapAction {
             const transactionParameters = {
                 to: this.tokenA,
                 from: this.wallet.address,
-                'data': contractTokenA.methods.approve(this.addressRouter, maxAmount).encodeABI()
+                data: contractTokenA.methods.approve(this.addressRouter, maxAmount).encodeABI()
             };
 
             const gas = await web3.eth.estimateGas(transactionParameters);
@@ -161,7 +109,7 @@ export class swapAction {
             const transactionParameters = {
                 to: this.tokenB,
                 from: this.wallet.address,
-                'data': contractTokenB.methods.approve(this.addressRouter, maxAmount).encodeABI()
+                data: contractTokenB.methods.approve(this.addressRouter, maxAmount).encodeABI()
             };
 
             const gas = await web3.eth.estimateGas(transactionParameters);
@@ -175,16 +123,15 @@ export class swapAction {
     }
 
 
-    swap = async (amountFrom, amountTo) => {
+    swap = async (amountFrom, amountTo, slippage = .1, deadline = 30) => {
         await this.checkWalletConnection();
 
         const web3 = new Web3(this.network);
 
         const contractRouter = new (web3.eth.Contract)(contractPancakeRouterAbi, this.addressRouter);
 
-        const slippage = 1;
         const amountInMax = Math.floor(amountFrom * (1 + slippage / 100));
-        const deadline = 20 * 60 + Math.floor(Date.now() / 1000);
+        const deadlineSeconds = deadline * 60 + Math.floor(Date.now() / 1000);
 
 
         const transactionParams = {
@@ -195,7 +142,7 @@ export class swapAction {
                 amountInMax,
                 [this.tokenA, this.tokenB],
                 this.wallet.address,
-                deadline.toString()
+                deadlineSeconds.toString()
                 ).encodeABI()
         }
 

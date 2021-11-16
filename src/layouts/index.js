@@ -8,7 +8,7 @@ import {
     Route,
 } from "react-router-dom";
 import {BridgePage} from "@src/pages/bridge";
-import {FarmPage} from "../pages/farming";
+import {FarmPage} from "@src/pages/farming";
 import {
     WalletContext,
     walletContextProps,
@@ -16,8 +16,9 @@ import {
     modalWalletContextProps,
     RateContext
 } from "@src/context";
-import {getPrice} from "@src/actions/swap";
+import {getPrice} from "@src/actions/swapAction";
 
+import { ZMetaBoardPage } from "../pages/z-meta-board";
 
 export const IndexLayout = () => {
     const [rate, setRate] = useState();
@@ -44,6 +45,7 @@ export const IndexLayout = () => {
                                 <Route path="/swap" component={SwapPage}/>
                                 <Route path="/bridge" component={BridgePage}/>
                                 <Route path="/farming" component={FarmPage}/>
+                                <Route path="/z-meta-board" component={ZMetaBoardPage}/>
                             </Switch>
                         </main>
                     </ModalWalletContext.Provider>

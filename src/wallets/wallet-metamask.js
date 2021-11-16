@@ -6,7 +6,6 @@ import {dec2hex} from "@src/utils";
 export class WalletMetamask extends WalletAbstract {
     constructor() {
         super();
-
         this.type = 'metamask';
     }
 
@@ -42,41 +41,4 @@ export class WalletMetamask extends WalletAbstract {
         }
     }
 
-    getBalance = async () => {
-        const web3 = new Web3(this.network);
-        this.error = '';
-        this.balance = 0;
-        this.allowance = 0;
-
-        try {
-            const chainId = await this.getChainId();
-
-            if (chainId !== '0x1' && this.swapMethod === 'swapETH2BSC') {
-                throw new Error('Please switch you Metamask wallet to Etherium network.');
-            }
-            if (chainId !== '0x38' && this.swapMethod === 'swapBSC2ETH') {
-                throw new Error('Please switch you Metamask wallet to Binance Smart Chain network.');
-            }
-
-            const contractToken = new (web3.eth.Contract)(this.contractZamAbi, this.contractZamAddress);
-
-
-            const balance = await contractToken.methods.balanceOf(this.address).call();
-
-            const allowance = await contractToken.methods.allowance(this.address, this.contractAgentAddress).call();
-
-            this.contractToken = contractToken; //
-            this.balance = Web3.utils.fromWei(balance);
-            this.allowance = allowance;
-        } catch (err) {
-            this.error = err.message;
-        }
-
-    }
-
-
-
-    getChainId = async () => {
-        return await window.ethereum.request({method: 'eth_chainId'});
-    }
 }

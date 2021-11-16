@@ -1,19 +1,19 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {TOKEN_USDT, TOKEN_ZAM, TOKENS} from "@src/constants";
+import {TOKEN_USDT, TOKEN_ZAM, TOKENS, MONTH_NAMES} from "@src/constants";
 import {SwapContext, RateContext} from "@src/context";
 import {AreaChart, Area, XAxis, Tooltip, ResponsiveContainer} from 'recharts';
-import {toFixed} from "@src/utils";
+import {formatChartDate, toFixed} from "@src/utils";
 
-
-const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 const ranges = {'hour': 'H', 'day': 'D', 'week': 'W'};
 
+const schemas = {'hour': 'pairHourDatas', 'day': 'pairDayDatas', 'week': 'pairWeekDatas'};
 
 export const SwapChart = ({mainToken}) => {
     const {rate, priceChange24, priceChangePercentage24} = useContext(RateContext);
     const {swapFrom, swapTo, setSwapFrom, setSwapTo} = useContext(SwapContext);
     const [range, setRange] = useState('hour');
+    const [graphData, setGraphData] = useState([]);
     const [data, setData] = useState([]);
 
     const revertHandler = (event) => {
@@ -23,29 +23,26 @@ export const SwapChart = ({mainToken}) => {
     }
 
     useEffect(() => {
-        let schema = '';
-
-        switch (range) {
-            case 'hour':
-                schema = 'pairHourDatas';
-                break;
-            case 'day':
-                schema = 'pairDayDatas';
-                break;
-            case 'week':
-                schema = 'pairWeekDatas';
-                break;
-        }
-
         const query = `{
-          ${schema}(where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
-            token1Price
-            token0Price
-            periodBegin,
-            periodEnd,
-          }
-          
-        }`;
+              pairHourDatas(where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+                token1Price
+                token0Price
+                periodBegin,
+                periodEnd,
+              },
+              pairDayDatas(where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+                token1Price
+                token0Price
+                periodBegin,
+                periodEnd,
+              },
+              pairWeekDatas(where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+                token1Price
+                token0Price
+                periodBegin,
+                periodEnd,
+              },
+            }`;
         fetch('https://api.thegraph.com/subgraphs/name/zambit/zampairgraph', {
             method: 'POST',
             headers: {
@@ -55,36 +52,29 @@ export const SwapChart = ({mainToken}) => {
             body: JSON.stringify({query})
         })
             .then(response => response.json())
-            .then(response => {
-                const data = response.data[schema].map(({periodBegin, periodEnd, token1Price, token0Price}) => {
-                    const dateBegin = new Date(periodBegin * 1000);
-                    const dateEnd = new Date(periodEnd * 1000);
-
-                    let name = '';
-                    switch (range) {
-                        case 'hour':
-                            name = `${monthNames[dateBegin.getMonth()]}. ${dateBegin.getDate()}, ${dateEnd.toLocaleString('en-US', { hour: 'numeric', hour12: true })}`
-                            break;
-                        case 'day':
-                        case 'week':
-                            name = `${dateEnd.getDate()} ${monthNames[dateBegin.getMonth()]}. ${dateBegin.getFullYear()}`
-                            break;
-                    }
-
-                    return {
-                        name,
-                        [TOKEN_ZAM]: toFixed(token1Price),
-                        [TOKEN_USDT]: toFixed(token0Price),
-                    }
-                });
-                setData(data);
-            });
+            .then(response => setGraphData(response.data));
     }, [range]);
 
-    const tickFormatter = (value) => '';
+    useEffect(() => {
+        if (!Object.keys(graphData).length) {
+            return;
+        }
+        const schema = schemas[range];
+        const data = graphData[schema].map(({periodBegin, token1Price, token0Price}) => {
+
+            return {
+                name: formatChartDate(periodBegin, range),
+                [TOKEN_ZAM]: toFixed(token1Price),
+                [TOKEN_USDT]: toFixed(token0Price),
+            }
+        });
+        setData(data);
+    }, [range, graphData])
+
+    const tickFormatter = (value) => value.toString().replace(/,.+/, '');
 
     return (
-        <div className="card swap-chart">
+        <div className="card chart swap-chart">
             <header>
                 <div className="swap-chart__tokens">
                     <div className="swap-chart__tokens-images">
@@ -100,7 +90,7 @@ export const SwapChart = ({mainToken}) => {
                         </a>
                     </div>
                 </div>
-                <div className="swap-chart__ranges">
+                <div className="chart__ranges">
                     <ul>
                         {
                             Object.keys(ranges)
@@ -112,7 +102,7 @@ export const SwapChart = ({mainToken}) => {
                 </div>
             </header>
 
-            <h3 className="swap-chart__rate">
+            <h3 className="chart__rate swap-chart__rate">
                 {swapFrom === mainToken ? rate : toFixed(1 / rate)} <span>{TOKENS[swapTo].name}</span>
             </h3>
             <div className={`swap-chart__rate-change ${swapFrom === mainToken && priceChange24 < 0 ? 'red' : ''}`}>
@@ -123,7 +113,7 @@ export const SwapChart = ({mainToken}) => {
                 } <span>24h</span>
             </div>
 
-            <div className="swap-chart__chart">
+            <div className="chart__chart">
 
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart

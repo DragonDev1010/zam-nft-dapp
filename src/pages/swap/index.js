@@ -3,7 +3,6 @@ import {SwapContext} from "@src/context";
 import {SwapSwitcher} from "@src/pages/swap/swap-switcher";
 import {SwapChart} from "@src/pages/swap/swap-chart";
 import {TOKEN_USDT, TOKEN_ZAM} from "@src/constants";
-import {getPrice} from "@src/actions/swap";
 
 
 export const SwapPage = () => {

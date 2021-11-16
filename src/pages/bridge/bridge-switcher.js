@@ -2,6 +2,7 @@ import React, {useContext, useState, useMemo, useEffect} from 'react';
 import {SelectComponent} from "@src/components/fields/Select";
 import {NETWORK_BSC, NETWORK_ETH, NETWORKS, SWAP_BSC_ETH, SWAP_ETH_BSC, TOKEN_ZAM, TOKENS} from "@src/constants";
 import {BridgeContext, ModalWalletContext, WalletContext} from "@src/context";
+import {bridgeAction} from "@src/actions/bridgeAction";
 
 const optionsNetworks = [
     {
@@ -22,7 +23,7 @@ const getOptionByValue = (token) => optionsNetworks[optionsNetworks.findIndex(op
 
 export const BridgeSwitcher = () => {
     const {setModalOpen} = useContext(ModalWalletContext);
-    const {wallet, setWallet, setWalletError} = useContext(WalletContext);
+    const {wallet, setWalletError} = useContext(WalletContext);
 
     const {bridgeFrom, setBridgeFrom, bridgeTo, setBridgeTo, swapMethod, setSwapMethod} = useContext(BridgeContext);
     const [amount, setAmount] = useState(0);
@@ -35,11 +36,10 @@ export const BridgeSwitcher = () => {
     }, []);
 
     useEffect(async () => {
-        wallet.initBridgeContacts(swapMethod);
-        await wallet.getBalance();
+        const bridge = new bridgeAction(wallet, swapMethod);
+        await bridge.getBalance();
 
-        setWallet(wallet);
-        setWalletError(wallet.error)
+        setWalletError(bridge.error)
     }, [swapMethod]);
 
 
@@ -69,13 +69,17 @@ export const BridgeSwitcher = () => {
 
 
     async function approve() {
-        await wallet.approve(swapMethod);
-        setWalletError(wallet.error);
+        const bridge = new bridgeAction(wallet, swapMethod);
+        await bridge.approve();
+
+        setWalletError(bridge.error);
     }
 
     async function transfer() {
-        await wallet.transfer(swapMethod, amount);
-        setWalletError(wallet.error);
+        const bridge = new bridgeAction(wallet, swapMethod);
+        await bridge.transfer(amount);
+
+        setWalletError(bridge.error);
     }
 
     const revertHandler = (event) => {
@@ -91,7 +95,7 @@ export const BridgeSwitcher = () => {
             </h3>
 
             <label className="input-field__label">Asset</label>
-            <div className="input-field mt-10">
+            <div className="input-field mt-10 mb-40">
                 <div className="select-field select-field-transparent">
                     <div className="select-field__control">
                         <div className="select-field__token">
@@ -100,7 +104,6 @@ export const BridgeSwitcher = () => {
                         </div>
                     </div>
                 </div>
-
             </div>
 
 
@@ -154,7 +157,7 @@ export const BridgeSwitcher = () => {
 
             {
                 wallet?.address ? (
-                    <div className="bridge-switcher__amount-value mb-40">
+                    <div className="bridge-switcher__amount-value mb-10">
                         <span>Available for transaction:</span>
                         <b>{wallet.balance}</b>
                     </div>

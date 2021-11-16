@@ -6,7 +6,7 @@ import { pairs } from './pairs';
 
 export const FarmPage = () => {
     return (
-        <article className="farming">
+        <article className="p-0">
             <div className="general-container">
                 <Header />
                 <div className="farming-cards">

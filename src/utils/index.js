@@ -1,3 +1,5 @@
+import {MONTH_NAMES, NETWORK_BSC, NETWORK_ETH, NETWORKS} from "@src/constants";
+
 export function dec2hex(str) {
     const dec = str.toString().split(''), sum = [], hex = [];
     let i, s;
@@ -16,11 +18,80 @@ export function dec2hex(str) {
 }
 
 
-export function toFixed(number) {
-    return Math.round(number* 100000000 ) / 100000000
+export function toFixed(number, precision = 100000000) {
+    return Math.round(number * precision) / precision
 }
 
 export function sortTokens(tokenA, tokenB) {
     const [token0, token1] = tokenA < tokenB ? [tokenA, tokenB] : [tokenB, tokenA];
     return [token0, token1];
+}
+
+export function float(value) {
+    return ['0', '0.', '0,'].includes(value.toString()) ? value : parseFloat(value.toString().replace(/,/g, '.'));
+}
+
+export function int(value) {
+    if (!value) {
+        return 0;
+    }
+    return parseInt(float(value));
+}
+
+export function formatChartDate(timestamp, range = 'M d, h:m') {
+    const date = new Date(timestamp * 1000);
+
+    switch (range) {
+        case 'M d, h':
+            return `${MONTH_NAMES[date.getMonth()]}. ${date.getDate()}, ${date.toLocaleString('ru-RU', {
+                hour: 'numeric',
+                hour24: true
+            })}`
+        case 'hour':
+            return `${MONTH_NAMES[date.getMonth()]}. ${date.getDate()}, ${date.toLocaleString('ru-RU', {
+                hour: 'numeric',
+                hour24: true
+            })}:00`
+        case 'day':
+        case 'week':
+            return `${MONTH_NAMES[date.getMonth()]}. ${date.getDate()}, ${date.getFullYear()}`
+    }
+}
+
+export function mergeObjects(ob1, ob2) {
+    const merged = {};
+
+    Object.keys(ob1).map(key => {
+        if (typeof ob1[key] === 'object') {
+            const stockSum = {...ob1[key]};
+            Object.keys(ob2[key]).forEach(name => stockSum[name] = stockSum[name] ? stockSum[name] + ob2[key][name] : ob2[key][name]);
+
+            merged[key] = Object.entries(stockSum)
+                .sort(([,a],[,b]) => a-b)
+                .reduce((r, [k, v]) => ({ ...r, [k]: v }), {});
+        }
+    })
+
+    return merged;
+}
+
+export function prepareGraphArray(obj, amountKey) {
+    const graphArray = [];
+
+    const map = new Map(Object.entries(obj).sort());
+console.log(map);
+    // console.log(obj)
+    for (let [key, value] of Object.entries(obj).sort()) {
+        graphArray.push({name: key, [amountKey]: value})
+    }
+    // console.log(graphArray);
+    return graphArray;
+}
+
+export function extractGraphDataByNetwork(object, name, amountKey, network) {
+    if (!object) {
+        return [];
+    }
+    const data = network ? object[network][name] : object.pair[name];
+    return prepareGraphArray(data, amountKey);
 }

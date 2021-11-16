@@ -1,14 +1,15 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {WalletContext} from "@src/context";
 import Web3 from "web3";
+import {bridgeAction} from "@src/actions/bridgeAction";
 
 
 export const BridgeTransactions = () => {
     const [transactions, setTransactions] = useState([]);
     const {wallet} = useContext(WalletContext);
 
-    useEffect(() => {
-        wallet.getTransactions(setTransactions);
+    useEffect(async () => {
+        await new bridgeAction(wallet).getTransactions(setTransactions);
     }, [wallet.address]);
 
 

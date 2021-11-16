@@ -1,14 +1,10 @@
 import React, {useContext} from 'react';
 import {ModalWalletContext, WalletContext} from "@src/context";
-import {farmingReducer} from "@src/reducers/farming";
 
 
 export const CardComponent = (props) => {
     const {setModalOpen} = useContext(ModalWalletContext);
     const {walletAddress} = useContext(WalletContext);
-
-
-    const poolLength = farmingReducer('getPoolLength')
 
 
     return (
@@ -49,8 +45,7 @@ export const CardComponent = (props) => {
                 </div>
                 <div className="card-body-container">
                     <div className="title-container">
-                        <p>Deposit ZAM-WBNB to earn</p>
-                        <p>ZAM and WBNB</p>
+                        <p dangerouslySetInnerHTML={{__html: props.title}}/>
                     </div>
                     <div className="content-container">
                         <div className="content">
@@ -75,11 +70,7 @@ export const CardComponent = (props) => {
                         </div>
                     </div>
                     <div className="button-container">
-                        {
-                            !walletAddress
-                                ? <button className="button-green w-full" onClick={() => setModalOpen(true)}>Connect Wallet</button>
-                                : <button className="button-green w-full">Swap</button>
-                        }
+                        <button className="button-green w-full" disabled={true}>Soon</button>
                     </div>
                 </div>
             </div>

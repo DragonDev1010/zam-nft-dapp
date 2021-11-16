@@ -46,8 +46,43 @@
   cursor: pointer;
   border: 0;
   transition: all .4s ease;
+
   &:hover {
     background: #1b9e50;
     transition: all .4s ease;
+  }
+
+  &:disabled {
+    background: #64889C;
+    color: #88b8d3;
+  }
+}
+
+.button-outlines {
+  display: flex;
+}
+.button-outline {
+  background: rgba(14, 16, 23, 0.76);
+  backdrop-filter: blur(13px);
+  border-radius: 15px;
+  border: 2px solid transparent;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  padding: 10px;
+  cursor: pointer;
+
+  &:hover {
+    border: 2px solid #2DFF82;
+  }
+
+  &.current {
+    border: 2px solid #2DFF82;
+  }
+
+  &__icon {
+    width: 20px;
+    margin-right: 0.5em;
   }
 }
