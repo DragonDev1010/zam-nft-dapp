@@ -32,6 +32,13 @@ export const IconBridge = () => (
         <path d="M20.15,3.07h-2l-.38,2.24h2.81Z" transform="translate(0 -3.07)" fill="currentColor"/>
     </svg>
 );
+export const IconMore = () => (
+    <svg width="20" height="4" viewBox="0 0 20 4" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="2" cy="2" r="2" fill="currentColor"/>
+        <circle cx="10" cy="2" r="2" fill="currentColor"/>
+        <circle cx="18" cy="2" r="2" fill="currentColor"/>
+    </svg>
+);
 
 export const IconStacking = () => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 17.72">
@@ -99,4 +106,16 @@ export const IconQuestion = () => (
     <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M7.65 13.6H9.35V11.9H7.65V13.6ZM8.5 0C3.808 0 0 3.808 0 8.5C0 13.192 3.808 17 8.5 17C13.192 17 17 13.192 17 8.5C17 3.808 13.192 0 8.5 0ZM8.5 15.3C4.7515 15.3 1.7 12.2485 1.7 8.5C1.7 4.7515 4.7515 1.7 8.5 1.7C12.2485 1.7 15.3 4.7515 15.3 8.5C15.3 12.2485 12.2485 15.3 8.5 15.3ZM8.5 3.4C6.6215 3.4 5.1 4.9215 5.1 6.8H6.8C6.8 5.865 7.565 5.1 8.5 5.1C9.435 5.1 10.2 5.865 10.2 6.8C10.2 8.5 7.65 8.2875 7.65 11.05H9.35C9.35 9.1375 11.9 8.925 11.9 6.8C11.9 4.9215 10.3785 3.4 8.5 3.4Z" fill="currentColor" />
     </svg>
+);
+
+export const IconCalculator = () => (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M21.3333 0H2.66667C1.2 0 0 1.2 0 2.66667V21.3333C0 22.8 1.2 24 2.66667 24H21.3333C22.8 24 24 22.8 24 21.3333V2.66667C24 1.2 22.8 0 21.3333 0ZM21.3333 21.3333H2.66667V2.66667H21.3333V21.3333Z" fill="#10CB62"/>
+        <path d="M10.9999 6.29395H4.33325V8.29395H10.9999V6.29395Z" fill="#10CB62"/>
+        <path d="M19.9999 17H13.3333V19H19.9999V17Z" fill="#10CB62"/>
+        <path d="M19.9999 13.667H13.3333V15.667H19.9999V13.667Z" fill="#10CB62"/>
+        <path d="M6.66667 20.0003H8.66667V17.3337H11.3333V15.3337H8.66667V12.667H6.66667V15.3337H4V17.3337H6.66667V20.0003Z" fill="#10CB62"/>
+        <path d="M14.7866 10.6L16.6666 8.72L18.5466 10.6L19.96 9.18667L18.08 7.29333L19.96 5.41333L18.5466 4L16.6666 5.88L14.7866 4L13.3733 5.41333L15.2533 7.29333L13.3733 9.18667L14.7866 10.6Z" fill="#10CB62"/>
+    </svg>
+
 );

@@ -63,4 +63,10 @@
     color: #fff;
     font-size: 14px;
   }
+
+  &__center {
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
 }

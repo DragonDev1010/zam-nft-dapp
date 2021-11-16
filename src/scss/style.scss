@@ -12,6 +12,7 @@
 @import "modals/wallet";
 @import "tooltip";
 @import "react-alice-carousel/lib/scss/alice-carousel.scss";
+@import "pages/staking.scss";
 @import "atomic";
 
 *, :after, :before {
@@ -46,6 +47,10 @@ h1 {
 
 main {
   display: flex;
+  @media (max-width: 768px) {
+    flex-flow: column-reverse;
+    padding-bottom: 80px;
+  }
 }
 article {
   padding: 25px;

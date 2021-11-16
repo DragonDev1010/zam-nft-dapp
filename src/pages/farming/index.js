@@ -9,7 +9,7 @@ export const FarmPage = () => {
         <article className="p-0">
             <div className="general-container">
                 <Header />
-                <div className="farming-cards">
+                <div className="cards farming-cards">
                     {
                         pairs.map((item, index) =>
                             <CardComponent {...item} key={`card-${index}`}/>

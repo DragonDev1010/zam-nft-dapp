@@ -19,6 +19,7 @@ import {
 import {getPrice} from "@src/actions/swapAction";
 
 import { ZMetaBoardPage } from "../pages/z-meta-board";
+import { StakingPage } from "../pages/staking";
 
 export const IndexLayout = () => {
     const [rate, setRate] = useState();
@@ -46,7 +47,8 @@ export const IndexLayout = () => {
                                 <Route path="/bridge" component={BridgePage}/>
                                 <Route path="/farming" component={FarmPage}/>
                                 <Route path="/z-meta-board" component={ZMetaBoardPage}/>
-                            </Switch>
+                            <Route path="/staking" component={StakingPage}/>
+            </Switch>
                         </main>
                     </ModalWalletContext.Provider>
                 </RateContext.Provider>

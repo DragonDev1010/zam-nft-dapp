@@ -17,6 +17,7 @@ import {
     withRouter
 } from "react-router-dom";
 import {RateContext} from "@src/context";
+import {IconMore} from "@src/icons/icons";
 
 
 const Sidebar = (props) => {
@@ -29,7 +30,7 @@ const Sidebar = (props) => {
                 <nav className="sidebar__nav">
 
                     <ul>
-                        <li>
+                        <li className="sidebar__nav-box">
                             <Link to="/z-meta-board" className={`sidebar__nav-item ${props.location?.pathname === '/z-meta-board' ? `active` : ''}`}>
                                 <div className="sidebar__nav-icon">
                                     <IconDashboard />
@@ -37,12 +38,12 @@ const Sidebar = (props) => {
                                 <span>zMetaBoard</span>
                             </Link>
                         </li>
-                        <li><a className="sidebar__nav-item disabled">
+                        <li className="sidebar__nav-box"><a className="sidebar__nav-item disabled">
                             <div className="sidebar__nav-icon">
                                 <IconWallet />
                             </div>
                             <span>Invest Portfolios</span></a></li>
-                        <li>
+                        <li className="sidebar__nav-box">
                             <Link to="/swap" className={`sidebar__nav-item ${props.location?.pathname === '/swap' ? `active` : ''}`}>
                                 <div className="sidebar__nav-icon">
                                     <IconExchange />
@@ -50,20 +51,32 @@ const Sidebar = (props) => {
                                 <span>Swap</span>
                             </Link>
                         </li>
-                        <li>
+                        <li className="sidebar__nav-box">
                             <Link to="/bridge" className={`sidebar__nav-item ${props.location?.pathname === '/bridge' ? `active` : ''}`}>
                                 <div className="sidebar__nav-icon">
                                     <IconBridge />
                                 </div>
-                                <span>Zamio Bridge</span>
+                                <span><b>Zamio</b> Bridge</span>
                             </Link>
                         </li>
-                        <li><a className="sidebar__nav-item disabled">
-                            <div className="sidebar__nav-icon">
-                                <IconStacking />
-                            </div>
-                            <span>Staking</span></a></li>
-                        <li>
+                        <li className="sidebar__nav-box sidebar__nav-more">
+                            <a href="#" className={`sidebar__nav-item active`}>
+                                <div className="sidebar__nav-icon">
+                                    <IconMore />
+                                </div>
+                                <span>More</span>
+                            </a>
+                        </li>
+                        
+                        <li className="sidebar__nav-box sidebar__nav-hidden-m">
+                            <Link to="/staking" className={`sidebar__nav-item ${props.location?.pathname === '/staking' ? `active` : ''}`}>
+                                <div className="sidebar__nav-icon">
+                                    <IconStacking />
+                                </div>
+                                <span>Staking</span>
+                            </Link>
+                        </li>
+                        <li className="sidebar__nav-box sidebar__nav-hidden-m">
                             <Link to="/farming" className={`sidebar__nav-item ${props.location?.pathname === '/farming' ? `active` : ''}`}>
                                 <div className="sidebar__nav-icon">
                                     <IconFarming />
@@ -71,7 +84,7 @@ const Sidebar = (props) => {
                                 <span>Farming</span>
                             </Link>
                         </li>
-                        <li><a target="_blank" href="/faq" className="sidebar__nav-item">
+                        <li className="sidebar__nav-box sidebar__nav-hidden-m"><a target="_blank" href="/faq" className="sidebar__nav-item">
                             <div className="sidebar__nav-icon">
                                 <IconHelp />
                             </div>

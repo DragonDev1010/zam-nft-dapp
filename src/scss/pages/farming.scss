@@ -1,33 +1,22 @@
 .farming {
     padding: 0;
 }
-.card-container {
-    width: 451px;
-    height: 523px;
-    margin-top: 2em;
-    background: rgba(49, 56, 85, 0.49);
-    margin-left: 2em;
-    backdrop-filter: blur(24px);
-    border: 1px solid rgba(47, 41, 84, 0.09);
-    box-sizing: border-box;
-    border-radius: 20px;
-}
+
 .card-header {
     border-radius: 20px 20px 0px 0px;
     backdrop-filter: blur(48px);
-    width: 451px;
     height: 91px;
     display: flex;
     justify-content: center;
 
     &-left-container {
         margin-right: 1em;
-        width: 130px;
+        width: 25%;
         text-align: center;
     }
     &-right-container {
         margin-left: 1em;
-        width: 130px;
+        width: 25%;
         text-align: center;
     }
     &-center-container {
@@ -101,19 +90,7 @@ p {
     margin-top: 1em;
     padding: 0 26px;
 }
-.connect-wallet-button {
-    width: 375px;
-    height: 60px;
-    border: none;
-    background: #21c162;
-    border-radius: 16.5455px;
-    font-family: Nunito;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 16px;
-    color: #ffffff;
-}
+
 .header-container {
     height: 213px;
     display: flex;
@@ -128,7 +105,6 @@ p {
     }
 }
 .farming-container {
-    width: 200px;
     height: 59px;
     font-style: normal;
     font-weight: bold;
@@ -137,9 +113,6 @@ p {
     color: #ffffff;
 }
 .farming-cards {
-    display: flex;
-    justify-content: start;
-    flex-wrap: wrap;
     margin-top: 2em;
 }
 
@@ -155,7 +128,6 @@ p {
     border-radius: 10px;
 }
 .activity-container-title {
-    width: 92.74px;
     height: 23.1px;
     font-style: normal;
     font-weight: 500;

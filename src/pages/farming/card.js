@@ -9,7 +9,7 @@ export const CardComponent = (props) => {
 
     return (
         <>
-            <div className="card-container">
+            <div className="card card-narrow pl-0 pt-0 pr-0">
                 <div style={{ background: props.background }} className="card-header">
                     <div className="card-header-left-container">
                         <div className="card-header-container-content">
