@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../parts/header";
 import Sidebar from "../parts/sidebar";
 import { SwapPage } from "@src/pages/swap";
+import { AuditsPage } from "../pages/audits";
 import {
     BrowserRouter as Router,
     Switch,
@@ -24,6 +25,7 @@ export const IndexLayout = () =>
                 <Route path="/farming" component={FarmPage} />
                 <Route path="/z-meta-board" component={ZMetaBoardPage} />
                 <Route path="/staking" component={StakingPage} />
+                <Route path="/audits" component={AuditsPage} />
                 <Route path="/" component={MainPage} />
             </Switch>
         </main>

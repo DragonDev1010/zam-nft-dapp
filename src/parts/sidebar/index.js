@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
     IconAppApple, IconAppGoogle,
+    IconAudits,
     IconBridge,
     IconDashboard,
     IconExchange,
@@ -72,6 +73,14 @@ const Sidebar = (props) => {
                                     <IconFarming />
                                 </div>
                                 <span>Farming</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/audits" className={`sidebar__nav-item ${props.location?.pathname === '/audits' ? `active` : ''}`}>
+                                <div className="sidebar__nav-icon">
+                                    <IconAudits />
+                                </div>
+                                <span>Audits</span>
                             </Link>
                         </li>
                         <li><a target="_blank" href="/faq" className="sidebar__nav-item">
