@@ -31,7 +31,9 @@
     padding: 0 10px;
     display: flex;
     align-items: center;
-
+    @media (max-width: 768px) {
+      font-size: 16px;
+    }
     &::placeholder {
       color: #838699;
     }

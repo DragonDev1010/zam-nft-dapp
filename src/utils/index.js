@@ -46,7 +46,9 @@ export function formatChartDate(timestamp, range = 'M d, h:m') {
             return `${MONTH_NAMES[date.getMonth()]}. ${date.getDate()}, ${date.toLocaleString('ru-RU', {
                 hour: 'numeric',
                 hour24: true
-            })}`
+            })}:00`
+        case 'M d':
+            return `${MONTH_NAMES[date.getMonth()]}. ${date.getDate()}`
         case 'hour':
             return `${MONTH_NAMES[date.getMonth()]}. ${date.getDate()}, ${date.toLocaleString('ru-RU', {
                 hour: 'numeric',
@@ -64,7 +66,15 @@ export function mergeObjects(ob1, ob2) {
     Object.keys(ob1).map(key => {
         if (typeof ob1[key] === 'object') {
             const stockSum = {...ob1[key]};
-            Object.keys(ob2[key]).forEach(name => stockSum[name] = stockSum[name] ? stockSum[name] + ob2[key][name] : ob2[key][name]);
+            let instersection = 0;
+            Object.keys(ob2[key]).forEach(name => {
+                if (stockSum[name]) {
+                    stockSum[name] = parseInt(stockSum[name]) + parseInt(ob2[key][name]);
+                    instersection = stockSum[name];
+                } else {
+                    stockSum[name] = parseInt(ob2[key][name]) + instersection;
+                }
+            });
 
             merged[key] = Object.entries(stockSum)
                 .sort(([,a],[,b]) => a-b)
@@ -78,13 +88,9 @@ export function mergeObjects(ob1, ob2) {
 export function prepareGraphArray(obj, amountKey) {
     const graphArray = [];
 
-    const map = new Map(Object.entries(obj).sort());
-console.log(map);
-    // console.log(obj)
     for (let [key, value] of Object.entries(obj).sort()) {
         graphArray.push({name: key, [amountKey]: value})
     }
-    // console.log(graphArray);
     return graphArray;
 }
 
@@ -94,4 +100,11 @@ export function extractGraphDataByNetwork(object, name, amountKey, network) {
     }
     const data = network ? object[network][name] : object.pair[name];
     return prepareGraphArray(data, amountKey);
+}
+
+export function numberFormat(value) {
+    if (!value) {
+        return value;
+    }
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 }

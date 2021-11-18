@@ -3,6 +3,7 @@ import {TOKEN_USDT, TOKEN_ZAM, TOKENS, MONTH_NAMES} from "@src/constants";
 import {SwapContext, RateContext} from "@src/context";
 import {AreaChart, Area, XAxis, Tooltip, ResponsiveContainer} from 'recharts';
 import {formatChartDate, toFixed} from "@src/utils";
+import {GRAPH_URL} from "@src/config/networks";
 
 
 const ranges = {'hour': 'H', 'day': 'D', 'week': 'W'};
@@ -43,7 +44,7 @@ export const SwapChart = ({mainToken}) => {
                 periodEnd,
               },
             }`;
-        fetch('https://api.thegraph.com/subgraphs/name/zambit/zampairgraph', {
+        fetch(GRAPH_URL.PAIR, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

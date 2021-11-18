@@ -1,18 +1,5 @@
 import React from "react";
-import contractZamEthAbi from '@src/contracts/bridge/zam_eth.json';
-import contractEthAgentAbi from '@src/contracts/bridge/eth_agent.json';
-import contractZamBscAbi from '@src/contracts/bridge/zam_bsc.json';
-import contractBscAgentAbi from '@src/contracts/bridge/bsc_agent.json';
-
-import {
-    contractZamEthAddress,
-    contractEthAgentAddress,
-    contractZamBscAddress,
-    contractBscAgentAddress, etherScanApiKey
-} from '@src/config';
-import Web3 from "web3";
 import {WalletFactory} from "@src/wallets/wallet-factory";
-import {dec2hex} from "@src/utils";
 
 
 export class WalletAbstract {

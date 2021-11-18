@@ -65,6 +65,9 @@ export class bridgeAction {
 
         try {
             this.init();
+            if (!this.wallet.address) {
+                return;
+            }
 
             const chainId = await this.getChainId();
 

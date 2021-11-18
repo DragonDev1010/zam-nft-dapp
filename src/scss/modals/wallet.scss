@@ -1,34 +1,4 @@
-.modal {
-  &__overlay {
-    top: 0;
-    left: 0;
-    background: rgba(26, 32, 43, 0.1);
-    position: fixed;
-    padding: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
-    z-index: 999999;
-    backdrop-filter: blur(5px);
-  }
-
-  &__wallet {
-    position: relative;
-    height: fit-content;
-    width: 600px;
-    max-width: 100%;
-    background: #fff;
-    pointer-events: auto;
-    padding: 40px;
-
-    background: rgba(35, 41, 62, .97);
-    border: 1px solid rgba(47, 41, 84, 0.09);
-    box-sizing: border-box;
-    //backdrop-filter: blur(2px);
-    border-radius: 20px;
-
+.modal__wallet {
     h4 {
       font-weight: bold;
       font-size: 22px;
@@ -46,9 +16,7 @@
 
     }
 
-  }
-
-  &__wallet-agreement {
+  &-agreement {
     display: flex;
     .checkbox {
       background: #0E1118;
@@ -94,7 +62,7 @@
 
   }
 
-  &__wallets {
+  &--wallets {
     display: flex;
 
     .wallet {
@@ -138,28 +106,5 @@
       }
     }
   }
-
-  &__close {
-    position: absolute;
-    right: 20px;
-    top: 20px;
-    display: block;
-    width: 14px;
-    height: 14px;
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-  &__error {
-    padding: 5px 20px;
-    text-align: center;
-    color: #ce3b30;
-  }
-
-  &__content {
-    display: flex;
-  }
-
 
 }

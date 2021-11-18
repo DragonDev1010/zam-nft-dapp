@@ -40,6 +40,14 @@ export const IconMore = () => (
     </svg>
 );
 
+export const IconHome = () => (
+    <svg width="21" height="18" viewBox="0 0 21 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10.5007 2.92708L15.709 7.61458V15.75H13.6257V9.5H7.37565V15.75H5.29232V7.61458L10.5007 2.92708ZM10.5007 0.125L0.0839844 9.5H3.20898V17.8333H9.45899V11.5833H11.5423V17.8333H17.7923V9.5H20.9173L10.5007 0.125Z" fill="currentColor"/>
+    </svg>
+
+);
+
+
 export const IconStacking = () => (
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 21 17.72">
         <path d="M10.59,4.3a4.72,4.72,0,1,0-4.23,7.41,6.85,6.85,0,0,0,.68,2H6.72a6.72,6.72,0,1,1,6-9.85A7.13,7.13,0,0,0,10.59,4.3Z" transform="translate(0 -0.28)" fill="currentColor"/>

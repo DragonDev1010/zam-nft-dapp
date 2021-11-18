@@ -1,36 +1,44 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import { data, totalSupply, barData } from './chart-arrays';
 import { SmallAreaChart } from "../z-meta-board/small-area-chart"
 import { CustomBarChart } from './bar-chart';
 import { LargeAreaChart } from './large-custom-area-chart';
+import {ZMetaBoardContext} from "@src/context/zmetaboard-context";
+import {extractGraphDataByNetwork} from "@src/utils";
 
 export const Graphics = () => {
-    const flexStyle = {
-        width: "100%",
-        display: "flex"
-    }
+    const {chartData, network} = useContext(ZMetaBoardContext);
+
     return (
         <>
-            <div style={flexStyle}>
-                <CustomBarChart title="Circulation" rate="65 230 014 ZAM" swapChart={barData} />
-                <div>
-                    <SmallAreaChart height="300px" title="Transfer Count" rate="34 614 335" data={data} />
+            <div className="cards">
+                <div className="card">
+                    <CustomBarChart height="175px" title="Circulation" chartKey="ZAM"
+                                    data={extractGraphDataByNetwork(chartData, 'circulations', 'ZAM', network)} />
+                </div>
+                <div className="card card-narrow">
+                    <LargeAreaChart height="175px" title="Transfer Count" chartKey="ZAM"
+                                    data={extractGraphDataByNetwork(chartData, 'transferred', 'ZAM', network)} />
                 </div>
             </div>
-            <div style={flexStyle}>
-                <LargeAreaChart title="Blocked" rate="545 765 ZAM" swapChart={data} />
-                <div>
-                    <SmallAreaChart height="202px" title="Transfer Count" rate="54 776 221" data={data} />
-                    <SmallAreaChart height="202px" title="Transaction Count" rate="54 776 221" data={data} />
+            <div className="cards">
+                <div className="card">
+                    <LargeAreaChart height="175px" title="Blocked" chartKey="ZAM"
+                                    data={extractGraphDataByNetwork(chartData, 'blockeds', 'ZAM', network)} />
+                </div>
+
+                <div className="card-narrow">
+                    <div className="card w-full">
+                        <SmallAreaChart height="50px" title="Transaction Count" chartKey="ZAM"
+                                        data={extractGraphDataByNetwork(chartData, 'transactions', 'ZAM', network)}  />
+                    </div>
+                    <div className="card w-full">
+                        <SmallAreaChart height="50px" title="Holder Count"
+                                          />
+                    </div>
                 </div>
             </div>
-            <div style={flexStyle}>
-                <LargeAreaChart title="Total Supply" rate="80 000 000 ZAM" swapChart={totalSupply} />
-                <div>
-                    <SmallAreaChart height="202px" title="Bridge" rate="285 230 ZAM" data={data} />
-                    <SmallAreaChart height="202px" title="Vester" rate="121 574" data={data} />
-                </div>
-            </div>
+
         </>
     )
 };

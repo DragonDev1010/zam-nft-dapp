@@ -11,7 +11,7 @@ export const SwapPage = () => {
 
     return (
         <article>
-            <div className="cards">
+            <div className="cards cards-column-revert">
                 <SwapContext.Provider value={{swapFrom, setSwapFrom, swapTo, setSwapTo}}>
                     <SwapChart mainToken={TOKEN_ZAM}/>
                     <SwapSwitcher mainToken={TOKEN_ZAM}/>

@@ -16,6 +16,9 @@
 .mt-20 {
   margin-top: 20px;
 }
+.mt-40 {
+  margin-top: 40px;
+}
 .mb-40 {
   margin-bottom: 40px;
 }
@@ -40,8 +43,19 @@
 .flex-column {
   flex-flow: column;
 }
+.sm-flex-column {
+  @media (max-width: 768px) {
+    flex-flow: column;
+  }
+}
 .justify-between {
   justify-content: space-between;
+}
+.justify-start {
+  justify-content: flex-start;
+}
+.align-center {
+  align-items: center;
 }
 .w-full {
   width: 100%;
@@ -51,4 +65,14 @@
 }
 .text-right {
   text-align: right;
+}
+.hidden-sm {
+  @media (max-width: 768px) {
+    display: none;
+  }
+}
+.visible-sm {
+  @media (min-width: 768px) {
+    display: none;
+  }
 }

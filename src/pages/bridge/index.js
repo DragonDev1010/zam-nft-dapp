@@ -12,7 +12,7 @@ export const BridgePage = () => {
 
     return (
         <article>
-            <div className="cards">
+            <div className="cards cards-column-revert">
                 <BridgeContext.Provider
                     value={{bridgeFrom, setBridgeFrom, bridgeTo, setBridgeTo, swapMethod, setSwapMethod}}>
                     <BridgeTransactions/>

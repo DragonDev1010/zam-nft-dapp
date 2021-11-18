@@ -9,10 +9,12 @@
 @import "pages/bridge";
 @import "pages/farming";
 @import "pages/z-meta-board.scss";
+@import "modals/modal";
 @import "modals/wallet";
 @import "tooltip";
 @import "react-alice-carousel/lib/scss/alice-carousel.scss";
 @import "pages/staking.scss";
+@import "pages/main.scss";
 @import "atomic";
 
 *, :after, :before {
@@ -53,7 +55,7 @@ main {
   }
 }
 article {
-  padding: 25px;
+  padding: 0;
   width: 100%;
   overflow: hidden;
 }
@@ -68,4 +70,25 @@ article {
   font-size: 22px;
   line-height: 120%;
   color: #FFFFFF;
+}
+
+.background-glow {
+  background-image: url(../images/background_glow.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+
+.soon {
+  background: #36E269;
+  border-radius: 15px;
+  color: #0E1017;
+  font-size: 14px;
+  padding: 5px 15px;
+  width: fit-content;
+
+  @media (max-width: 768px) {
+    font-size: 11px;
+  }
 }

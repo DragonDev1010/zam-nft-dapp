@@ -1,47 +1,21 @@
-import React, { useState } from 'react';
-import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import React from 'react';
+import { Area, XAxis, Tooltip, ResponsiveContainer, AreaChart } from 'recharts';
+import {numberFormat} from "@src/utils";
 
-const ranges = { 'day': '24H', 'week': '1W', 'month': '1M' };
-
-
-export const LargeAreaChart = (props) => {
-    const [range, setRange] = useState('month');
+export const LargeAreaChart = ({data, height, title, chartKey }) => {
     return (
-        <div className="large-chart-container swap-chart">
-            <header>
-                <div className="swap-chart__tokens" />
-                <div className="swap-chart__ranges">
-                    <ul>
-                        {
-                            Object.keys(ranges)
-                                .map(i => <li className={i === range ? `active` : ``}
-                                    key={`swap_chart_ranges_${i}`}
-                                    onClick={() => setRange(i)}>{ranges[i]}</li>)
-                        }
-                    </ul>
-                </div>
-            </header>
-            <div>
-                <div className="blocked-title">{props.title}</div>
-                <h3 className="swap-chart__rate">{props.rate}</h3>
-                <div className="duration-container">Past 24h</div>
-            </div>
-            <div className="swap-chart__chart">
-                <ResponsiveContainer width="100%" height="60%">
+        <div className="chart flex flex-column">
+            <div className="blocked-title">{title}</div>
+            <h3 className="rate-container">{data.length ? numberFormat(data[data.length - 1][chartKey])  : 0} {chartKey}</h3>
+            <div style={{ height, marginTop: 'auto' }}>
+                <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
-                        width={500}
-                        height={400}
-                        data={props.swapChart}
-                        margin={{
-                            top: 10,
-                            right: 30,
-                            left: 0,
-                            bottom: 0,
-                        }}
+                        data={data}
+
                     >
-                        <XAxis dataKey="name" />
+                        <XAxis tick={{ fontSize: 13 }} dataKey="name" />
                         <Tooltip />
-                        <Area type="monotone" dataKey="uv" stroke="#4A9DFB" fill="url(#graph-gradient)" strokeWidth="2" />
+                        <Area type="monotone" dataKey={chartKey} stroke="#4A9DFB" fill="url(#graph-gradient)" strokeWidth="2" />
                         <defs>
                             <linearGradient id="graph-gradient" gradientTransform="rotate(90)">
                                 <stop offset="0" stopColor="#4A9DFB" />
@@ -51,6 +25,7 @@ export const LargeAreaChart = (props) => {
                     </AreaChart>
                 </ResponsiveContainer>
             </div>
+
         </div>
     );
-};
+}

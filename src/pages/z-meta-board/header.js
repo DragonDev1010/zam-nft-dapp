@@ -1,10 +1,25 @@
-import React from 'react';
+import React, {useContext, useEffect, useState} from 'react';
+import {ZMetaBoardContext} from "@src/context/zmetaboard-context";
+import {NETWORK_BSC, NETWORK_ETH, NETWORKS} from "@src/constants";
+import {numberFormat} from "@src/utils";
+import {RateContext} from "@src/context";
+import {zamGraphPairData} from "@src/pages/z-meta-board/chart-data";
+
+const ranges = {'day': '24H', 'week': '1W', 'month': '1M', 'all': 'All'};
 
 export const Header = () => {
+    const {network, setNetwork, range, setRange, chartData} = useContext(ZMetaBoardContext);
+    const {rate} = useContext(RateContext);
+    const [reserve, setReserve] = useState(0);
+
+    useEffect(async () => {
+        const {reserve} = await zamGraphPairData();
+        setReserve(reserve);
+    }, [])
 
     return (
         <>
-            <div className="z-meta-header-container">
+            <div className="z-meta-board__header-container">
                 <div style={{ marginTop: "2em", marginLeft: "2em" }}>
                     <p className="farming-container">
                         zMetaBoard
@@ -12,64 +27,68 @@ export const Header = () => {
                     <div className="zam-values-container">
                         <div className="value-container">
                             <div style={{ color: "#2DFF82" }} className="zam-value">
-                                8 000 000 ZAM
+                                {chartData ? numberFormat(chartData.pair.circulationsSupply.singleton) : 0} ZAM
                             </div>
                             <div className="zam-value-title">
-                                Total Liquidiy
+                                Circulating Supply
                             </div>
                         </div>
                         <div className="value-container">
                             <div className="zam-value">
-                                43 000 ZAM
+                                ${chartData ? numberFormat(parseInt(chartData.pair.transferCounts.singleton * rate)) : 0}
                             </div>
                             <div className="zam-value-title">
-                                Total Volume
+                                Total Volume All Time
                             </div>
                         </div>
                         <div className="value-container">
                             <div className="zam-value">
-                                65 234 ZAM
+                                {chartData ? numberFormat(chartData.pair.holderCounts.singleton) : 0}
+
                             </div>
                             <div className="zam-value-title">
-                                Total Referrer Reward
+                                Holders
                             </div>
                         </div>
                         <div className="value-container">
                             <div className="zam-value">
-                                43 543 ZAM
+                                ${numberFormat(reserve)}
                             </div>
                             <div className="zam-value-title">
-                                Total Supply
+                                Total Value Locked (TVL)
                             </div>
                         </div>
                     </div>
-                    <div style={{ marginTop: "2em" }} className="activity-buttons-container">
-                        <button id="all" onClick={e => onClickButton(e)} className="activity-button">
-                            <div className="activity-nutton-content">
-                                All Networks
-                            </div>
-                        </button>
-                        <button id="eth" onClick={e => onClickButton(e)} className="activity-button">
-                            <div style={{ display: "flex" }} className="activity-nutton-content">
-                                <div>
-                                    <img className="button-icon" src="../../../images/eth.png" />
-                                </div>
-                                <div className="eth-button-content">
-                                    ETH Network
-                                </div>
-                            </div>
-                        </button>
-                        <button id="bsc" onClick={e => onClickButton(e)} className="activity-button">
-                            <div style={{ display: "flex" }} className="activity-nutton-content">
-                                <div>
-                                    <img className="button-icon" src="../../../images/bsc.png" />
-                                </div>
-                                <div className="eth-button-content">
-                                    BSC Network
-                                </div>
-                            </div>
-                        </button>
+
+                    <div className="z-meta-board__filters">
+                        <div className="button-outlines z-meta-board__filters-buttons">
+                            <button onClick={() => setNetwork()} className={`button-outline ${network ?? 'current'}`}>
+                                <span className="hidden-sm">All Networks</span>
+                                <span className="visible-sm">All Networks</span>
+                            </button>
+                            <button onClick={() => setNetwork(NETWORK_ETH)} className={`button-outline ${network === NETWORK_ETH ? 'current' : ''}`}>
+                                <img className="button-outline__icon" src={NETWORKS[NETWORK_ETH].icon} />
+                                <span className="hidden-sm">{NETWORKS[NETWORK_ETH].name}</span>
+                                <span className="visible-sm">ETH</span>
+                            </button>
+                            <button onClick={() => setNetwork(NETWORK_BSC)} className={`button-outline ${network === NETWORK_BSC ? 'current' : ''}`}>
+                                <img className="button-outline__icon" src={NETWORKS[NETWORK_BSC].icon} />
+                                <span className="hidden-sm">{NETWORKS[NETWORK_BSC].name}</span>
+                                <span className="visible-sm">BSC</span>
+                            </button>
+                        </div>
+                        <div className="chart__ranges">
+                            <ul>
+                                {
+                                    Object.keys(ranges)
+                                        .map(i => <li className={i === range ? `active` : ``}
+                                                      key={`swap_chart_ranges_${i}`}
+                                                      onClick={() => setRange(i)}>{ranges[i]}</li>)
+                                }
+                            </ul>
+                        </div>
                     </div>
+
                 </div>
             </div>
         </>

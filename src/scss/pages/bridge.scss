@@ -17,9 +17,41 @@
     line-height: 120%;
     color: rgba(255, 255, 255, 0.61);
   }
+
+  &__inputs {
+    @media (max-width: 768px) {
+      flex-flow: column;
+      .input-field__column {
+        width: 100%;
+      }
+      .input-field__column--revert {
+        width: 100%;
+
+        img {
+          transform: none;
+        }
+      }
+    }
+  }
+  .select-field__token-v .select-field__value-container {
+    @media (max-width: 768px) {
+      height: 60px;
+    }
+  }
+  .select-field__token {
+    @media (max-width: 768px) {
+      flex-flow: row;
+      align-items: center;
+    }
+  }
 }
 
 .bridge-transactions {
+  &__table-wrapper {
+    @media (max-width: 768px) {
+      overflow-x: scroll;
+    }
+  }
   &__table {
     width: 100%;
     margin-bottom: 30px;

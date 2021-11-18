@@ -107,7 +107,7 @@ export const BridgeSwitcher = () => {
             </div>
 
 
-            <div className="flex mt-10 mb-40">
+            <div className="flex mt-10 mb-40 bridge-switcher__inputs">
                 <div className="input-field__column">
                     <label className="input-field__label">From</label>
                     <div className="input-field mt-10 select-field__token-v">

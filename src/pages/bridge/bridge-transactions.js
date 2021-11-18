@@ -9,20 +9,23 @@ export const BridgeTransactions = () => {
     const {wallet} = useContext(WalletContext);
 
     useEffect(async () => {
-        await new bridgeAction(wallet).getTransactions(setTransactions);
+        getTransactions();
     }, [wallet.address]);
 
+    const getTransactions = () => {
+        new bridgeAction(wallet).getTransactions(setTransactions);
+    }
 
     return (
         <div className="card bridge-transactions">
             <header className="flex justify-between mb-40">
                 <h3 className="title">Transactions</h3>
                 <button className="bridge-transactions__refresh"
-                        onClick={() => wallet.getTransactions(setTransactions)}>
+                        onClick={getTransactions}>
                     Refresh <img src="images/icon_refresh.svg"/>
                 </button>
             </header>
-            <div className="card__table-wrapper">
+            <div className="bridge-transactions__table-wrapper">
                 <table className="table bridge-transactions__table">
                     <thead>
                     <tr>

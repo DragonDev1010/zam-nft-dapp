@@ -56,11 +56,34 @@
     span {
       color: #838699;
     }
+    @media (max-width: 768px) {
+      font-size: 24px;
+    }
   }
 
   &__chart {
     width: calc(100% + 30px);
     height: 300px;
     margin-top: 30px;
+  }
+}
+
+
+.small-cart {
+  display: flex;
+  flex-flow: row;
+  align-items: end;
+  @media (max-width: 768px) {
+    flex-flow: column;
+    align-items: start;
+  }
+  &__column-left {
+    @media (min-width: 769px) {
+      width: 150px;
+      margin-right: 20px;
+    }
+  }
+  &__column-right {
+    width: 100%;
   }
 }
