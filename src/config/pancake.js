@@ -11,10 +11,3 @@ export const PancakeAddresses = {
     }
 };
 
-
-export const PancakeNetworks = {
-    main: 'https://bsc-dataseed.binance.org/',
-    test: 'https://data-seed-prebsc-1-s1.binance.org:8545/'
-    // test: 'https://data-seed-prebsc-2-s1.binance.org:8545/'
-};
-

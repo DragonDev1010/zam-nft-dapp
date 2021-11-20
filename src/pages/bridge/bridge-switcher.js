@@ -89,7 +89,7 @@ export const BridgeSwitcher = () => {
     }
 
     return (
-        <div className="card card-narrow card-glow bridge-switcher">
+        <div className="card card-filled card-narrow card-glow bridge-switcher">
             <h3 className="title text-center mb-20">
                 Zamio bridge
             </h3>

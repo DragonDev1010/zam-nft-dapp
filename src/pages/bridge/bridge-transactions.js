@@ -17,7 +17,7 @@ export const BridgeTransactions = () => {
     }
 
     return (
-        <div className="card bridge-transactions">
+        <div className="card card-filled bridge-transactions">
             <header className="flex justify-between mb-40">
                 <h3 className="title">Transactions</h3>
                 <button className="bridge-transactions__refresh"

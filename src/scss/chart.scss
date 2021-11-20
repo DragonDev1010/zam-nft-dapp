@@ -77,6 +77,7 @@
     align-items: start;
   }
   &__column-left {
+    width: 100%;
     @media (min-width: 769px) {
       width: 35%;
       padding-right: 10px;
@@ -84,5 +85,8 @@
   }
   &__column-right {
     width: 65%;
+    @media (max-width: 768px) {
+      width: 100%;
+    }
   }
 }

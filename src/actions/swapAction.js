@@ -1,22 +1,22 @@
 import Web3 from "web3";
-import {PancakeNetworks} from "@src/config/pancake";
 import contractPancakeFactoryAbi from '@src/contracts/pancake/IPancakeFactory_ABI.json';
 import contractPancakePairAbi from '@src/contracts/pancake/IPancakePair_ABI.json';
 import contractPancakeRouterAbi from '@src/contracts/pancake/PancakeRouter_ABI.json';
 import contractPancakeIerc20 from '@src/contracts/pancake/IERC20.json';
 import {PancakeAddresses, TOKEN_ADDRESES} from "@src/config";
-import {ENV} from "@src/env";
 import {dec2hex, sortTokens} from "@src/utils";
 
+const NETWORK_ENV = process.env.NETWORK_ENV;
+const NETWORK_URL = process.env.NETWORK_URL;
 
 export class swapAction {
     constructor(wallet, swapFrom, swapTo) {
-        this.network = PancakeNetworks[ENV];
-        this.addressFactory = PancakeAddresses[ENV].factory;
-        this.addressRouter = PancakeAddresses[ENV].router;
+        this.network = NETWORK_URL;
+        this.addressFactory = PancakeAddresses[NETWORK_ENV].factory;
+        this.addressRouter = PancakeAddresses[NETWORK_ENV].router;
         this.wallet = wallet;
-        this.tokenA = TOKEN_ADDRESES[ENV][swapTo];
-        this.tokenB = TOKEN_ADDRESES[ENV][swapFrom];
+        this.tokenA = TOKEN_ADDRESES[NETWORK_ENV][swapTo];
+        this.tokenB = TOKEN_ADDRESES[NETWORK_ENV][swapFrom];
     }
 
     init = async () => {

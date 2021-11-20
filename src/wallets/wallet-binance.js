@@ -1,7 +1,5 @@
-import Web3 from "web3";
 import React from "react";
 import {WalletAbstract} from "@src/wallets/wallet-abstract";
-import {dec2hex} from "@src/utils";
 
 export class WalletBinance extends WalletAbstract {
     constructor() {

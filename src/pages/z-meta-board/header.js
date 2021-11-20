@@ -13,10 +13,10 @@ export const Header = () => {
     const [reserve, setReserve] = useState(0);
     const circulationsSupply = extractScalarDataByNetwork(chartData, 'circulationsTotal', network) ?? 0;
 
-    useEffect(async () => {
-        const {reserve} = await zamGraphPairData();
-        setReserve(reserve);
-    }, [])
+    // useEffect(async () => {
+    //     const {reserve} = await zamGraphPairData();
+    //     setReserve(reserve);
+    // }, [])
 
     return (
         <>
