@@ -161,14 +161,3 @@ export class swapAction {
     }
 }
 
-
-export const getPrice = (setRate, setPriceChange24, setPriceChangePercentage24) => {
-    fetch('https://api.coingecko.com/api/v3/coins/ethereum/contract/0xd373576a9e738f37dc6882328358ff69c4caf4c6')
-        .then((response) => {
-            return response.json();
-        }).then((data) => {
-        setRate(data.market_data.current_price.usd);
-        setPriceChange24(data.market_data.price_change_24h);
-        setPriceChangePercentage24(data.market_data.price_change_percentage_24h);
-    });
-}

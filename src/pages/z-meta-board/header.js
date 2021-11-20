@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useState} from 'react';
 import {ZMetaBoardContext} from "@src/context/zmetaboard-context";
-import {NETWORK_BSC, NETWORK_ETH, NETWORKS} from "@src/constants";
-import {numberFormat} from "@src/utils";
+import {NETWORK_BSC, NETWORK_ETH, NETWORKS, TOTAL_SUPPLY} from "@src/constants";
+import {extractGraphDataByNetwork, extractScalarDataByNetwork, numberFormat} from "@src/utils";
 import {RateContext} from "@src/context";
 import {zamGraphPairData} from "@src/pages/z-meta-board/chart-data";
 
@@ -9,8 +9,9 @@ const ranges = {'day': '24H', 'week': '1W', 'month': '1M', 'all': 'All'};
 
 export const Header = () => {
     const {network, setNetwork, range, setRange, chartData} = useContext(ZMetaBoardContext);
-    const {rate} = useContext(RateContext);
+    const {rate, volume24} = useContext(RateContext);
     const [reserve, setReserve] = useState(0);
+    const circulationsSupply = extractScalarDataByNetwork(chartData, 'circulationsTotal', network) ?? 0;
 
     useEffect(async () => {
         const {reserve} = await zamGraphPairData();
@@ -27,7 +28,7 @@ export const Header = () => {
                     <div className="zam-values-container">
                         <div className="value-container">
                             <div style={{ color: "#2DFF82" }} className="zam-value">
-                                {chartData ? numberFormat(chartData.pair.circulationsSupply.singleton) : 0} ZAM
+                                {numberFormat(circulationsSupply) ?? 0} ZAM
                             </div>
                             <div className="zam-value-title">
                                 Circulating Supply
@@ -35,29 +36,29 @@ export const Header = () => {
                         </div>
                         <div className="value-container">
                             <div className="zam-value">
-                                ${chartData ? numberFormat(parseInt(chartData.pair.transferCounts.singleton * rate)) : 0}
+                                ${numberFormat(parseInt(volume24)) ?? 0}
                             </div>
                             <div className="zam-value-title">
-                                Total Volume All Time
+                                Trading Volume (24h)
                             </div>
                         </div>
                         <div className="value-container">
                             <div className="zam-value">
-                                {chartData ? numberFormat(chartData.pair.holderCounts.singleton) : 0}
+                                ${rate ? numberFormat(parseInt(TOTAL_SUPPLY * rate)) : 0}
 
                             </div>
                             <div className="zam-value-title">
-                                Holders
+                                Fully Diluted Market Cap
                             </div>
                         </div>
-                        <div className="value-container">
-                            <div className="zam-value">
-                                ${numberFormat(reserve)}
-                            </div>
-                            <div className="zam-value-title">
-                                Total Value Locked (TVL)
-                            </div>
-                        </div>
+                        {/*<div className="value-container">*/}
+                        {/*    <div className="zam-value">*/}
+                        {/*        ${numberFormat(reserve)}*/}
+                        {/*    </div>*/}
+                        {/*    <div className="zam-value-title">*/}
+                        {/*        Total Value Locked (TVL)*/}
+                        {/*    </div>*/}
+                        {/*</div>*/}
                     </div>
 
                     <div className="z-meta-board__filters">
@@ -77,16 +78,16 @@ export const Header = () => {
                                 <span className="visible-sm">BSC</span>
                             </button>
                         </div>
-                        <div className="chart__ranges">
-                            <ul>
-                                {
-                                    Object.keys(ranges)
-                                        .map(i => <li className={i === range ? `active` : ``}
-                                                      key={`swap_chart_ranges_${i}`}
-                                                      onClick={() => setRange(i)}>{ranges[i]}</li>)
-                                }
-                            </ul>
-                        </div>
+                        {/*<div className="chart__ranges">*/}
+                        {/*    <ul>*/}
+                        {/*        {*/}
+                        {/*            Object.keys(ranges)*/}
+                        {/*                .map(i => <li className={i === range ? `active` : ``}*/}
+                        {/*                              key={`swap_chart_ranges_${i}`}*/}
+                        {/*                              onClick={() => setRange(i)}>{ranges[i]}</li>)*/}
+                        {/*        }*/}
+                        {/*    </ul>*/}
+                        {/*</div>*/}
                     </div>
 
                 </div>

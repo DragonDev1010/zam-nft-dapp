@@ -135,6 +135,15 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 768px) {
+      flex-flow: column;
+      justify-content: start;
+      align-items: start;
+
+      .chart__ranges {
+        margin-top: 10px;
+      }
+    }
   }
 
   &__tokens {

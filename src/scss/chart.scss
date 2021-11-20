@@ -72,18 +72,17 @@
 .small-cart {
   display: flex;
   flex-flow: row;
-  align-items: end;
   @media (max-width: 768px) {
     flex-flow: column;
     align-items: start;
   }
   &__column-left {
     @media (min-width: 769px) {
-      width: 150px;
-      margin-right: 20px;
+      width: 35%;
+      padding-right: 10px;
     }
   }
   &__column-right {
-    width: 100%;
+    width: 65%;
   }
 }

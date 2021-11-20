@@ -17,3 +17,5 @@ export const TOKENS = {
         name: 'USDT',
     }
 }
+
+export const TOTAL_SUPPLY = 888888888;

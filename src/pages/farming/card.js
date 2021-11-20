@@ -17,7 +17,7 @@ export const CardComponent = (props) => {
                                 Total Staked
                             </p>
                             <p className="bottom-p-container">
-                                $54 243 789
+                                $888 888
                             </p>
                         </div>
                     </div>
@@ -28,7 +28,8 @@ export const CardComponent = (props) => {
                         </div>
                         <div className="activity-container">
                             <div className="activity-container-title">
-                                Active ✅
+                                {/*Active ✅*/}
+                                Pending
                             </div>
                         </div>
                     </div>
@@ -38,7 +39,7 @@ export const CardComponent = (props) => {
                                 Farming APY
                             </p>
                             <p className="bottom-p-container">
-                                32,12%
+                                88,88%
                             </p>
                         </div>
                     </div>
@@ -50,11 +51,11 @@ export const CardComponent = (props) => {
                     <div className="content-container">
                         <div className="content">
                             <p className="content-left">Start date</p>
-                            <p className="content-right">24 Sep 2021 9:00 UTC</p>
+                            <p className="content-right">-</p>
                         </div>
                         <div className="content">
                             <p className="content-left">End date</p>
-                            <p className="content-right">24 Oct 2021 9:00 UTC</p>
+                            <p className="content-right">-</p>
                         </div>
                         <div style={{ marginTop: "1em" }} className="content">
                             <p className="content-left">Your Stake</p>

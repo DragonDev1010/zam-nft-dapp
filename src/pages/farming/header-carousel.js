@@ -11,14 +11,14 @@ export const HeaderCard = (props) => {
     };
 
     const items = [
-        <img src="images/farming/frame1.png" srcSet="images/farming/frame1.png 1x, images/farming/frame1@2x.png 2x" onDragStart={handleDragStart} role="presentation" />,
-        <img src="images/farming/frame2.png" srcSet="images/farming/frame2.png 1x, images/farming/frame2@2x.png 2x" onDragStart={handleDragStart} role="presentation" />,
-        <img src="images/farming/frame3.png" srcSet="images/farming/frame3.png 1x, images/farming/frame3@2x.png 2x" onDragStart={handleDragStart} role="presentation" />,
+        <img src="images/farming/frame1_2x.png" srcSet="images/farming/frame1.png 1x, images/farming/frame1_2x.png 2x" onDragStart={handleDragStart} role="presentation" />,
+        <img src="images/farming/frame2_2x.png" srcSet="images/farming/frame2.png 1x, images/farming/frame2_2x.png 2x" onDragStart={handleDragStart} role="presentation" />,
+        <img src="images/farming/frame3_2x.png" srcSet="images/farming/frame3.png 1x, images/farming/frame3_2x.png 2x" onDragStart={handleDragStart} role="presentation" />,
     ];
 
     return (
         <>
-            <div className="header-card-container">
+            <div className="header-card-container hidden-sm">
                 <AliceCarousel
                     infinite
                     autoPlayInterval="2000"

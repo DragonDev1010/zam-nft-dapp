@@ -1,4 +1,5 @@
 import {MONTH_NAMES, NETWORK_BSC, NETWORK_ETH, NETWORKS} from "@src/constants";
+import Web3 from "web3";
 
 export function dec2hex(str) {
     const dec = str.toString().split(''), sum = [], hex = [];
@@ -38,10 +39,15 @@ export function int(value) {
     return parseInt(float(value));
 }
 
-export function formatChartDate(timestamp, range = 'M d, h:m') {
+export function timestampToString(timestamp) {
+    const date = new Date(timestamp * 1000);
+    return date.toISOString().split('T')[0];
+}
+
+export function formatChartDate(timestamp, format = 'M d, h:m') {
     const date = new Date(timestamp * 1000);
 
-    switch (range) {
+    switch (format) {
         case 'M d, h':
             return `${MONTH_NAMES[date.getMonth()]}. ${date.getDate()}, ${date.toLocaleString('ru-RU', {
                 hour: 'numeric',
@@ -88,9 +94,14 @@ export function mergeObjects(ob1, ob2) {
 export function prepareGraphArray(obj, amountKey) {
     const graphArray = [];
 
-    for (let [key, value] of Object.entries(obj).sort()) {
-        graphArray.push({name: key, [amountKey]: value})
-    }
+
+    Object.keys(obj).sort().map((key) => {
+        const date = new Date(key);
+        graphArray.push({name: `${MONTH_NAMES[date.getMonth()]}. ${date.getDate()}`, [amountKey]: obj[key]})
+    })
+
+    console.log(graphArray)
+
     return graphArray;
 }
 
@@ -102,9 +113,20 @@ export function extractGraphDataByNetwork(object, name, amountKey, network) {
     return prepareGraphArray(data, amountKey);
 }
 
+export function extractScalarDataByNetwork(object, name, network, firstKey = "singleton") {
+    if (!object) {
+        return 0;
+    }
+    return network ? object[network][name][firstKey] : object.pair[name][firstKey];
+}
+
 export function numberFormat(value) {
     if (!value) {
         return value;
     }
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+}
+
+export const fromWei = (value) => {
+    return parseInt(Web3.utils.fromWei(value?.toString()));
 }

@@ -1,6 +1,7 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
     IconAppApple, IconAppGoogle,
+    IconAudits,
     IconBridge,
     IconDashboard,
     IconExchange,
@@ -23,7 +24,13 @@ import {ModalSidebarMenu} from "@src/components/modal/sidebar-menu";
 
 const Sidebar = (props) => {
     const {rate} = useContext(RateContext);
-    const [modalIsOpen, setModalOpen] = useState();
+    const [modalIsOpen, setModalOpen] = useState(false);
+
+
+    useEffect(() => {
+        setModalOpen(false);
+    }, [props.location?.pathname])
+
 
     return (
         <>
@@ -82,7 +89,8 @@ const Sidebar = (props) => {
                                     </Link>
                                 </li>
                                 <li className="sidebar__nav-box sidebar__nav-more">
-                                    <a href="#" onClick={() => setModalOpen(true)} className={`sidebar__nav-item active`}>
+                                    <a href="#" onClick={() => setModalOpen(true)}
+                                       className={`sidebar__nav-item active`}>
                                         <div className="sidebar__nav-icon">
                                             <IconMore/>
                                         </div>
@@ -108,12 +116,24 @@ const Sidebar = (props) => {
                                         <span>Farming</span>
                                     </Link>
                                 </li>
-                                <li className="sidebar__nav-box hidden-sm"><a target="_blank" href="https://zam.io/faq"
-                                                                              className="sidebar__nav-item">
-                                    <div className="sidebar__nav-icon">
-                                        <IconHelp/>
-                                    </div>
-                                    <span>FAQ</span></a></li>
+                                <li className="sidebar__nav-box hidden-sm">
+                                    <Link to="/audits"
+                                          className={`sidebar__nav-item ${props.location?.pathname === '/audits' ? `active` : ''}`}>
+                                        <div className="sidebar__nav-icon">
+                                            <IconAudits/>
+                                        </div>
+                                        <span>Audits</span>
+                                    </Link>
+                                </li>
+                                <li className="sidebar__nav-box hidden-sm">
+                                    <a target="_blank" href="https://zam.io/faq"
+                                       className="sidebar__nav-item">
+                                        <div className="sidebar__nav-icon">
+                                            <IconHelp/>
+                                        </div>
+                                        <span>FAQ</span>
+                                    </a>
+                                </li>
                             </ul>
 
                         </nav>
@@ -122,8 +142,8 @@ const Sidebar = (props) => {
                     <div className="sidebar__footer">
                         <div className="sidebar__zamwallet">
                             <img className="sidebar__zamwallet-image"
-                                 src="images/icon_app_big.png"
-                                 srcSet="images/icon_app_big.png 1x, images/icon_app_big@2x.png 2x"/>
+                                 src="/images/icon_app_big.png"
+                                 srcSet="/images/icon_app_big.png 1x, /images/icon_app_big_2x.png 2x"/>
                             <div className="sidebar__zamwallet-text">
                                 <b>Get ZamWallet</b>
                                 <div className="sidebar__zamwallet-apps">
@@ -140,7 +160,7 @@ const Sidebar = (props) => {
                         </div>
                         <div className="sidebar__balance">
                             <div className="sidebar__balance-token">
-                                <img src="images/tokens/icon_token_zam.svg" height="30px" width="30px"/>
+                                <img src="/images/tokens/icon_token_zam.svg" height="30px" width="30px"/>
                                 ZAM
                             </div>
                             <div className="sidebar__balance-price">

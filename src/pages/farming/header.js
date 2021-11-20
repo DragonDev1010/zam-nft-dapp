@@ -12,14 +12,14 @@ export const Header = () => {
                     <p className="farming-container">
                         Farming
                     </p>
-                    <div style={{ marginTop: "2em" }} className="button-outlines">
-                        <button className="button-outline">
-                            Active ✅
-                        </button>
-                        <button className="button-outline">
-                            Ended
-                        </button>
-                    </div>
+                    {/*<div style={{ marginTop: "2em" }} className="button-outlines">*/}
+                    {/*    <button className="button-outline">*/}
+                    {/*        Active ✅*/}
+                    {/*    </button>*/}
+                    {/*    <button className="button-outline">*/}
+                    {/*        Ended*/}
+                    {/*    </button>*/}
+                    {/*</div>*/}
                 </div>
                 <div className="header-container__item">
                     <HeaderCard />

@@ -2,15 +2,12 @@ import React from 'react';
 import { Area, XAxis, Tooltip, ResponsiveContainer, AreaChart } from 'recharts';
 import {numberFormat} from "@src/utils";
 
-export const SmallAreaChart = ({data, height, title, chartKey }) => {
+export const SmallAreaChart = ({data, height, title, chartKey, total, unit = '' }) => {
     return (
         <div className="chart small-cart">
             <div className="small-cart__column-left">
                 <div className="blocked-title">{title}</div>
-                {
-                    !data ? <div className="mt-20"><span className="soon">Soon</span></div>
-                        : <h3 className="rate-container">{data.length ? numberFormat(data[data.length - 1][chartKey])  : 0} {chartKey}</h3>
-                }
+                <h3 className="rate-container">{numberFormat(total)} {unit}</h3>
             </div>
             <div className="small-cart__column-right">
                 <div style={{ height, width: "100%"}}>

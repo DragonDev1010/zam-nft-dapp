@@ -1,0 +1,118 @@
+.audits-header-container {
+    width: 100%;
+    height: 59px;
+    font-family: Maven Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 50px;
+    line-height: 45px;
+    color: #ffffff;
+    margin-top: 1em;
+}
+.audits-header-title {
+    display: flex;
+    align-items: center;
+    margin-left: 1.5em;
+}
+.audits-header-carousel {
+    margin-top: 3.5em;
+}
+.audits-body-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.audits-body-card {
+    max-width: 927px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    @media (max-width: 768px) {
+        width: auto;
+        padding: 20px;
+    }
+}
+.audits-card-header-title {
+    display: flex;
+    justify-content: start;
+    padding-bottom: 1em;
+}
+.audits-card-title-text {
+    margin-top: 0.4em;
+    margin-left: 1em;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 120%;
+    color: #838699;
+}
+.audits-card-subject {
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 45px;
+    color: #ffffff;
+}
+.audits-card-date {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 120%;
+    color: rgba(255, 255, 255, 0.61);
+}
+.audit-card-content {
+}
+.audits-github {
+    display: flex;
+    justify-content: start;
+    margin-top: 3em;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 120%;
+    color: white;
+}
+.audits-bscscan {
+    display: flex;
+    justify-content: start;
+    margin-top: 0.5em;
+    font-weight: bold;
+    font-size: 13px;
+    line-height: 120%;
+    color: white;
+}
+.audits-github-link {
+    color: rgb(79, 79, 231);
+}
+.audits-github-link-container {
+    margin-left: 1em;
+    margin-top: 0.2em;
+}
+.audits-large-image-container {
+    margin-right: 2em;
+    margin-top: 1.7em;
+}
+.audits-card-buttons {
+    display: flex;
+    margin-top: 1em;
+}
+.audits-button {
+    width: 167px;
+    height: 50px;
+    background: rgba(14, 16, 23, 0.76);
+    backdrop-filter: blur(13px);
+    border-radius: 15px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 120%;
+    color: #a9abb3;
+    border: none;
+}
+.audits-button-2 {
+    width: 200px;
+}
+.audits-button:hover {
+    border: 2px solid #2dff82;
+}
+.audits-button-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
