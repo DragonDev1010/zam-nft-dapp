@@ -11,6 +11,7 @@
   z-index: 1;
   display: flex;
   flex-flow: column;
+  height: auto;
 
   @media (max-width: 768px) {
     width: 100%;
@@ -23,6 +24,7 @@
     border-radius: 0 40px 0 0;
     display: flex;
     flex-direction: column;
+    height: 100%;
     @media (max-width: 768px) {
       width: 100%;
       height: auto;
@@ -55,12 +57,6 @@
     overflow-y: auto;
     display: flex;
     flex-flow: column;
-
-    &-hidden {
-      @media (max-width: 768px) {
-        display: none;
-      }
-    }
   }
 
   &__logo {
@@ -82,6 +78,25 @@
       min-height: 20px;
       max-height: 20px;
       margin-right: 20px;
+
+      @media (max-width: 768px) {
+        margin-bottom: 7px;
+        margin-right: 0;
+        max-width: 18px;
+        max-height: 18px;
+      }
+    }
+
+    &-box {
+      @media (max-width: 768px) {
+        width: 25%;
+      }
+    }
+    &-more {
+      display: none;
+      @media (max-width: 768px) {
+        display: block;
+      }
     }
 
     &-item {
@@ -96,6 +111,17 @@
       color: #BDC1D9;
       text-decoration: none;
 
+      @media (max-width: 768px) {
+        flex-flow: column;
+        font-size: 11px;
+        padding: 0 10px;
+        text-align: center;
+
+        b {
+          display: none;
+        }
+      }
+
       &.disabled {
         color: #4b4f69;
       }
@@ -103,10 +129,19 @@
       &:not(.disabled):hover, &.active {
         color: #fff;
       }
+
       &.active {
         .sidebar__nav-icon {
           color: #36D777;
         }
+      }
+    }
+
+    ul {
+      @media (max-width: 768px) {
+        display: flex;
+        align-items: center;
+        padding-top: 11px;
       }
     }
   }
@@ -114,9 +149,15 @@
   &__footer {
     margin-top: auto;
     padding: 0 20px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
+
   &__zamwallet {
     display: flex;
+
     &-image {
       width: 82px;
     }
@@ -131,18 +172,22 @@
       margin-left: 18px;
       margin-top: 16px;
     }
+
     &-apps {
       display: flex;
       margin-top: 16px;
     }
+
     &-app {
       display: flex;
       width: 26px;
       color: #23283D;
+
       &:hover {
         color: #444e76;
       }
     }
+
     &-app-apple {
       position: relative;
       top: -2px;
@@ -182,5 +227,29 @@
       line-height: 20px;
       color: #FFFFFF;
     }
+  }
+  @media (max-width: 768px) {
+    display: flex;
+    align-items: center;
+    position: fixed;
+    z-index: 2;
+    top: calc(100% - 63px);
+    height: 63px;
+    padding: 0;
+    border-top: 1px solid rgba(99, 103, 126, 0.17);
+  }
+}
+
+
+.sidebar__mobile {
+  display: flex;
+  flex-wrap: wrap;
+
+  .sidebar__nav-box {
+    width: 50%;
+    padding: 15px 0;
+  }
+  b {
+    display: inline;
   }
 }

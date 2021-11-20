@@ -1,7 +1,8 @@
-import React, {useContext, useState, useMemo} from 'react';
+import React, {useContext, useState, useMemo, useEffect} from 'react';
 import {SelectComponent} from "@src/components/fields/Select";
-import {NETWORK_BSC, NETWORK_ETH, NETWORKS, TOKEN_ZAM, TOKENS} from "@src/constants";
-import {BridgeContext} from "@src/context";
+import {NETWORK_BSC, NETWORK_ETH, NETWORKS, SWAP_BSC_ETH, SWAP_ETH_BSC, TOKEN_ZAM, TOKENS} from "@src/constants";
+import {BridgeContext, ModalWalletContext, WalletContext} from "@src/context";
+import {bridgeAction} from "@src/actions/bridgeAction";
 
 const optionsNetworks = [
     {
@@ -21,8 +22,35 @@ const optionsNetworks = [
 const getOptionByValue = (token) => optionsNetworks[optionsNetworks.findIndex(option => option.value === token)];
 
 export const BridgeSwitcher = () => {
-    const {bridgeFrom, setBridgeFrom, bridgeTo, setBridgeTo} = useContext(BridgeContext);
+    const {setModalOpen} = useContext(ModalWalletContext);
+    const {wallet, setWalletError} = useContext(WalletContext);
+
+    const {bridgeFrom, setBridgeFrom, bridgeTo, setBridgeTo, swapMethod, setSwapMethod} = useContext(BridgeContext);
     const [amount, setAmount] = useState(0);
+
+
+    useEffect(() => {
+        return () => {
+            setWalletError(null)
+        }
+    }, []);
+
+    useEffect(async () => {
+        const bridge = new bridgeAction(wallet, swapMethod);
+        await bridge.getBalance();
+
+        setWalletError(bridge.error)
+    }, [swapMethod]);
+
+
+    useEffect(() => {
+        if (bridgeFrom === NETWORK_ETH) {
+            setSwapMethod(SWAP_ETH_BSC);
+        } else {
+            setSwapMethod(SWAP_BSC_ETH);
+        }
+    }, [bridgeFrom]);
+
 
     const handleChange = (option, type) => {
 
@@ -39,6 +67,21 @@ export const BridgeSwitcher = () => {
         }
     }
 
+
+    async function approve() {
+        const bridge = new bridgeAction(wallet, swapMethod);
+        await bridge.approve();
+
+        setWalletError(bridge.error);
+    }
+
+    async function transfer() {
+        const bridge = new bridgeAction(wallet, swapMethod);
+        await bridge.transfer(amount);
+
+        setWalletError(bridge.error);
+    }
+
     const revertHandler = (event) => {
         event.preventDefault();
         setBridgeFrom(bridgeTo);
@@ -52,19 +95,19 @@ export const BridgeSwitcher = () => {
             </h3>
 
             <label className="input-field__label">Asset</label>
-            <div className="input-field mt-10">
+            <div className="input-field mt-10 mb-40">
                 <div className="select-field select-field-transparent">
                     <div className="select-field__control">
                         <div className="select-field__token">
-                            <img alt="" src={TOKENS[TOKEN_ZAM].icon} height="30px" width="30px"/>{TOKENS[TOKEN_ZAM].name}
+                            <img alt="" src={TOKENS[TOKEN_ZAM].icon} height="30px"
+                                 width="30px"/>{TOKENS[TOKEN_ZAM].name}
                         </div>
                     </div>
                 </div>
-
             </div>
 
 
-            <div className="flex mt-10 mb-40">
+            <div className="flex mt-10 mb-40 bridge-switcher__inputs">
                 <div className="input-field__column">
                     <label className="input-field__label">From</label>
                     <div className="input-field mt-10 select-field__token-v">
@@ -79,9 +122,9 @@ export const BridgeSwitcher = () => {
                     </div>
                 </div>
                 <div className="input-field__column input-field__column--revert">
-                        <a href="#" onClick={revertHandler}>
-                            <img src="/images/icon_revert.svg" alt=""/>
-                        </a>
+                    <a href="#" onClick={revertHandler}>
+                        <img src="images/icon_revert.svg" alt=""/>
+                    </a>
                 </div>
                 <div className="input-field__column">
                     <label className="input-field__label">To</label>
@@ -98,21 +141,44 @@ export const BridgeSwitcher = () => {
                 </div>
             </div>
 
-            <label className="input-field__label">Amount</label>
-            <div className="input-field mt-10 mb-10">
-                <input className="input-field__input"
-                       placeholder="Enter the amount"
-                       onChange={(event) => setAmount(parseInt(event.target.value))}
-                       value={amount || 0} placeholder="0"/>
-            </div>
-            <div className="bridge-switcher__amount-value mb-40">
-                <span>Available for transaction:</span>
-                <b>0 </b>
-            </div>
 
-            <button className="button-green w-full">
-                Connect Wallet
-            </button>
+            {
+                wallet?.address && wallet.allowance > 0 ?
+                    <>
+                        <label className="input-field__label">Amount</label>
+                        <div className="input-field mt-10 mb-10">
+                            <input className="input-field__input"
+                                   onChange={(event) => setAmount(parseInt(event.target.value))}
+                                   value={amount || 0} placeholder="0"/>
+                        </div>
+                    </>
+                    : ''
+            }
+
+            {
+                wallet?.address ? (
+                    <div className="bridge-switcher__amount-value mb-10">
+                        <span>Available for transaction:</span>
+                        <b>{wallet.balance}</b>
+                    </div>
+                ) : <div className="mb-40"/>
+            }
+
+
+            {
+                !wallet.error ?
+                    wallet?.address ?
+                        wallet.allowance > 0 ?
+                            <button className="button-green w-full" onClick={transfer}>Transfer</button>
+                            :
+                            <button className="button-green w-full" onClick={approve}>Approve</button>
+                        :
+                        <button className="button-green w-full" onClick={() => setModalOpen(true)}>Connect
+                            Wallet</button>
+                    : ''
+            }
+
+
         </div>
     );
 };

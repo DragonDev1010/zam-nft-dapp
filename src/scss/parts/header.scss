@@ -7,6 +7,17 @@
   z-index: 2;
   background: #0e1017;
   border-bottom: 1px solid #282C42;
+  @media (max-width: 768px) {
+    padding: 10px 15px;
+  }
+
+  &__logo {
+    width: 132px;
+    @media (max-width: 768px) {
+      width: 92px;
+    }
+  }
+
 
   &__nav {
     ul {
@@ -50,5 +61,29 @@
     display: flex;
     flex-flow: row;
     align-items: center;
+  }
+
+  .error-dropdown {
+    position: absolute;
+    top: 100%;
+    background: rgb(255, 36, 36, .5);
+    border-radius: 0 0 8px 8px;
+    padding: 6px 20px;
+    left: 50%;
+    transform: translate(calc(-50% + 140px));
+    color: #fff;
+    font-size: 14px;
+    @media (max-width: 768px) {
+      width: calc(100% - 30px);
+      text-align: center;
+      left: 15px;
+      transform: none;
+    }
+  }
+
+  &__center {
+    @media (max-width: 768px) {
+      display: none;
+    }
   }
 }

@@ -1,60 +1,21 @@
-import React, {useContext, useState} from 'react';
-import {TOKENS} from "@src/constants";
-import {SwapContext} from "@src/context";
-import { AreaChart, Area, XAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import React, {useContext, useEffect, useState} from 'react';
+import {TOKEN_USDT, TOKEN_ZAM, TOKENS, MONTH_NAMES} from "@src/constants";
+import {SwapContext, RateContext} from "@src/context";
+import {AreaChart, Area, XAxis, Tooltip, ResponsiveContainer} from 'recharts';
+import {formatChartDate, toFixed} from "@src/utils";
+import {GRAPH_URL} from "@src/config/networks";
 
 
-const data = [
-    {
-        name: 'Sep 10',
-        uv: 4000,
-        pv: 2400,
-        amt: 2400,
-    },
-    {
-        name: 'Sep 12',
-        uv: 3000,
-        pv: 1398,
-        amt: 2210,
-    },
-    {
-        name: 'Sep 14',
-        uv: 2000,
-        pv: 9800,
-        amt: 2290,
-    },
-    {
-        name: 'Sep 16',
-        uv: 2780,
-        pv: 3908,
-        amt: 2000,
-    },
-    {
-        name: 'Sep 18',
-        uv: 1890,
-        pv: 4800,
-        amt: 2181,
-    },
-    {
-        name: 'Sep 20',
-        uv: 2390,
-        pv: 3800,
-        amt: 2500,
-    },
-    {
-        name: 'Sep 22',
-        uv: 3490,
-        pv: 4300,
-        amt: 2100,
-    },
-];
+const ranges = {'hour': 'H', 'day': 'D', 'week': 'W'};
 
-const ranges = {'day': '24H', 'week': '1W', 'month': '1M'};
+const schemas = {'hour': 'pairHourDatas', 'day': 'pairDayDatas', 'week': 'pairWeekDatas'};
 
-
-export const SwapChart = () => {
+export const SwapChart = ({mainToken}) => {
+    const {rate, priceChange24, priceChangePercentage24} = useContext(RateContext);
     const {swapFrom, swapTo, setSwapFrom, setSwapTo} = useContext(SwapContext);
-    const [range, setRange] = useState('month');
+    const [range, setRange] = useState('hour');
+    const [graphData, setGraphData] = useState([]);
+    const [data, setData] = useState([]);
 
     const revertHandler = (event) => {
         event.preventDefault();
@@ -62,8 +23,59 @@ export const SwapChart = () => {
         setSwapTo(swapFrom);
     }
 
+    useEffect(() => {
+        const query = `{
+              pairHourDatas(where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+                token1Price
+                token0Price
+                periodBegin,
+                periodEnd,
+              },
+              pairDayDatas(where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+                token1Price
+                token0Price
+                periodBegin,
+                periodEnd,
+              },
+              pairWeekDatas(where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+                token1Price
+                token0Price
+                periodBegin,
+                periodEnd,
+              },
+            }`;
+        fetch(GRAPH_URL.PAIR, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+            },
+            body: JSON.stringify({query})
+        })
+            .then(response => response.json())
+            .then(response => setGraphData(response.data));
+    }, [range]);
+
+    useEffect(() => {
+        if (!Object.keys(graphData).length) {
+            return;
+        }
+        const schema = schemas[range];
+        const data = graphData[schema].map(({periodBegin, token1Price, token0Price}) => {
+
+            return {
+                name: formatChartDate(periodBegin, range),
+                [TOKEN_ZAM]: toFixed(token1Price),
+                [TOKEN_USDT]: toFixed(token0Price),
+            }
+        });
+        setData(data);
+    }, [range, graphData])
+
+    const tickFormatter = (value) => value.toString().replace(/,.+/, '');
+
     return (
-        <div className="card swap-chart">
+        <div className="card chart swap-chart">
             <header>
                 <div className="swap-chart__tokens">
                     <div className="swap-chart__tokens-images">
@@ -75,11 +87,11 @@ export const SwapChart = () => {
                     </div>
                     <div className="swap-chart__tokens-revert">
                         <a href="#" onClick={revertHandler}>
-                            <img src="/images/icon_revert.svg" alt=""/>
+                            <img src="images/icon_revert.svg" alt=""/>
                         </a>
                     </div>
                 </div>
-                <div className="swap-chart__ranges">
+                <div className="chart__ranges">
                     <ul>
                         {
                             Object.keys(ranges)
@@ -91,10 +103,19 @@ export const SwapChart = () => {
                 </div>
             </header>
 
-            <h3 className="swap-chart__rate">23.432342 <span>ETH</span></h3>
-            <div className="swap-chart__rate-change">+0.5435823 ZAM (29.46%) <span>24h</span></div>
+            <h3 className="chart__rate swap-chart__rate">
+                {swapFrom === mainToken ? rate : toFixed(1 / rate)} <span>{TOKENS[swapTo].name}</span>
+            </h3>
+            <div className={`swap-chart__rate-change ${swapFrom === mainToken && priceChange24 < 0 ? 'red' : ''}`}>
+                {
+                    swapFrom === mainToken
+                        ? `${priceChange24} (${priceChangePercentage24}%)`
+                        : `${-priceChange24} (${-priceChangePercentage24}%)`
+                } <span>24h</span>
+            </div>
 
-            <div className="swap-chart__chart">
+            <div className="chart__chart">
+
                 <ResponsiveContainer width="100%" height="100%">
                     <AreaChart
                         width={500}
@@ -108,10 +129,11 @@ export const SwapChart = () => {
                         }}
                     >
                         {/*<CartesianGrid strokeDasharray="3 3" />*/}
-                        <XAxis dataKey="name" />
+                        <XAxis dataKey="name" tickFormatter={tickFormatter}/>
                         {/*<YAxis />*/}
-                        <Tooltip />
-                        <Area type="monotone" dataKey="uv" stroke="#2CDD74" fill="url(#graph-gradient)" strokeWidth="2" />
+                        <Tooltip/>
+                        <Area type="monotone" dataKey={swapFrom} stroke="#2CDD74" fill="url(#graph-gradient)"
+                              strokeWidth="2"/>
                         <defs>
                             <linearGradient id="graph-gradient" gradientTransform="rotate(90)">
                                 <stop offset="0" stopColor="#5bbc6d"/>

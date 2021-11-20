@@ -10,7 +10,7 @@
     text-align: center;
     font-weight: 600;
     font-size: 15px;
-    color: #838699;
+    color: #fff;
     margin: 30px 0;
   }
 
@@ -20,30 +20,130 @@
     padding-left: 5px;
     margin-right: 15px;
   }
-}
-
-.swap-chart {
-  .ReactChart {
-    .Series {
-      g, + g {
-        transform: none !important;
-      }
-    }
-    .axes {
-      .domainAndTicks {
-        display: none;
-      }
-      .Axis-Group {
-        transform: none !important;
-      }
+  .input-field__column--select {
+    @media (max-width: 768px) {
+      width: 70%;
     }
   }
 
+  &__approve {
+    color: #fff;
+    font-size: 13px;
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    margin-bottom: 8px;
+  }
+
+  &__settings {
+    background: none;
+    position: absolute;
+    border: 0;
+    right: 39px;
+    top: 45px;
+    color: #fff;
+    cursor: pointer;
+
+    @media (max-width: 768px) {
+      right: 20px;
+      top: 34px;
+    }
+
+    &:hover {
+      color: #45dd82;
+    }
+  }
+
+  .input-field__column {
+    @media (max-width: 768px) {
+      width: 66px;
+      &:first-child {
+        width: 80%;
+      }
+    }
+  }
+}
+
+.swap-settings {
+  padding: 0 !important;
+
+  .swap-settings__header {
+    padding-top: 40px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    @media (max-width: 768px) {
+      padding-top: 30px;
+    }
+  }
+
+  .swap-settings__content {
+    padding: 40px;
+    @media (max-width: 768px) {
+      padding: 15px 15px 40px 15px;
+    }
+  }
+
+  &__arrow {
+    background: none;
+    position: absolute;
+    border: 0;
+    left: 35px;
+    top: 45px;
+    color: #fff;
+    cursor: pointer;
+    width: 30px;
+
+    @media (max-width: 768px) {
+      left: 8px;
+      top: 36px;
+    }
+
+
+    &:hover {
+      color: #45dd82;
+    }
+  }
+  &__slippage {
+    font-size: 18px;
+    @media (max-width: 768px) {
+      font-size: 15px;
+    }
+    button {
+      width: 100%;
+      height: 58px;
+      display: flex;
+      border-radius: 12px;
+      border: 0;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 18px;
+      color: #fff;
+      background: none;
+      cursor: pointer;
+
+      &.active {
+        color: #0E1017;
+        background: #2DFC87;
+      }
+    }
+  }
+}
+
+.swap-chart {
 
   header {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 768px) {
+      flex-flow: column;
+      justify-content: start;
+      align-items: start;
+
+      .chart__ranges {
+        margin-top: 10px;
+      }
+    }
   }
 
   &__tokens {
@@ -53,6 +153,10 @@
       img {
         width: 30px;
         margin-right: -5px;
+
+        @media (max-width: 768px) {
+          width: 24px;
+        }
       }
     }
     &-names {
@@ -65,6 +169,9 @@
       span {
         color: #838699;
       }
+      @media (max-width: 768px) {
+        font-size: 12px;
+      }
     }
     &-revert {
       img {
@@ -74,58 +181,23 @@
       }
     }
   }
-  &__ranges {
-    ul {
-      display: flex;
-      align-items: center;
-      li {
-        padding: 5px 15px;
-        font-weight: 500;
-        font-size: 14px;
-        color: #838699;
-        cursor: pointer;
-        &.active {
-          background: #46DD83;
-          border-radius: 50px;
-          color: #0E1017;
-        }
-      }
-    }
-  }
 
-  &__rate {
-    font-weight: bold;
-    font-size: 30px;
-    color: #FFFFFF;
-    margin-top: 25px;
-    margin-bottom: 20px;
-    span {
-      color: #838699;
-    }
-  }
   &__rate-change {
     font-weight: 500;
     font-size: 13px;
     line-height: 16px;
     color: #26E072;
+
+    &.red {
+      color: #a52a2a;
+    }
     span {
       color: #fff;
     }
   }
 
-  &__chart {
-    width: calc(100% + 30px);
-    height: 300px;
-    margin-top: 30px;
-  }
 
-  .recharts-default-tooltip {
-    background: #151F2C !important;
-    border-radius: 11px !important;
-    border: 0 !important;
-    color: #fff !important;
-  }
-  .recharts-cartesian-axis-line {
-    display: none;
-  }
 }
+
+
+

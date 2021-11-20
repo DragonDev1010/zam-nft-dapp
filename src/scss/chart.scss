@@ -1,0 +1,88 @@
+.chart {
+  .ReactChart {
+    .Series {
+      g, + g {
+        transform: none !important;
+      }
+    }
+    .axes {
+      .domainAndTicks {
+        display: none;
+      }
+      .Axis-Group {
+        transform: none !important;
+      }
+    }
+
+  }
+
+  .recharts-default-tooltip {
+    background: #151F2C !important;
+    border-radius: 11px !important;
+    border: 0 !important;
+    color: #fff !important;
+  }
+  .recharts-cartesian-axis-line {
+    display: none;
+  }
+  .recharts-tooltip-cursor {
+    display: none !important;
+  }
+
+  &__ranges {
+    ul {
+      display: flex;
+      align-items: center;
+      li {
+        padding: 5px 15px;
+        font-weight: 500;
+        font-size: 14px;
+        color: #838699;
+        cursor: pointer;
+        &.active {
+          background: #46DD83;
+          border-radius: 50px;
+          color: #0E1017;
+        }
+      }
+    }
+  }
+  &__rate {
+    font-weight: bold;
+    font-size: 30px;
+    color: #FFFFFF;
+    margin-top: 25px;
+    margin-bottom: 20px;
+    span {
+      color: #838699;
+    }
+    @media (max-width: 768px) {
+      font-size: 24px;
+    }
+  }
+
+  &__chart {
+    width: calc(100% + 30px);
+    height: 300px;
+    margin-top: 30px;
+  }
+}
+
+
+.small-cart {
+  display: flex;
+  flex-flow: row;
+  @media (max-width: 768px) {
+    flex-flow: column;
+    align-items: start;
+  }
+  &__column-left {
+    @media (min-width: 769px) {
+      width: 35%;
+      padding-right: 10px;
+    }
+  }
+  &__column-right {
+    width: 65%;
+  }
+}

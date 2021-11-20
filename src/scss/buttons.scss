@@ -23,13 +23,42 @@
 
   img {
     margin-left: 10px;
+    height: 19px;
   }
 }
 
 .button-wallet {
   @extend .button-logout;
-  border: 2px solid #46DD83;
-  padding: 6px 25px;
+  padding: 11px 25px;
+  background: #0092E5;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  @media (max-width: 768px) {
+    margin-right: 0;
+    padding: 11px 15px;
+  }
+
+  &:hover {
+    background: #2b5878;
+  }
+  &--connected {
+    background: #273C57;
+  }
+
+  &__icon {
+    width: 23px;
+    height: 23px;
+    background: #fff;
+    overflow: hidden;
+    border-radius: 50px;
+    margin-left: 10px;
+
+    img{
+      width: 100%;
+      margin-left: 0;
+    }
+  }
 }
 
 .button-green {
@@ -45,8 +74,47 @@
   cursor: pointer;
   border: 0;
   transition: all .4s ease;
+
   &:hover {
     background: #1b9e50;
     transition: all .4s ease;
+  }
+
+  &:disabled {
+    background: #64889C;
+    color: #88b8d3;
+  }
+}
+
+.button-outlines {
+  display: flex;
+}
+.button-outline {
+  background: rgba(14, 16, 23, 0.76);
+  backdrop-filter: blur(13px);
+  border-radius: 15px;
+  border: 2px solid transparent;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
+  padding: 10px;
+  cursor: pointer;
+  text-decoration: none;
+  @media (max-width: 768px) {
+    padding: 5px 10px;
+  }
+
+  &:hover {
+    border: 2px solid #2DFF82;
+  }
+
+  &.current {
+    border: 2px solid #2DFF82;
+  }
+
+  &__icon {
+    width: 20px;
+    margin-right: 0.5em;
   }
 }

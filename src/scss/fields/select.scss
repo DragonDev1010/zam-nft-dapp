@@ -37,10 +37,13 @@
 
   &__token-v {
     .select-field__single-value .select-field__token {
-      flex-flow: column;
-      align-items: baseline;
-      height: 70px;
-      justify-content: space-between;
+      @media (min-width: 768px) {
+        flex-flow: column;
+        align-items: baseline;
+        height: 70px;
+        justify-content: space-between;
+      }
+
     }
     .select-field__value-container {
       height: 90px;

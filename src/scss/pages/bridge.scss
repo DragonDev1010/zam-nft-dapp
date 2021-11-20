@@ -17,13 +17,45 @@
     line-height: 120%;
     color: rgba(255, 255, 255, 0.61);
   }
+
+  &__inputs {
+    @media (max-width: 768px) {
+      flex-flow: column;
+      .input-field__column {
+        width: 100%;
+      }
+      .input-field__column--revert {
+        width: 100%;
+
+        img {
+          transform: none;
+        }
+      }
+    }
+  }
+  .select-field__token-v .select-field__value-container {
+    @media (max-width: 768px) {
+      height: 60px;
+    }
+  }
+  .select-field__token {
+    @media (max-width: 768px) {
+      flex-flow: row;
+      align-items: center;
+    }
+  }
 }
 
 .bridge-transactions {
+  &__table-wrapper {
+    @media (max-width: 768px) {
+      overflow-x: scroll;
+    }
+  }
   &__table {
     width: 100%;
     margin-bottom: 30px;
-
+    border-spacing: 0;
     th {
       font-style: normal;
       font-weight: 600;
@@ -36,8 +68,10 @@
 
     td {
       padding: 8px 5px;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1px solid #838798;
       font-size: 14px;
+      font-size: 13px;
+      color: #fff;
     }
   }
 
@@ -53,8 +87,15 @@
     border: 0;
     display: flex;
     align-items: center;
+    cursor: pointer;
     img {
       margin-left: 5px;
+    }
+    &:hover {
+      img {
+        transform: rotate(360deg);
+        transition: all 1s ease;
+      }
     }
   }
 }
