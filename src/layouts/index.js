@@ -31,7 +31,7 @@ export const IndexLayout = () => {
 
     useEffect(() => {
         getPrice(setRate, setPriceChange24, setPriceChangePercentage24, setVolume24);
-        timer = setInterval(() => getPrice(setRate, setPriceChange24, setPriceChangePercentage24, setVolume24), 5000);
+        timer = setInterval(() => getPrice(setRate, setPriceChange24, setPriceChangePercentage24, setVolume24), 60000);
         return () => {
             clearInterval(timer)
         };

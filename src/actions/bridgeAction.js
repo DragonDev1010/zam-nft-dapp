@@ -11,6 +11,7 @@ import contractEthAgentAbi from "@src/contracts/bridge/eth_agent.json";
 import contractZamBscAbi from "@src/contracts/bridge/zam_bsc.json";
 import contractBscAgentAbi from "@src/contracts/bridge/bsc_agent.json";
 import {SWAP_BSC_ETH, SWAP_ETH_BSC} from "@src/constants";
+import {CHAIN_ID_BINANCE, CHAIN_ID_ETH} from "../constants";
 
 
 export class bridgeAction {
@@ -24,7 +25,7 @@ export class bridgeAction {
     }
 
     init = async () => {
-        this.checkWalletConnection();
+        await this.checkWalletConnection();
 
         switch (this.swapMethod) {
             case 'swapETH2BSC':
@@ -32,30 +33,28 @@ export class bridgeAction {
                 this.contractAgentAbi = contractEthAgentAbi;
                 this.contractZamAddress = contractZamEthAddress;
                 this.contractAgentAddress = contractEthAgentAddress;
-                this.network = Web3.givenProvider;
+                this.network = this.wallet.getNetwork(CHAIN_ID_ETH);
+
                 break;
             case 'swapBSC2ETH':
                 this.contractZamAbi = contractZamBscAbi;
                 this.contractAgentAbi = contractBscAgentAbi;
                 this.contractZamAddress = contractZamBscAddress;
                 this.contractAgentAddress = contractBscAgentAddress;
-                this.network = 'https://bsc-dataseed.binance.org/';
+                this.network = this.wallet.getNetwork(CHAIN_ID_BINANCE);
                 break;
             default:
                 throw new Error('Way is not support');
-        }
 
+        }
 
         const web3 = new Web3(this.network);
         this.contractToken = new (web3.eth.Contract)(this.contractZamAbi, this.contractZamAddress);
+
     }
 
     getChainId = async () => {
-        if (this.wallet.type === 'metamask') {
-            return await window.ethereum.request({method: 'eth_chainId'});
-        } else if (this.wallet.type === 'binance') {
-            return await window.BinanceChain.send('eth_chainId').result;
-        }
+        return await this.wallet.getChainId();
     };
 
     getBalance = async () => {
@@ -64,7 +63,8 @@ export class bridgeAction {
         this.allowance = 0;
 
         try {
-            this.init();
+            await this.init();
+
             if (!this.wallet.address) {
                 return;
             }
@@ -85,6 +85,13 @@ export class bridgeAction {
                 if (chainId !== '0x38' && this.swapMethod === SWAP_BSC_ETH) {
                     throw new Error('Please switch you Binance Chain to Binance Smart Chain network.');
                 }
+            } else if (this.wallet.type === 'walletconnect') {
+                if (chainId !== 1 && this.swapMethod === SWAP_ETH_BSC) {
+                    throw new Error('Please switch you wallet to Ethereum network.');
+                }
+                if (chainId !== 56 && this.swapMethod === SWAP_BSC_ETH) {
+                    throw new Error('Please switch you wallet to Binance Smart Chain network.');
+                }
             }
 
             const balance = await this.contractToken.methods.balanceOf(this.wallet.address).call();
@@ -101,7 +108,7 @@ export class bridgeAction {
 
     approve = async () => {
         try {
-            this.init();
+            await this.init();
 
             const maxAmount = '0x' + dec2hex('1' + '0'.repeat(60));
 
@@ -110,7 +117,9 @@ export class bridgeAction {
                 from: this.wallet.address,
                 'data': this.contractToken.methods.approve(this.contractAgentAddress, maxAmount).encodeABI()
             };
-            await window.ethereum.request({
+
+            const provider = await this.wallet.getProvider();
+            await provider.request({
                 method: 'eth_sendTransaction',
                 params: [transactionParameters],
             });
@@ -145,7 +154,9 @@ export class bridgeAction {
 
             const gas = await web3.eth.estimateGas(transactionParametersSwap);
 
-            await window.ethereum.request({
+            const provider = await this.wallet.getProvider();
+
+            await await provider.request({
                 method: 'eth_sendTransaction',
                 params: [{...transactionParametersSwap, gas: Web3.utils.toHex(gas)}],
             });

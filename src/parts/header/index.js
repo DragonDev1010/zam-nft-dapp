@@ -13,7 +13,7 @@ const Header = () => {
             <header className="site-header">
                 <div className="site-header__left">
                     <a href="/">
-                        <img src="images/logo_zamio.svg" className="site-header__logo" alt="Zamio"/>
+                        <img src="/images/logo_zamio.svg" className="site-header__logo" alt="Zamio"/>
                     </a>
                 </div>
                 <div className="site-header__center">
@@ -44,7 +44,7 @@ const Header = () => {
                     {
                         !wallet.address ||
                         <button className="button-logout hidden-sm" onClick={() => setWallet(wallet.resetWallet())}>
-                            Log out <img src="images/icon_logout.svg"/>
+                            Log out <img src="/images/icon_logout.svg"/>
                         </button>
                     }
 
@@ -58,24 +58,27 @@ const Header = () => {
                                     <div className="button-wallet__icon">
                                         {
                                             wallet.type === 'metamask' ?
-                                                <img src="images/icon_metamask.svg"/> :
+                                                <img src="/images/icon_metamask.svg"/> :
                                                 wallet.type === 'binance' ?
-                                                    <img src="images/tokens/icon_token_bsc.svg"/> :
-                                                    ''
+                                                    <img src="/images/tokens/icon_token_bsc.svg"/> :
+                                                    wallet.type === 'walletconnect' ?
+                                                        <img src="/images/icon_walletconnector.svg"/> :
+                                                        ''
+
                                         }
                                     </div>
 
                                 </>
                             ) : (
                                 <>
-                                    <span>Connect Wallet</span> <img className="hidden-sm" src="images/icon_chain.svg"/>
+                                    <span>Connect Wallet</span> <img className="hidden-sm" src="/images/icon_chain.svg"/>
                                 </>
 
                             )
                         }
                     </button>
                     {/*<a href="#">*/}
-                    {/*    <img src="images/icon-gear.svg" alt=""/>*/}
+                    {/*    <img src="/images/icon-gear.svg" alt=""/>*/}
                     {/*</a>*/}
                 </div>
 
@@ -87,7 +90,7 @@ const Header = () => {
                 }
             </header>
             <Modal isOpen={modalIsOpen} onClose={() => setModalOpen(false)}>
-                <ModalWalletConnect/>
+                <ModalWalletConnect onClose={() => setModalOpen(false)}/>
             </Modal>
         </>
     );

@@ -5,6 +5,7 @@ import contractPancakeRouterAbi from '@src/contracts/pancake/PancakeRouter_ABI.j
 import contractPancakeIerc20 from '@src/contracts/pancake/IERC20.json';
 import {PancakeAddresses, TOKEN_ADDRESES} from "@src/config";
 import {dec2hex, sortTokens} from "@src/utils";
+import {CHAIN_ID_BINANCE} from "../constants";
 
 const NETWORK_ENV = process.env.NETWORK_ENV;
 const NETWORK_URL = process.env.NETWORK_URL;
@@ -62,21 +63,35 @@ export class swapAction {
     }
 
     getAllowance = async () => {
-        await this.checkWalletConnection();
+        this.error = '';
 
-        const web3 = new Web3(this.network);
+        try {
+            await this.checkWalletConnection();
 
-        const contractTokenA = new (web3.eth.Contract)(contractPancakeIerc20, this.tokenA);
-        const allowanceA = await contractTokenA.methods.allowance(this.wallet.address, this.addressRouter).call();
-        // const balanceA = await contractTokenA.methods.balanceOf(this.wallet.address).call();
+            if (!this.wallet.address) {
+                return;
+            }
 
-        const contractTokenB = new (web3.eth.Contract)(contractPancakeIerc20, this.tokenB);
-        const allowanceB = await contractTokenB.methods.allowance(this.wallet.address, this.addressRouter).call();
-        // const balanceB = await contractTokenB.methods.balanceOf(this.wallet.address).call();
+            const chainId = await this.getChainId();
 
-        return {
-            allowanceA: parseInt(allowanceA),
-            allowanceB: parseInt(allowanceB)
+            if (chainId !== CHAIN_ID_BINANCE && chainId !== 56) {
+                throw new Error('Please switch you wallet to Binance Smart Chain network.');
+            }
+
+            const web3 = new Web3(this.network);
+
+            const contractTokenA = new (web3.eth.Contract)(contractPancakeIerc20, this.tokenA);
+            const allowanceA = await contractTokenA.methods.allowance(this.wallet.address, this.addressRouter).call();
+
+            const contractTokenB = new (web3.eth.Contract)(contractPancakeIerc20, this.tokenB);
+            const allowanceB = await contractTokenB.methods.allowance(this.wallet.address, this.addressRouter).call();
+
+            return {
+                allowanceA: parseInt(allowanceA),
+                allowanceB: parseInt(allowanceB)
+            }
+        } catch (e) {
+            this.error = e.message
         }
     }
 
@@ -97,8 +112,9 @@ export class swapAction {
             };
 
             const gas = await web3.eth.estimateGas(transactionParameters);
+            const provider = await this.wallet.getProvider();
 
-            await window.ethereum.request({
+            await provider.request({
                 method: 'eth_sendTransaction',
                 params: [{...transactionParameters, gas: Web3.utils.toHex(Math.floor(gas * 1.1))}],
             });
@@ -113,8 +129,9 @@ export class swapAction {
             };
 
             const gas = await web3.eth.estimateGas(transactionParameters);
+            const provider = await this.wallet.getProvider();
 
-            await window.ethereum.request({
+            await provider.request({
                 method: 'eth_sendTransaction',
                 params: [{...transactionParameters, gas: Web3.utils.toHex(Math.floor(gas * 1.1))}],
             });
@@ -147,8 +164,9 @@ export class swapAction {
         }
 
         const gas = await web3.eth.estimateGas(transactionParams);
+        const provider = await this.wallet.getProvider();
 
-        await window.ethereum.request({
+        await provider.request({
             method: 'eth_sendTransaction',
             params: [{...transactionParams, gas: Web3.utils.toHex(Math.floor(gas))}],
         });
@@ -159,5 +177,9 @@ export class swapAction {
             await this.wallet.checkConnection();
         }
     }
+
+    getChainId = async () => {
+        return await this.wallet.getChainId();
+    };
 }
 

@@ -1,10 +1,13 @@
 import React from "react";
 import {WalletAbstract} from "@src/wallets/wallet-abstract";
 
+const RPC_URLS_56 = process.env.RPC_URL_56;
+
 export class WalletBinance extends WalletAbstract {
     constructor() {
         super();
         this.type = 'binance';
+        this.network = RPC_URLS_1;
     }
 
     checkConnection = async () => {
@@ -41,4 +44,12 @@ export class WalletBinance extends WalletAbstract {
         }
     }
 
+    getChainId = async () => {
+        return await window.BinanceChain.send('eth_chainId').result;
+    };
+
+
+    getProvider = async () => {
+        return window.BinanceChain;
+    }
 }

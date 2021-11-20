@@ -2,6 +2,10 @@ import Web3 from "web3";
 import React from "react";
 import {WalletAbstract} from "@src/wallets/wallet-abstract";
 import {dec2hex} from "@src/utils";
+import {WalletConnectConnector} from "@web3-react/walletconnect-connector";
+import {CHAIN_ID_ETH, CHAIN_ID_BINANCE} from "@src/constants";
+
+const RPC_URLS_56 = process.env.RPC_URL_56;
 
 export class WalletMetamask extends WalletAbstract {
     constructor() {
@@ -39,6 +43,14 @@ export class WalletMetamask extends WalletAbstract {
                 </span>
             )
         }
+    }
+
+    getChainId = async () => {
+        return await window.ethereum.request({method: 'eth_chainId'});
+    };
+
+    getProvider = async () => {
+        return window.ethereum;
     }
 
 }

@@ -26,6 +26,10 @@
   font-family: "Maven Pro", sans-serif;
 }
 
+body, html, #app, main {
+  min-height: 100%;
+}
+
 body {
   background: #0E1017;
 }
@@ -93,4 +97,9 @@ article {
   @media (max-width: 768px) {
     font-size: 11px;
   }
+}
+
+
+.walletconnect-modal__base {
+  max-width: 325px;
 }

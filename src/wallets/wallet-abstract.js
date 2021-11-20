@@ -1,5 +1,7 @@
 import React from "react";
 import {WalletFactory} from "@src/wallets/wallet-factory";
+import Web3 from "web3";
+import {CHAIN_ID_BINANCE, CHAIN_ID_ETH} from "../constants";
 
 
 export class WalletAbstract {
@@ -21,7 +23,9 @@ export class WalletAbstract {
         this.type = '';
         this.address = '';
         localStorage.setItem('walletType', null);
+        localStorage.setItem('walletconnect', null);
 
+        window.location.reload();
         return this;
     };
 
@@ -38,4 +42,11 @@ export class WalletAbstract {
         return newWallet;
     };
 
+    getNetwork = (chainId) => {
+        if (chainId === CHAIN_ID_ETH) {
+            return Web3.givenProvider;
+        } else if (chainId === CHAIN_ID_BINANCE) {
+            return 'https://bsc-dataseed.binance.org/';
+        }
+    }
 }

@@ -1,6 +1,6 @@
 import React, {useContext, useState, useMemo, useEffect} from 'react';
 import {SelectComponent} from "@src/components/fields/Select";
-import {CHAIN_ID_BINANCE, TOKEN_USDT, TOKEN_ZAM, TOKENS} from "@src/constants";
+import {TOKEN_USDT, TOKEN_ZAM, TOKENS} from "@src/constants";
 import {ModalWalletContext, RateContext, SwapContext, WalletContext} from "@src/context";
 import {float, toFixed, int} from "@src/utils";
 import {swapAction} from "@src/actions/swapAction";
@@ -51,14 +51,11 @@ export const SwapSwitcher = ({mainToken}) => {
     }, []);
 
     useEffect(async () => {
-        const allowance = await new swapAction(wallet, swapFrom, swapTo).getAllowance();
+        const swap = new swapAction(wallet, swapFrom, swapTo);
+        const allowance = await swap.getAllowance();
         setAllowance(allowance);
 
-        const chainId = await wallet.getChainId();
-
-        if (chainId !== CHAIN_ID_BINANCE) {
-            setWalletError('Please switch you wallet to Binance Smart Chain network.');
-        }
+        setWalletError(swap.error);
 
     }, [wallet]);
 
@@ -115,15 +112,18 @@ export const SwapSwitcher = ({mainToken}) => {
 
     let partAppove;
 
-    if (!Object.keys(allowance).length) {
-        partAppove = null;
-    } else if (!allowance.allowanceA && !allowance.allowanceB) {
-        partAppove = 0;
-    } else if (!allowance.allowanceA || !allowance.allowanceB) {
-        partAppove = 1;
-    } else {
-        partAppove = 2;
+    if (allowance) {
+        if (!Object.keys(allowance).length) {
+            partAppove = null;
+        } else if (!allowance.allowanceA && !allowance.allowanceB) {
+            partAppove = 0;
+        } else if (!allowance.allowanceA || !allowance.allowanceB) {
+            partAppove = 1;
+        } else {
+            partAppove = 2;
+        }
     }
+
 
     const setCustomSlippage = (e) => {
         const {value} = e.target;
@@ -235,7 +235,7 @@ export const SwapSwitcher = ({mainToken}) => {
 
                     </div>
                     :
-                    <div className="card card-narrow card-glow swap-settings">
+                    <div className="card card-filled card-narrow card-glow swap-settings">
                         <div className="swap-settings__header">
                             <button className="swap-settings__arrow" onClick={() => setFilterActive(false)}>
                                 <IconArrowLeft/>

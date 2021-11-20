@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {WalletFactory} from "@src/wallets/wallet-factory";
+import {WalletConnectConnector} from "@web3-react/walletconnect-connector";
 
 export const WalletContext = React.createContext();
 
