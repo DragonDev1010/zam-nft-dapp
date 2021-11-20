@@ -139,7 +139,7 @@ export const SwapSwitcher = ({mainToken}) => {
             {
                 !filterActive
                     ?
-                    <div className="card card-narrow card-glow swap-switcher">
+                    <div className="card card-filled card-narrow card-glow swap-switcher">
                         <button className="swap-switcher__settings" onClick={() => setFilterActive(true)}><IconFilter/>
                         </button>
                         <h3 className="title text-center mb-20">

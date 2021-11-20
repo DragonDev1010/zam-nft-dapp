@@ -94,13 +94,10 @@ export function mergeObjects(ob1, ob2) {
 export function prepareGraphArray(obj, amountKey) {
     const graphArray = [];
 
-
     Object.keys(obj).sort().map((key) => {
         const date = new Date(key);
         graphArray.push({name: `${MONTH_NAMES[date.getMonth()]}. ${date.getDate()}`, [amountKey]: obj[key]})
     })
-
-    console.log(graphArray)
 
     return graphArray;
 }

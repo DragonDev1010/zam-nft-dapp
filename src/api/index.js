@@ -1,8 +1,8 @@
-import {coinMarketApi} from "@src/config";
+import {ZAM_API_URL} from "@src/config";
 import {formatChartDate, toFixed} from "@src/utils";
 
 export const getPrice = (setRate, setPriceChange24, setPriceChangePercentage24, setVolume24) => {
-    fetch(`${coinMarketApi}?type=price`)
+    fetch(`${ZAM_API_URL}?type=price`)
         .then((response) => {
             return response.json();
         }).then((data) => {
@@ -14,7 +14,7 @@ export const getPrice = (setRate, setPriceChange24, setPriceChangePercentage24, 
 }
 
 export const getMarketData = (setMarketData, setMarketDataTotal) => {
-    fetch(`${coinMarketApi}?type=market`)
+    fetch(`${ZAM_API_URL}?type=market`)
         .then((response) => {
             return response.json();
         }).then((data) => {

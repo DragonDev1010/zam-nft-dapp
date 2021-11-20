@@ -3,7 +3,7 @@ import React from 'react';
 export const BodyCard = (props) => {
     return (
         <>
-            <div style={{height: props.height}} className="card audits-body-card">
+            <div style={{height: props.height}} className="card card-filled audits-body-card">
                 <div className="audits-body-card__left">
                     <div className="audits-card-header-title">
                         <div>

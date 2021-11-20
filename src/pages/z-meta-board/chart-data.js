@@ -1,7 +1,6 @@
-import {MONTH_NAMES, NETWORK_ETH} from "@src/constants";
-import Web3 from "web3";
+import {NETWORK_ETH} from "@src/constants";
 import {GRAPH_URL} from "@src/config";
-import {timestampToString, toFixed, int, fromWei, mergeObjects} from "@src/utils";
+import {timestampToString, fromWei, mergeObjects} from "@src/utils";
 
 const offset24h = parseInt(Date.now() / 1000 - 24*60*60);
 const offsetWeek = parseInt(Date.now() / 1000 - 24*60*60*7);
@@ -9,9 +8,6 @@ const offsetMonth = parseInt(Date.now() / 1000 - 24*60*60*30);
 const offsetYear = parseInt(Date.now() / 1000 - 24*60*60*365);
 
 const getRangeQuery = (range, offset, network) => `{
-
-              
-                           
               ${
                 network === NETWORK_ETH ?
                     `

@@ -17,7 +17,7 @@
         padding-bottom: 40px;
     }
 
-    .card {
+    .card-filled {
         padding: 20px;
     }
 
@@ -35,9 +35,6 @@
         }
 
         &-buttons {
-            @media (max-width: 768px) {
-                margin-bottom: 20px;
-            }
             button {
                 @media (max-width: 768px) {
                     font-size: 11px;
@@ -46,17 +43,7 @@
         }
     }
 
-    .card-narrow {
-        @media (max-width: 768px) {
-            margin: 15px;
 
-            .card.w-full {
-                margin-left: 0;
-                margin-right: 0;
-            }
-        }
-
-    }
 
 }
 

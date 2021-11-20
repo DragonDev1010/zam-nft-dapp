@@ -75,7 +75,7 @@ export const SwapChart = ({mainToken}) => {
     const tickFormatter = (value) => value.toString().replace(/,.+/, '');
 
     return (
-        <div className="card chart swap-chart">
+        <div className="card card-filled chart swap-chart">
             <header>
                 <div className="swap-chart__tokens">
                     <div className="swap-chart__tokens-images">
