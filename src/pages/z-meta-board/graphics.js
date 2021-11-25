@@ -3,7 +3,7 @@ import {SmallAreaChart} from "@src/components/charts/small-area-chart.js"
 import {LargeAreaChart} from '@src/components/charts/large-area-chart';
 import {ZMetaBoardContext} from "@src/context/zmetaboard-context";
 import {extractGraphDataByNetwork, extractScalarDataByNetwork, numberFormat} from "@src/utils";
-import {NETWORK_ETH, TOTAL_SUPPLY} from "@src/constants";
+import {NETWORK_BSC, NETWORK_ETH, TOTAL_SUPPLY} from "@src/constants";
 import {getMarketData} from "@src/api";
 import {RateContext} from "@src/context";
 
@@ -39,7 +39,7 @@ export const Graphics = () => {
             <div className="cards">
                 <div className="card card-filled">
                     <div className="blocked-title">Total supply</div>
-                    <h3 className="rate-container">{numberFormat(totalSupply)}</h3>
+                    <h3 className="rate-container">{numberFormat(totalSupply)} ZAM</h3>
                 </div>
                 <div className="card card-narrow card-filled">
                     <SmallAreaChart height="100px" title="Holders" chartKey="amount"
@@ -54,26 +54,31 @@ export const Graphics = () => {
                                             title={network === NETWORK_ETH ? `Bridge ETH to BSC` : `Bridge BSC to ETH`}
                                             chartKey="ZAM"
                                             unit="ZAM"
-                                            total={extractScalarDataByNetwork(chartData, 'bridgeTotal', network)}
-                                            data={extractGraphDataByNetwork(chartData, 'bridgeData', 'ZAM', network)}/>
+                                            // show reverted data
+                                            total={extractScalarDataByNetwork(chartData, 'bridgeTotal', network === NETWORK_ETH ? NETWORK_BSC : NETWORK_ETH)}
+                                            data={extractGraphDataByNetwork(chartData, 'bridgeData', 'ZAM', network === NETWORK_ETH ? NETWORK_BSC : NETWORK_ETH)}/>
                             :
                             <>
                                 <div className="blocked-title">Bridge Total Volume</div>
                                 <h3 className="rate-container">
-                                    {numberFormat(extractScalarDataByNetwork(chartData, 'bridgeTotalAll', network))}
+                                    {numberFormat(extractScalarDataByNetwork(chartData, 'bridgeTotalAll', network))} ZAM
+                                    <br/>
+                                    <small>
+                                        ${numberFormat(parseInt(extractScalarDataByNetwork(chartData, 'bridgeTotalAll', network) * rate))}
+                                    </small>
                                 </h3>
                             </>
                     }
                 </div>
                 <div className="card card-narrow card-filled">
-                    <SmallAreaChart height="100px" title="Holder All Time" chartKey="amount"
+                    <SmallAreaChart height="100px" title="Users (All Time)" chartKey="amount"
                                     total={extractScalarDataByNetwork(chartData, 'holderAllTimeTotal', network)}
                                     data={extractGraphDataByNetwork(chartData, 'holderAllTimeData', 'amount', network)}/>
                 </div>
 
 
                 {
-                    network ||
+                    !!network ||
                     <div className="card card-filled">
                         <LargeAreaChart height="175px" title="Trading Volume (All Time)" chartKey="USD"
                                         prefix="$"
@@ -97,16 +102,20 @@ export const Graphics = () => {
                 </div>
 
 
-                <div className="card card-filled">
-                    <LargeAreaChart height="175px" title="on-Chain Total Volume (All Time)" chartKey="USD"
-                                    prefix="$"
-                                    total={transferZamTotal}
-                                    data={transferZamData}/>
-                </div>
+                {
+                    !!network ||
+                    <div className="card card-filled">
+                        <LargeAreaChart height="175px" title="on-Chain Total Volume (All Time)" chartKey="USD"
+                                        prefix="$"
+                                        total={transferZamTotal}
+                                        data={transferZamData}/>
+                    </div>
+                }
 
-                <div className="card-narrow">
-                    <div className="card card-filled w-full">
-                        <div className="blocked-title">Tokens in Vesting</div>
+
+                <div  className={`${!network ? 'card-narrow' : 'card'}`}>
+                    <div className={`${!network ? 'card card-filled w-full' : 'card-filled w-full'}`}>
+                        <div className="blocked-title">Total Vesters</div>
                         <h3 className="rate-container">
                             {numberFormat(extractScalarDataByNetwork(chartData, 'vestingCountsTotal', network))}
                         </h3>

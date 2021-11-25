@@ -1,4 +1,7 @@
 .chart {
+  .recharts-cartesian-axis {
+    display: none; // disable temporary
+  }
   .ReactChart {
     .Series {
       g, + g {

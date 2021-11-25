@@ -3,7 +3,7 @@ import React from "react";
 import {WalletAbstract} from "@src/wallets/wallet-abstract";
 import {dec2hex} from "@src/utils";
 import {WalletConnectConnector} from "@web3-react/walletconnect-connector";
-import {CHAIN_ID_ETH, CHAIN_ID_BINANCE} from "@src/constants";
+import {CHAIN_ID_ETH, CHAIN_ID_BSC} from "@src/constants";
 
 const RPC_URLS_56 = process.env.RPC_URL_56;
 

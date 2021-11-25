@@ -1,6 +1,6 @@
 import React from 'react';
-import { HeaderCard } from "./header-carousel";
 import {NETWORK_BSC, NETWORK_ETH, NETWORKS} from "@src/constants";
+import {HeaderCarouselComponent} from "@src/components/header-carousel";
 
 
 export const Header = () => {
@@ -22,7 +22,7 @@ export const Header = () => {
                     {/*</div>*/}
                 </div>
                 <div className="header-container__item">
-                    <HeaderCard />
+                    <HeaderCarouselComponent />
                 </div>
             </div>
         </>

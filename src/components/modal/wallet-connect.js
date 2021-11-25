@@ -67,12 +67,12 @@ export const ModalWalletConnect = (props) => {
                     <img src="/images/tokens/icon_token_bsc.svg" alt="wallet"/>
                     <span className="wallet__name">Binance Wallet</span>
                 </div>
-                <div
-                    className={`wallet ${agreement ? 'active' : ''} ${wallet.type === 'binance' && wallet.address ? 'current' : ''}`}
-                    onClick={() => connectWallet('walletconnect')}>
-                    <img src="/images/icon_walletconnector.svg" alt="wallet"/>
-                    <span className="wallet__name">Wallet Connect</span>
-                </div>
+                {/*<div*/}
+                {/*    className={`wallet ${agreement ? 'active' : ''} ${wallet.type === 'walletconnect' && wallet.address ? 'current' : ''}`}*/}
+                {/*    onClick={() => connectWallet('walletconnect')}>*/}
+                {/*    <img src="/images/icon_walletconnector.svg" alt="wallet"/>*/}
+                {/*    <span className="wallet__name">Wallet Connect</span>*/}
+                {/*</div>*/}
             </div>
         </div>
     );

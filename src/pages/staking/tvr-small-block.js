@@ -9,9 +9,9 @@ export const TvrBlock = () => {
                     TVL
                 </div>
                 <div className="tvr-block-body">
-                    $132 656 885
+                    TBA
                     <div className="tvr-block-body-span">
-                        465 244 661 ZAM
+                        &nbsp;
                     </div>
                 </div>
             </div>

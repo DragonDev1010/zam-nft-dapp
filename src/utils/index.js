@@ -29,6 +29,7 @@ export function sortTokens(tokenA, tokenB) {
 }
 
 export function float(value) {
+    return value;
     return ['0', '0.', '0,'].includes(value.toString()) ? value : parseFloat(value.toString().replace(/,/g, '.'));
 }
 

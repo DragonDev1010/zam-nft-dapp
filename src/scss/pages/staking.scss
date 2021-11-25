@@ -1,8 +1,157 @@
+.staking {
+    padding: 0;
+    padding-bottom: 100px;
+
+    .header-container__item {
+        width: 540px;
+        max-width: 100%;
+        @media (max-width: 768px) {
+            width: auto;
+            padding-bottom: 30px;
+        }
+    }
+
+    .card-filled {
+        padding: 25px;
+        z-index: 2;
+    }
+
+    .card-narrow {
+        min-width: 425px;
+        @media (max-width: 768px) {
+            width: 100%;
+            min-width: auto;
+        }
+    }
+
+
+    &__card-left {
+        @media (max-width: 1722px) {
+            width: 100%;
+            max-width: 1170px;
+        }
+    }
+    &__card-right {
+        justify-content: space-between;
+        max-width: 930px;
+
+        @media (max-width: 1722px) {
+            width: 100%;
+            max-width: 1170px;
+        }
+        @media (max-width: 768px) {
+            flex-flow: column;
+            width: 100%;
+        }
+
+        .card-filled {
+            width: 50%;
+            margin-right: 30px;
+            &:last-child {
+                margin-right: 0;
+            }
+
+            @media (max-width: 1722px) {
+                width: 100%;
+                max-width: 452px;
+                margin-right: 0;
+                &:last-child {
+                    width: 100%;
+                    margin-left: 30px;
+                    max-width: none;
+
+                }
+            }
+            @media (max-width: 768px) {
+                margin-left: 0 !important;
+                margin-top: 20px;
+            }
+        }
+    }
+
+    .small-block-container {
+        width: 50%;
+        background: #2dff82;
+        border: 1px solid rgba(47, 41, 84, 0.09);
+        backdrop-filter: blur(21px);
+        border-radius: 20px;
+        padding: 20px;
+
+        @media (max-width: 1722px) {
+            width: 100%;
+            max-width: 452px;
+        }
+    }
+
+    .tvr-block {
+        background: rgba(49, 56, 85, 0.49);
+        width: 50%;
+        border: 2px solid #2dff82;
+        margin-left: 30px;
+        box-sizing: border-box;
+        backdrop-filter: blur(21px);
+        border-radius: 20px;
+        padding: 20px;
+
+        @media (max-width: 1722px) {
+            width: 100%;
+        }
+    }
+
+
+
+    .staking-calculator {
+        width: 100%;
+        max-width: 930px;
+        padding: 0;
+        flex: 1;
+
+        &__bar {
+            padding: 0 30px;
+        }
+
+        &-header {
+            width: 100%;
+            height: 22px;
+            font-weight: bold;
+            font-size: 24px;
+            line-height: 120%;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            padding: 40px 30px 0 30px;
+        }
+
+        &-buttons-group {
+            margin-left: 2em;
+        }
+    }
+
+
+    &__switcher {
+        margin-left: 60px;
+        margin-right: 60px;
+        padding: 4px 5px;
+
+        @media (max-width: 768px) {
+            margin-left: 0;
+            margin-right: 50px;
+
+
+        }
+    }
+
+    .swap-switcher__settings {
+        @media (max-width: 768px) {
+            top: 43px;
+        }
+    }
+}
+
 .header-staking-container {
     width: 100%;
     height: 45px;
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: bold;
     font-size: 45px;
     line-height: 45px;
@@ -10,24 +159,18 @@
 }
 .header-earn-container {
     width: 100%;
-    height: 20px;
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: 500;
     font-size: 16px;
     line-height: 138%;
     color: #ffffff;
 }
 .earn-span {
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: bold;
     font-size: 16px;
     line-height: 120%;
     color: #2dff82;
 }
 .staking-header-general-container {
-    width: 1570px;
     height: 250px;
     display: flex;
     background: rgba(60, 67, 100, 0.49);
@@ -53,17 +196,7 @@
     margin-top: 2em;
     margin-left: -2.5em;
 }
-.small-block-container {
-    width: 213px;
-    height: 122px;
-    margin-left: 1em;
-    background: #2dff82;
-    border: 1px solid rgba(47, 41, 84, 0.09);
-    box-sizing: border-box;
-    backdrop-filter: blur(21px);
-    border-radius: 20px;
-    padding: 20px;
-}
+
 .small-blocks {
     display: flex;
 }
@@ -72,77 +205,55 @@
     margin-left: 2em;
 }
 .network-overview-container {
-    width: 1089px;
-    height: 59px;
     margin-top: 1em;
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: bold;
     font-size: 24px;
     line-height: 45px;
     color: #ffffff;
+    padding-left: 30px;
 }
 .small-block-header {
-    width: 96px;
     height: 19px;
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: bold;
     font-size: 16px;
     line-height: 120%;
     color: #0e1017;
 }
 .small-block-body {
-    width: 121px;
     height: 70px;
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: bold;
     font-size: 35px;
     line-height: 70px;
     color: #0e1017;
 }
-.tvr-block {
-    background: rgba(49, 56, 85, 0.49);
-    width: 213px;
-    height: 122px;
-    border: 2px solid #2dff82;
-    margin-left: 1em;
-    box-sizing: border-box;
-    backdrop-filter: blur(21px);
-    border-radius: 20px;
-    padding: 20px;
-}
+
 .tvr-block-header {
-    width: 30px;
     height: 19px;
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: bold;
     font-size: 16px;
     line-height: 120%;
     color: #2dff82;
 }
 .tvr-block-body {
-    width: 177px;
     height: 59px;
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: bold;
     font-size: 24px;
     line-height: 45px;
     color: #ffffff;
+    @media (max-width: 768px) {
+        font-size: 16px;
+    }
 }
 .tvr-block-body-span {
-    width: 146px;
     height: 43px;
     margin-top: -1em;
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: 500;
     font-size: 15px;
     line-height: 45px;
     color: rgba(255, 255, 255, 0.62);
+    @media (max-width: 768px) {
+        font-size: 12px;
+    }
 }
 .small-block-chart-container {
     width: 93%;
@@ -151,62 +262,16 @@
     backdrop-filter: blur(18px);
     border-radius: 20px;
     padding: 20px;
-    margin-left: 1em;
-    &-narrow {
-        width: 452px;
-    }
+    height: 123px;
+}
 
-    &-glow {
-        position: relative;
-        z-index: 1;
-
-        &:after {
-            content: "";
-            position: absolute;
-            display: block;
-            width: 340px;
-            height: 340px;
-            z-index: -1;
-            background: #2fb6ee;
-            filter: blur(140px);
-            border-radius: 100%;
-            right: -120px;
-            top: 0;
-        }
-    }
-}
-.stake-zam-container {
-    width: 451px;
-    height: 353px;
-    background: rgba(49, 56, 85, 0.61);
-    border: 1px solid rgba(47, 41, 84, 0.09);
-    box-sizing: border-box;
-    backdrop-filter: blur(18px);
-    border-radius: 20px;
-    margin: 1em;
-}
-.staking-calculator {
-    width: 926px;
-    height: 353px;
-    margin: 1em;
-    background: rgba(49, 56, 85, 0.49);
-    border: 1px solid rgba(47, 41, 84, 0.09);
-    box-sizing: border-box;
-    backdrop-filter: blur(24px);
-    border-radius: 20px;
-}
 .body-container-staking-zam {
     display: flex;
 }
 .stake-zam-container-header {
-    height: 42px;
-    margin-top: 1em;
     align-content: center;
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: bold;
-    font-size: 33px;
-    line-height: 120%;
+    font-size: 24px;
     text-align: center;
     color: #ffffff;
     display: flex;
@@ -220,29 +285,27 @@
     box-sizing: border-box;
     border-radius: 7.04478px;
     color: #15fb72;
-
+    cursor: pointer;
     &:hover {
-        transform: scale(1.05);
+        background: #15fb72;
+        color:#141924;
     }
+
 }
 .zam-coin-ending-column {
     color: #838699;
-    font-family: Maven Pro;
-    font-style: normal;
-    font-weight: normal;
     font-size: 20px;
     line-height: 120%;
 }
-.field-container {
-    margin: 2em;
-}
+
 .filed-container-title {
     font-family: Work Sans;
-    font-style: normal;
     font-weight: 600;
     font-size: 15px;
     color: #ffffff;
     line-height: 120%;
+    display: flex;
+    justify-content: space-between;
 }
 .field-container-title-span {
     color: #15fb72;
@@ -253,17 +316,7 @@
 .zam-token-name {
     margin-right: 1em;
 }
-.connect-wallet-button {
-    margin-top: 1em;
-    width: 385px;
-    height: 60px;
-    background: #0092e5;
-    border-radius: 15px;
-    color: #ffffff;
-}
-.connect-wallet-button-container {
-    margin: 2em;
-}
+
 .stake-unstake-body-card {
     width: 180px;
     height: 130px;
@@ -277,10 +330,12 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    @media (max-width: 768px) {
+        width: 100%;
+        margin-bottom: 20px;
+    }
 }
 .stake-unstake-body-card-value {
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: 500;
     font-size: 18px;
     color: #ffffff;
@@ -292,8 +347,6 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: bold;
     margin-top: 1em;
 }
@@ -308,23 +361,20 @@
     color: #ffffff;
 }
 .rewards-body-card {
-    width: 375px;
     height: 130px;
-    background: #878787;
     backdrop-filter: blur(13px);
     border-radius: 15px;
-    margin-left: 2.3em;
     margin-top: 1em;
     justify-content: center;
     display: flex;
     background-image: url(../images/rewards-body-card-image.png);
+    background-size: cover;
+    background-position: center;
     align-items: flex-end;
 }
 .rewards-body-card-value {
     width: 133px;
     height: 70px;
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: 500;
     font-size: 28px;
     line-height: 70px;
@@ -334,44 +384,29 @@
 .stake-unstake-body {
     display: flex;
     justify-content: space-evenly;
+    @media (max-width: 768px) {
+        flex-flow: column;
+    }
 }
-.staking-calculator-header {
-    width: 100%;
-    height: 22px;
-    font-family: Maven Pro;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 24px;
-    line-height: 120%;
-    color: #ffffff;
-    margin-top: 1.5em;
-    margin-left: 2em;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-}
-.staking-calculator-buttons-group {
-    margin-left: 2em;
-}
+
+
 .set-width {
     width: 110px;
 }
 .range-title {
     display: flex;
-    margin: 3em;
+    margin: 3em 0 1em 0;
     justify-content: space-between;
+    padding: 0 30px;
 }
 .range-title-header {
     font-family: Work Sans;
-    font-style: normal;
     font-weight: 500;
     font-size: 15px;
     line-height: 120%;
     color: #ffffff;
 }
 .range-title-body {
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: bold;
     font-size: 30px;
     line-height: 48px;
@@ -380,11 +415,10 @@
 .stakinkg-calculator-footer {
     display: flex;
     justify-content: space-around;
-    margin: 3em;
+    margin-top: 3em;
 }
 .period-container {
     font-family: Work Sans;
-    font-style: normal;
     font-weight: 500;
     font-size: 15px;
     line-height: 120%;
@@ -392,17 +426,16 @@
     text-align: center;
 }
 .period-zam {
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: bold;
     font-size: 24px;
     line-height: 48px;
     color: #ffffff;
     text-align: center;
+    @media (max-width: 768px) {
+        font-size: 14px;
+    }
 }
 .period-zam-cost {
-    font-family: Maven Pro;
-    font-style: normal;
     font-weight: bold;
     font-size: 18px;
     line-height: 45px;
@@ -410,5 +443,9 @@
     color: #2dff82;
 }
 .calculator-footer-column {
-    
+    width: 33.3%;
+    border-right: 3px solid rgba(14, 16, 23, 0.33);
+    &:last-child {
+        border: 0;
+    }
 }

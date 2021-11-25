@@ -54,6 +54,9 @@
 .justify-start {
   justify-content: flex-start;
 }
+.justify-center {
+  justify-content: center;
+}
 .align-center {
   align-items: center;
 }
@@ -68,11 +71,11 @@
 }
 .hidden-sm {
   @media (max-width: 768px) {
-    display: none;
+    display: none !important;
   }
 }
 .visible-sm {
-  @media (min-width: 768px) {
-    display: none;
+  @media (min-width: 769px) {
+    display: none !important;
   }
 }

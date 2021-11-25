@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="SshConfigs">
+    <configs>
+      <sshConfig authType="PASSWORD" connectionConfig="{&quot;serverAliveInterval&quot;:300}" host="94.26.228.111" id="156959d2-55e5-4246-96c2-89583f6e7633" port="22" customName="dapps.zam.io" nameFormat="CUSTOM" username="zamzam">
+        <option name="customName" value="dapps.zam.io" />
+      </sshConfig>
+    </configs>
+  </component>
+</project>

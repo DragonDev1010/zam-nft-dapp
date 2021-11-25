@@ -1,6 +1,5 @@
 import React from 'react';
-import { HeaderCarouselCard } from './header-carousel';
-import {HeaderCard} from "@src/pages/farming/header-carousel";
+import {HeaderCarouselComponent} from "@src/components/header-carousel";
 
 
 export const Header = () => {
@@ -13,7 +12,7 @@ export const Header = () => {
                     </p>
                 </div>
                 <div className="header-container__item">
-                    <HeaderCard />
+                    <HeaderCarouselComponent />
                 </div>
             </div>
         </>

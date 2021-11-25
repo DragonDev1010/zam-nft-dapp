@@ -1,8 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {Header} from './header';
 import {Graphics} from "./graphics";
-import {MONTH_NAMES, NETWORK_BSC, NETWORK_ETH} from "@src/constants";
-import result from "postcss/lib/result";
+import {NETWORK_BSC, NETWORK_ETH} from "@src/constants";
 import {zamGraphData} from "@src/pages/z-meta-board/chart-data";
 import {ZMetaBoardContext} from "@src/context/zmetaboard-context";
 import {mergeObjects} from "@src/utils";

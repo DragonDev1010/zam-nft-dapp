@@ -16,12 +16,10 @@ const envKeys = Object.keys(envFile).reduce((prev, next) => {
 }, {});
 
 module.exports = {
-
     entry: "./src/index.js",
     output: {
         path: path.join(__dirname, "/dist"),
-        filename: "bundle.js",
-        publicPath: '/',
+        filename: "bundle.[hash].js",
     },
     resolve: {
         alias: {

@@ -27,7 +27,7 @@ if (file_exists($file)) {
     }
 }
 
-$newContent = file_get_contents($url);
+$newContent = @file_get_contents($url);
 if($newContent === false) {
     exit(file_get_contents($file));
 }

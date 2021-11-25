@@ -1,4 +1,11 @@
 .modal {
+  h4 {
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 120%;
+    color: #FFFFFF;
+  }
+
   &__overlay {
     top: 0;
     left: 0;

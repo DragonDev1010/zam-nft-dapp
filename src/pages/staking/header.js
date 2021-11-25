@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeaderCard } from '../farming/header-carousel';
+import {HeaderCarouselComponent} from "@src/components/header-carousel";
 
 
 export const Header = () => {
@@ -9,9 +9,9 @@ export const Header = () => {
     }
     return (
         <>
-            <div className="staking-header-general-container">
-                <div style={{ marginTop: "2em", marginLeft: "2em" }}>
-                    <p className="header-staking-container">
+            <div className="header-container">
+                <div className="header-container__item">
+                    <p className="farming-container">
                         Stake ZAM, Earn ZAM
                     </p>
                     <p className="header-earn-container">
@@ -20,10 +20,9 @@ export const Header = () => {
                     <p className="header-earn-container">
                         Only <span className="earn-span">BEP20 ZAM.</span>
                     </p>
-
                 </div>
-                <div className="slider-container">
-                    <HeaderCard />
+                <div className="header-container__item">
+                    <HeaderCarouselComponent/>
                 </div>
             </div>
         </ >
