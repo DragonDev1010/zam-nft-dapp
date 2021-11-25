@@ -1,12 +1,7 @@
-import React, {useContext} from 'react';
-import {ModalWalletContext, WalletContext} from "@src/context";
+import React from 'react';
 
 
 export const CardComponent = (props) => {
-    const {setModalOpen} = useContext(ModalWalletContext);
-    const {walletAddress} = useContext(WalletContext);
-
-
     return (
         <>
             <div className="card card-filled card-narrow pl-0 pt-0 pr-0">

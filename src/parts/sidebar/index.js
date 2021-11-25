@@ -80,12 +80,12 @@ const Sidebar = (props) => {
                                     </Link>
                                 </li>
                                 <li className="sidebar__nav-box">
-                                    <Link to="/bridge"
-                                          className={`sidebar__nav-item ${props.location?.pathname === '/bridge' ? `active` : ''}`}>
+                                    <Link to="/staking"
+                                          className={`sidebar__nav-item ${props.location?.pathname === '/staking' ? `active` : ''}`}>
                                         <div className="sidebar__nav-icon">
-                                            <IconBridge/>
+                                            <IconStacking/>
                                         </div>
-                                        <span><b>Zamio</b> Bridge</span>
+                                        <span>Staking</span>
                                     </Link>
                                 </li>
                                 <li className="sidebar__nav-box sidebar__nav-more">
@@ -99,12 +99,12 @@ const Sidebar = (props) => {
                                 </li>
 
                                 <li className="sidebar__nav-box hidden-sm">
-                                    <Link to="/staking"
-                                          className={`sidebar__nav-item ${props.location?.pathname === '/staking' ? `active` : ''}`}>
+                                    <Link to="/bridge"
+                                          className={`sidebar__nav-item ${props.location?.pathname === '/bridge' ? `active` : ''}`}>
                                         <div className="sidebar__nav-icon">
-                                            <IconStacking/>
+                                            <IconBridge/>
                                         </div>
-                                        <span>Staking</span>
+                                        <span>Zamio Bridge</span>
                                     </Link>
                                 </li>
                                 <li className="sidebar__nav-box hidden-sm">
@@ -166,6 +166,24 @@ const Sidebar = (props) => {
                             <div className="sidebar__balance-price">
                                 ${rate}
                             </div>
+                        </div>
+                        <div className="sidebar__icons">
+                            <a className="sidebar__icons-icon" href="https://github.com/Zamzam-Technology" target="_blank">
+                                <img src="/images/icon_github.svg" height="31px" width="31px"/>
+                            </a>
+                            <a className="sidebar__icons-icon" href="https://coinmarketcap.com/currencies/zamio/" target="_blank">
+                                <img src="/images/icon_coinmarketcap.svg" height="31px" width="31px"/>
+                            </a>
+                            <a className="sidebar__icons-icon" href="https://t.me/zam_io" target="_blank">
+                                <img src="/images/icon_telegram.svg" height="31px" width="31px"/>
+                            </a>
+                            <a className="sidebar__icons-icon" href="https://twitter.com/zam_io" target="_blank">
+                                <img src="/images/icon_twitter.svg" height="31px" width="31px"/>
+                            </a>
+                        </div>
+                        <div className="sidebar__links">
+                            <a href="https://zam.io/docs/5e7b377cde8403176232a4cff7b679b4.pdf" className="gray-link" target="_blank">Privacy Policy</a>
+                            <a href="https://zam.io/docs/debe5b38c66e212ac7afddf8293af433.pdf" className="gray-link" target="_blank">Terms of Conditions</a>
                         </div>
                     </div>
 

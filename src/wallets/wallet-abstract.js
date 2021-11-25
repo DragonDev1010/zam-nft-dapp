@@ -1,5 +1,7 @@
 import React from "react";
 import {WalletFactory} from "@src/wallets/wallet-factory";
+import Web3 from "web3";
+import {CHAIN_ID_BSC, CHAIN_ID_ETH} from "../constants";
 
 
 export class WalletAbstract {
@@ -21,6 +23,7 @@ export class WalletAbstract {
         this.type = '';
         this.address = '';
         localStorage.setItem('walletType', null);
+        localStorage.setItem('walletconnect', null);
 
         return this;
     };
@@ -38,4 +41,42 @@ export class WalletAbstract {
         return newWallet;
     };
 
+    getNetwork = (chainId) => {
+        if (chainId === CHAIN_ID_ETH) {
+            return Web3.givenProvider;
+        } else if (chainId === CHAIN_ID_BSC) {
+            return process.env.RPC_URL_BSC;
+        }
+    }
+
+    getChainId = async () => {
+    };
+
+    getProvider = async () => {
+    }
+
+    switchNetwork = async (chainId, rpcUrl) => {
+        const provider = await this.getProvider();
+
+        try {
+            await provider.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId }],
+            });
+        } catch (switchError) {
+            console.log(switchError)
+            // This error code indicates that the chain has not been added to MetaMask.
+            if (switchError.code === 4902) {
+                try {
+                    await provider.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [{ chainId, rpcUrl}],
+                    });
+                } catch (addError) {
+                    // handle "add" error
+                }
+            }
+            // handle other "switch" errors
+        }
+    }
 }

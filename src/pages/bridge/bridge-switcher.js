@@ -1,7 +1,7 @@
 import React, {useContext, useState, useMemo, useEffect} from 'react';
 import {SelectComponent} from "@src/components/fields/Select";
 import {NETWORK_BSC, NETWORK_ETH, NETWORKS, SWAP_BSC_ETH, SWAP_ETH_BSC, TOKEN_ZAM, TOKENS} from "@src/constants";
-import {BridgeContext, ModalWalletContext, WalletContext} from "@src/context";
+import {BridgeContext, ModalContext, WalletContext} from "@src/context";
 import {bridgeAction} from "@src/actions/bridgeAction";
 
 const optionsNetworks = [
@@ -22,8 +22,10 @@ const optionsNetworks = [
 const getOptionByValue = (token) => optionsNetworks[optionsNetworks.findIndex(option => option.value === token)];
 
 export const BridgeSwitcher = () => {
-    const {setModalOpen} = useContext(ModalWalletContext);
+    const {setModalWalletOpen, setModalNetworkOpen} = useContext(ModalContext);
     const {wallet, setWalletError} = useContext(WalletContext);
+    const [allowance, setAllowance] = useState(0);
+    const [balance, setBalance] = useState(0);
 
     const {bridgeFrom, setBridgeFrom, bridgeTo, setBridgeTo, swapMethod, setSwapMethod} = useContext(BridgeContext);
     const [amount, setAmount] = useState(0);
@@ -37,9 +39,12 @@ export const BridgeSwitcher = () => {
 
     useEffect(async () => {
         const bridge = new bridgeAction(wallet, swapMethod);
-        await bridge.getBalance();
+        const balanceResponse = await bridge.getBalance();
 
-        setWalletError(bridge.error)
+        setAllowance(balanceResponse?.allowance);
+        setBalance(balanceResponse?.balance);
+
+        setWalletError(bridge.errorAction);
     }, [swapMethod]);
 
 
@@ -72,14 +77,16 @@ export const BridgeSwitcher = () => {
         const bridge = new bridgeAction(wallet, swapMethod);
         await bridge.approve();
 
-        setWalletError(bridge.error);
+        setWalletError(bridge.errorAction);
+        setModalNetworkOpen(bridge.needChainId);
     }
 
     async function transfer() {
         const bridge = new bridgeAction(wallet, swapMethod);
         await bridge.transfer(amount);
 
-        setWalletError(bridge.error);
+        setWalletError(bridge.errorAction);
+        setModalNetworkOpen(bridge.needChainId);
     }
 
     const revertHandler = (event) => {
@@ -143,7 +150,7 @@ export const BridgeSwitcher = () => {
 
 
             {
-                wallet?.address && wallet.allowance > 0 ?
+                wallet?.address && allowance > 0 ?
                     <>
                         <label className="input-field__label">Amount</label>
                         <div className="input-field mt-10 mb-10">
@@ -158,8 +165,8 @@ export const BridgeSwitcher = () => {
             {
                 wallet?.address ? (
                     <div className="bridge-switcher__amount-value mb-10">
-                        <span>Available for transaction:</span>
-                        <b>{wallet.balance}</b>
+                        <span>Available for transaction:</span>&nbsp;
+                        <b>{balance}</b>
                     </div>
                 ) : <div className="mb-40"/>
             }
@@ -168,12 +175,12 @@ export const BridgeSwitcher = () => {
             {
                 !wallet.error ?
                     wallet?.address ?
-                        wallet.allowance > 0 ?
+                        allowance > 0 ?
                             <button className="button-green w-full" onClick={transfer}>Transfer</button>
                             :
                             <button className="button-green w-full" onClick={approve}>Approve</button>
                         :
-                        <button className="button-green w-full" onClick={() => setModalOpen(true)}>Connect
+                        <button className="button-green w-full" onClick={() => setModalWalletOpen(true)}>Connect
                             Wallet</button>
                     : ''
             }

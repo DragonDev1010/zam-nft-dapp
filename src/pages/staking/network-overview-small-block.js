@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {StakingContext} from "@src/context/staking-context";
 
 
 export const SmallBlock = () => {
+    const {apy} = useContext(StakingContext);
+
     return (
         <>
             <div  className="small-block-container">
                 <div className="small-block-header">
-                    Current APR
+                    Current APY
                 </div>
                 <div className="small-block-body">
-                    51.08%
+                    {apy}%
                 </div>
             </div>
         </ >

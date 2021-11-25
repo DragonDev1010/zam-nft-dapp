@@ -10,21 +10,21 @@ import contractZamEthAbi from "@src/contracts/bridge/zam_eth.json";
 import contractEthAgentAbi from "@src/contracts/bridge/eth_agent.json";
 import contractZamBscAbi from "@src/contracts/bridge/zam_bsc.json";
 import contractBscAgentAbi from "@src/contracts/bridge/bsc_agent.json";
-import {SWAP_BSC_ETH, SWAP_ETH_BSC} from "@src/constants";
+import {NETWORK_BSC, NETWORK_ETH, SWAP_BSC_ETH, SWAP_ETH_BSC} from "@src/constants";
+import {CHAIN_ID_BSC, CHAIN_ID_ETH} from "../constants";
 
 
 export class bridgeAction {
     constructor(wallet, swapMethod) {
-        this.error = '';
-        this.balance = 0;
-        this.allowance = 0;
+        this.errorAction = [];
+        this.needChainId = 0;
 
         this.swapMethod = swapMethod;
         this.wallet = wallet;
     }
 
     init = async () => {
-        this.checkWalletConnection();
+        await this.checkWalletConnection();
 
         switch (this.swapMethod) {
             case 'swapETH2BSC':
@@ -32,68 +32,46 @@ export class bridgeAction {
                 this.contractAgentAbi = contractEthAgentAbi;
                 this.contractZamAddress = contractZamEthAddress;
                 this.contractAgentAddress = contractEthAgentAddress;
-                this.network = Web3.givenProvider;
+                this.network = this.wallet.getNetwork(CHAIN_ID_ETH);
+
                 break;
             case 'swapBSC2ETH':
                 this.contractZamAbi = contractZamBscAbi;
                 this.contractAgentAbi = contractBscAgentAbi;
                 this.contractZamAddress = contractZamBscAddress;
                 this.contractAgentAddress = contractBscAgentAddress;
-                this.network = 'https://bsc-dataseed.binance.org/';
+                this.network = this.wallet.getNetwork(CHAIN_ID_BSC);
                 break;
             default:
-                throw new Error('Way is not support');
-        }
+                throw new Error('Way is not supported');
 
+        }
 
         const web3 = new Web3(this.network);
         this.contractToken = new (web3.eth.Contract)(this.contractZamAbi, this.contractZamAddress);
+
     }
 
-    getChainId = async () => {
-        if (this.wallet.type === 'metamask') {
-            return await window.ethereum.request({method: 'eth_chainId'});
-        } else if (this.wallet.type === 'binance') {
-            return await window.BinanceChain.send('eth_chainId').result;
-        }
-    };
+
 
     getBalance = async () => {
-        this.error = '';
-        this.balance = 0;
-        this.allowance = 0;
-
         try {
-            this.init();
+            await this.init();
+
             if (!this.wallet.address) {
                 return;
             }
-
-            const chainId = await this.getChainId();
-
-            if (this.wallet.type === 'metamask') {
-                if (chainId !== '0x1' && this.swapMethod === SWAP_ETH_BSC) {
-                    throw new Error('Please switch you Metamask wallet to Ethereum network.');
-                }
-                if (chainId !== '0x38' && this.swapMethod === SWAP_BSC_ETH) {
-                    throw new Error('Please switch you Metamask wallet to Binance Smart Chain network.');
-                }
-            } else if (this.wallet.type === 'binance') {
-                if (chainId !== '0x01' && this.swapMethod === SWAP_ETH_BSC) {
-                    throw new Error('Please switch you Binance Chain wallet to Ethereum network.');
-                }
-                if (chainId !== '0x38' && this.swapMethod === SWAP_BSC_ETH) {
-                    throw new Error('Please switch you Binance Chain to Binance Smart Chain network.');
-                }
-            }
+            await this.checkWalletChain();
 
             const balance = await this.contractToken.methods.balanceOf(this.wallet.address).call();
             const allowance = await this.contractToken.methods.allowance(this.wallet.address, this.contractAgentAddress).call();
 
-            this.balance = Web3.utils.fromWei(balance);
-            this.allowance = allowance;
+            return {
+                balance: Web3.utils.fromWei(balance),
+                allowance,
+            }
         } catch (err) {
-            this.error = err.message;
+            this.errorAction.push(err.message);
         }
 
     }
@@ -101,7 +79,13 @@ export class bridgeAction {
 
     approve = async () => {
         try {
-            this.init();
+            await this.init();
+
+            if (!this.wallet.address) {
+                return;
+            }
+
+            await this.checkWalletChain();
 
             const maxAmount = '0x' + dec2hex('1' + '0'.repeat(60));
 
@@ -110,12 +94,14 @@ export class bridgeAction {
                 from: this.wallet.address,
                 'data': this.contractToken.methods.approve(this.contractAgentAddress, maxAmount).encodeABI()
             };
-            await window.ethereum.request({
+
+            const provider = await this.wallet.getProvider();
+            await provider.request({
                 method: 'eth_sendTransaction',
                 params: [transactionParameters],
             });
         } catch (e) {
-            this.error = e.message;
+            this.errorAction.push(e.message);
         }
 
     }
@@ -126,7 +112,13 @@ export class bridgeAction {
             if (parseFloat(amount) <= 0) {
                 throw new Error('Please enter an amount greater than 0');
             }
-            this.init();
+            await this.init();
+
+            if (!this.wallet.address) {
+                return;
+            }
+
+            await this.checkWalletChain();
 
             const web3 = new Web3(this.network);
 
@@ -137,7 +129,7 @@ export class bridgeAction {
             const transactionParametersSwap = {
                 to: this.contractAgentAddress,
                 from: this.wallet.address,
-                data: contractAgent.methods[swapMethod](
+                data: contractAgent.methods[this.swapMethod](
                     this.contractZamAddress,
                     Web3.utils.toHex(amountInWei)
                 ).encodeABI()
@@ -145,13 +137,15 @@ export class bridgeAction {
 
             const gas = await web3.eth.estimateGas(transactionParametersSwap);
 
-            await window.ethereum.request({
+            const provider = await this.wallet.getProvider();
+
+            await await provider.request({
                 method: 'eth_sendTransaction',
                 params: [{...transactionParametersSwap, gas: Web3.utils.toHex(gas)}],
             });
 
         } catch (e) {
-            this.error = e.message
+            this.errorAction.push(e.message);
         }
     }
 
@@ -178,6 +172,33 @@ export class bridgeAction {
         if (!this.wallet.address) {
             await this.wallet.checkConnection();
         }
+    }
+
+    getChainId = async () => {
+        return await this.wallet.getChainId();
+    };
+
+    checkWalletChain = async (needException = true) => {
+        const chainId = await this.getChainId();
+
+        if (chainId !== CHAIN_ID_ETH && chainId !== '0x01' && this.swapMethod === SWAP_ETH_BSC) {
+            this.needChainId = NETWORK_ETH;
+            const message = 'Please switch your wallet to Ethereum network.';
+            this.errorAction.push(message);
+            if (needException) {
+                throw new Error(message);
+            }
+        }
+        if (chainId !== CHAIN_ID_BSC && this.swapMethod === SWAP_BSC_ETH) {
+            this.needChainId = NETWORK_BSC;
+            const message = 'Please switch your wallet to Binance Smart Chain network.';
+            this.errorAction.push(message);
+
+            if (needException) {
+                throw new Error(message);
+            }
+        }
+
     }
 }
 

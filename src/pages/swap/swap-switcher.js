@@ -1,9 +1,9 @@
 import React, {useContext, useState, useMemo, useEffect} from 'react';
 import {SelectComponent} from "@src/components/fields/Select";
-import {CHAIN_ID_BINANCE, TOKEN_USDT, TOKEN_ZAM, TOKENS} from "@src/constants";
-import {ModalWalletContext, RateContext, SwapContext, WalletContext} from "@src/context";
+import {TOKEN_USDT, TOKEN_ZAM, TOKENS} from "@src/constants";
+import {ModalContext, RateContext, SwapContext, WalletContext} from "@src/context";
 import {float, toFixed, int} from "@src/utils";
-import {swapAction} from "@src/actions/swapAction";
+import {SwapAction} from "@src/actions/swapAction";
 import {IconArrowLeft, IconFilter} from "@src/icons/icons";
 import {Tooltip} from "@src/components/fields/Tooltip";
 
@@ -28,6 +28,7 @@ const defaultSlippage = .1;
 
 const slippageText = `Slippage is when there is a price difference from the amount of the original market order and 
 the actual price paid of a stock.`;
+const deadlineText = `Your transaction will revert if it is pending for more than this long.`;
 
 export const SwapSwitcher = ({mainToken}) => {
     const {rate} = useContext(RateContext);
@@ -36,7 +37,7 @@ export const SwapSwitcher = ({mainToken}) => {
     const [valueTo, setValueTo] = useState(0);
     const inputRefFrom = React.createRef();
     const inputRefTo = React.createRef();
-    const {setModalOpen} = useContext(ModalWalletContext);
+    const {setModalWalletOpen, setModalNetworkOpen} = useContext(ModalContext);
     const {wallet, walletError, setWalletError} = useContext(WalletContext);
     const [lastInput, setLastInput] = useState('from');
     const [allowance, setAllowance] = useState({});
@@ -51,24 +52,20 @@ export const SwapSwitcher = ({mainToken}) => {
     }, []);
 
     useEffect(async () => {
-        const allowance = await new swapAction(wallet, swapFrom, swapTo).getAllowance();
+        const swap = new SwapAction(wallet, swapFrom, swapTo);
+        const allowance = await swap.getAllowance();
+
         setAllowance(allowance);
-
-        const chainId = await wallet.getChainId();
-
-        if (chainId !== CHAIN_ID_BINANCE) {
-            setWalletError('Please switch you wallet to Binance Smart Chain network.');
-        }
-
+        setWalletError(swap.errorAction);
     }, [wallet]);
 
     useEffect(async () => {
-        const swap = new swapAction(wallet, swapFrom, swapTo);
-
         if (lastInput === 'from') {
+            const swap = new SwapAction(wallet, swapFrom, swapTo);
             const amountB = await swap.getAmountB(valueFrom);
             setValueTo(amountB);
         } else if (lastInput === 'to') {
+            const swap = new SwapAction(wallet, swapTo, swapFrom);
             const amountA = await swap.getAmountA(valueTo);
             setValueFrom(amountA);
         }
@@ -96,34 +93,43 @@ export const SwapSwitcher = ({mainToken}) => {
     }
 
     const changeValueFrom = (event) => {
-        setValueFrom(parseInt(event.target.value))
+        setValueFrom(float(event.target.value))
         setLastInput('from');
     }
     const changeValueTo = (event) => {
-        setValueTo(parseInt(event.target.value))
+        setValueTo(toFixed(float(event.target.value)), 1000000)
         setLastInput('to');
     }
     const approve = async () => {
-        await new swapAction(wallet, swapFrom, swapTo).approve();
+        const swap = new SwapAction(wallet, swapFrom, swapTo);
+        await swap.approve();
+        setWalletError(swap.errorAction);
+        setModalNetworkOpen(swap.needChainId);
     }
     const swapHandler = async () => {
         if (!valueFrom || !valueTo) {
             return;
         }
-        await new swapAction(wallet, swapFrom, swapTo).swap(valueFrom, valueTo, slippage, deadline);
+        const swap = new SwapAction(wallet, swapFrom, swapTo);
+        await swap.swap(valueFrom, valueTo, slippage, deadline);
+        setWalletError(swap.errorAction);
+        setModalNetworkOpen(swap.needChainId);
     }
 
-    let partAppove;
+    let partAppove = null;
 
-    if (!Object.keys(allowance).length) {
-        partAppove = null;
-    } else if (!allowance.allowanceA && !allowance.allowanceB) {
-        partAppove = 0;
-    } else if (!allowance.allowanceA || !allowance.allowanceB) {
-        partAppove = 1;
-    } else {
-        partAppove = 2;
+    if (allowance) {
+        if (!Object.keys(allowance).length) {
+            partAppove = null;
+        } else if (!allowance.allowanceA && !allowance.allowanceB) {
+            partAppove = 0;
+        } else if (!allowance.allowanceA || !allowance.allowanceB) {
+            partAppove = 1;
+        } else {
+            partAppove = 2;
+        }
     }
+
 
     const setCustomSlippage = (e) => {
         const {value} = e.target;
@@ -206,36 +212,34 @@ export const SwapSwitcher = ({mainToken}) => {
                         </div>
 
                         {
-                            !walletError ?
-                                wallet?.address ?
-                                    (
-                                        partAppove === 2 ?
-                                            <button className="button-green w-full" disabled={!valueFrom || !valueTo}
-                                                    onClick={swapHandler}>{valueFrom && valueTo ? 'Swap' : 'Enter Amount'}</button>
-                                            :
-                                            (
-                                                partAppove !== null ?
-                                                    <>
-                                                        <div className="swap-switcher__approve">
-                                                            <span>Approved progress:</span>
-                                                            <span>{partAppove}/2</span>
-                                                        </div>
-                                                        <button className="button-green w-full"
-                                                                onClick={approve}>Approve
-                                                        </button>
-                                                    </>
-                                                    : ''
-                                            )
-                                    )
-                                    :
-                                    <button className="button-green w-full" onClick={() => setModalOpen(true)}>Connect
-                                        Wallet</button>
-                                : ''
+                            wallet?.address ?
+                                (
+                                    partAppove === 2 ?
+                                        <button className="button-green w-full" disabled={!valueFrom || !valueTo}
+                                                onClick={swapHandler}>{valueFrom && valueTo ? 'Swap' : 'Enter Amount'}</button>
+                                        :
+                                        (
+                                            partAppove !== null ?
+                                                <>
+                                                    <div className="swap-switcher__approve">
+                                                        <span>Approved progress:</span>
+                                                        <span>{partAppove}/2</span>
+                                                    </div>
+                                                    <button className="button-green w-full"
+                                                            onClick={approve}>Approve
+                                                    </button>
+                                                </>
+                                                : ''
+                                        )
+                                )
+                                :
+                                <button className="button-green w-full" onClick={() => setModalWalletOpen(true)}>Connect
+                                    Wallet</button>
                         }
 
                     </div>
                     :
-                    <div className="card card-narrow card-glow swap-settings">
+                    <div className="card card-filled card-narrow card-glow swap-settings">
                         <div className="swap-settings__header">
                             <button className="swap-settings__arrow" onClick={() => setFilterActive(false)}>
                                 <IconArrowLeft/>
@@ -248,39 +252,39 @@ export const SwapSwitcher = ({mainToken}) => {
                         <div className="swap-settings__content">
                             <label className="input-field__label">Slippage Tolerance <Tooltip text={slippageText}/></label>
                             <div className="input-field mt-10 mb-40">
-                                <div className="input-field__column swap-settings__slippage">
+                                <div className="input-field__column buttons-switcher">
                                     <button className={slippage === .1 ? 'active' : ''}
                                             onClick={() => setSlippage(.1)}>0.1%
                                     </button>
                                 </div>
-                                <div className="input-field__column swap-settings__slippage">
+                                <div className="input-field__column buttons-switcher">
                                     <button className={slippage === .5 ? 'active' : ''}
                                             onClick={() => setSlippage(.5)}>0.5%
                                     </button>
                                 </div>
-                                <div className="input-field__column swap-settings__slippage">
+                                <div className="input-field__column buttons-switcher">
                                     <button className={slippage === 1 ? 'active' : ''}
                                             onClick={() => setSlippage(1)}>1%
                                     </button>
                                 </div>
                                 <div className="input-field__column ">
-                                    <input className="input-field__input text-right swap-settings__slippage"
+                                    <input className="input-field__input text-right buttons-switcher"
                                            onChange={setCustomSlippage}
                                            value={slippage && ![0.1, 0.5, 1].includes(slippage) ? slippage : ''}
                                            placeholder="Custom"/>
                                 </div>
                             </div>
 
-                            <label className="input-field__label">Transaction Deadline <Tooltip text={slippageText}/></label>
+                            <label className="input-field__label">Transaction Deadline <Tooltip text={deadlineText}/></label>
                             <div className="input-field mt-10">
-                                <div className="input-field__column swap-settings__slippage">
+                                <div className="input-field__column buttons-switcher">
                                     <input className="input-field__input"
                                            onChange={(e) => setDeadline(int(e.target.value))}
                                            value={deadline || ''}
                                            placeholder="Custom"/>
                                 </div>
                                 <div className="input-field__column text-right">
-                                    <input className="input-field__input text-right swap-settings__slippage"
+                                    <input className="input-field__input text-right buttons-switcher"
                                            disabled={true}
                                            placeholder="minutes"/>
                                 </div>

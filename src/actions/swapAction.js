@@ -5,18 +5,22 @@ import contractPancakeRouterAbi from '@src/contracts/pancake/PancakeRouter_ABI.j
 import contractPancakeIerc20 from '@src/contracts/pancake/IERC20.json';
 import {PancakeAddresses, TOKEN_ADDRESES} from "@src/config";
 import {dec2hex, sortTokens} from "@src/utils";
+import {CHAIN_ID_BSC, NETWORK_BSC} from "../constants";
 
 const NETWORK_ENV = process.env.NETWORK_ENV;
-const NETWORK_URL = process.env.NETWORK_URL;
+const NETWORK_URL = process.env.RPC_URL_BSC;
 
-export class swapAction {
+export class SwapAction {
     constructor(wallet, swapFrom, swapTo) {
+        this.errorAction = [];
+        this.needChainId = 0;
+
         this.network = NETWORK_URL;
         this.addressFactory = PancakeAddresses[NETWORK_ENV].factory;
         this.addressRouter = PancakeAddresses[NETWORK_ENV].router;
         this.wallet = wallet;
-        this.tokenA = TOKEN_ADDRESES[NETWORK_ENV][swapTo];
-        this.tokenB = TOKEN_ADDRESES[NETWORK_ENV][swapFrom];
+        this.tokenA = TOKEN_ADDRESES[NETWORK_ENV][swapFrom];
+        this.tokenB = TOKEN_ADDRESES[NETWORK_ENV][swapTo];
     }
 
     init = async () => {
@@ -46,7 +50,7 @@ export class swapAction {
         const contractRouter = new (web3.eth.Contract)(contractPancakeRouterAbi, this.addressRouter);
         const {reserveA, reserveB} = await this.getReserves(this.addressPair, this.tokenA, this.tokenB);
 
-        return parseInt(await contractRouter.methods.getAmountOut(amountA, reserveA, reserveB).call())
+        return await contractRouter.methods.getAmountOut(amountA, reserveA, reserveB).call()
     }
 
     getAmountA = async (amountB) => {
@@ -58,105 +62,157 @@ export class swapAction {
         const contractRouter = new (web3.eth.Contract)(contractPancakeRouterAbi, this.addressRouter);
         const {reserveA, reserveB} = await this.getReserves(this.addressPair, this.tokenA, this.tokenB);
 
-        return parseInt(await contractRouter.methods.getAmountOut(amountB, reserveA, reserveB).call())
+        return await contractRouter.methods.getAmountOut(amountB, reserveA, reserveB).call()
     }
 
     getAllowance = async () => {
-        await this.checkWalletConnection();
+        try {
+            await this.checkWalletConnection();
 
-        const web3 = new Web3(this.network);
+            if (!this.wallet.address) {
+                return;
+            }
 
-        const contractTokenA = new (web3.eth.Contract)(contractPancakeIerc20, this.tokenA);
-        const allowanceA = await contractTokenA.methods.allowance(this.wallet.address, this.addressRouter).call();
-        // const balanceA = await contractTokenA.methods.balanceOf(this.wallet.address).call();
+            await this.checkWalletChain(false);
 
-        const contractTokenB = new (web3.eth.Contract)(contractPancakeIerc20, this.tokenB);
-        const allowanceB = await contractTokenB.methods.allowance(this.wallet.address, this.addressRouter).call();
-        // const balanceB = await contractTokenB.methods.balanceOf(this.wallet.address).call();
+            const web3 = new Web3(this.network);
 
-        return {
-            allowanceA: parseInt(allowanceA),
-            allowanceB: parseInt(allowanceB)
+            const contractTokenA = new (web3.eth.Contract)(contractPancakeIerc20, this.tokenA);
+            const allowanceA = await contractTokenA.methods.allowance(this.wallet.address, this.addressRouter).call();
+
+            const contractTokenB = new (web3.eth.Contract)(contractPancakeIerc20, this.tokenB);
+            const allowanceB = await contractTokenB.methods.allowance(this.wallet.address, this.addressRouter).call();
+
+            return {
+                allowanceA: parseInt(allowanceA),
+                allowanceB: parseInt(allowanceB)
+            }
+        } catch (e) {
+            this.errorAction.push(e.message);
         }
     }
 
     approve = async () => {
-        await this.checkWalletConnection();
+        this.error = '';
+        try {
+            await this.checkWalletConnection();
 
-        const web3 = new Web3(this.network);
-        const maxAmount = '0x' + dec2hex('1' + '0'.repeat(60));
+            await this.checkWalletChain();
 
-        const {allowanceA, allowanceB} = this.getAllowance();
-        if (!allowanceA) {
-            const contractTokenA = new (web3.eth.Contract)(contractPancakeIerc20, this.tokenA);
+            const web3 = new Web3(this.network);
+            const maxAmount = '0x' + dec2hex('1' + '0'.repeat(60));
 
-            const transactionParameters = {
-                to: this.tokenA,
-                from: this.wallet.address,
-                data: contractTokenA.methods.approve(this.addressRouter, maxAmount).encodeABI()
-            };
+            const {allowanceA, allowanceB} = this.getAllowance();
+            if (!allowanceA) {
+                const contractTokenA = new (web3.eth.Contract)(contractPancakeIerc20, this.tokenA);
 
-            const gas = await web3.eth.estimateGas(transactionParameters);
+                const transactionParameters = {
+                    to: this.tokenA,
+                    from: this.wallet.address,
+                    data: contractTokenA.methods.approve(this.addressRouter, maxAmount).encodeABI()
+                };
 
-            await window.ethereum.request({
-                method: 'eth_sendTransaction',
-                params: [{...transactionParameters, gas: Web3.utils.toHex(Math.floor(gas * 1.1))}],
-            });
-        }
-        if (!allowanceB) {
-            const contractTokenB = new (web3.eth.Contract)(contractPancakeIerc20, this.tokenB);
+                const gas = await web3.eth.estimateGas(transactionParameters);
+                const provider = await this.wallet.getProvider();
 
-            const transactionParameters = {
-                to: this.tokenB,
-                from: this.wallet.address,
-                data: contractTokenB.methods.approve(this.addressRouter, maxAmount).encodeABI()
-            };
+                await provider.request({
+                    method: 'eth_sendTransaction',
+                    params: [{...transactionParameters, gas: Web3.utils.toHex(Math.floor(gas * 1.1))}],
+                });
+            }
+            if (!allowanceB) {
+                const contractTokenB = new (web3.eth.Contract)(contractPancakeIerc20, this.tokenB);
 
-            const gas = await web3.eth.estimateGas(transactionParameters);
+                const transactionParameters = {
+                    to: this.tokenB,
+                    from: this.wallet.address,
+                    data: contractTokenB.methods.approve(this.addressRouter, maxAmount).encodeABI()
+                };
 
-            await window.ethereum.request({
-                method: 'eth_sendTransaction',
-                params: [{...transactionParameters, gas: Web3.utils.toHex(Math.floor(gas * 1.1))}],
-            });
+                const gas = await web3.eth.estimateGas(transactionParameters);
+                const provider = await this.wallet.getProvider();
+
+                await provider.request({
+                    method: 'eth_sendTransaction',
+                    params: [{...transactionParameters, gas: Web3.utils.toHex(Math.floor(gas * 1.1))}],
+                });
+            }
+        } catch (e) {
+            this.errorAction.push(e.message);
         }
 
     }
 
 
     swap = async (amountFrom, amountTo, slippage = .1, deadline = 30) => {
-        await this.checkWalletConnection();
+        try {
+            await this.checkWalletConnection();
 
-        const web3 = new Web3(this.network);
+            await this.checkWalletChain();
 
-        const contractRouter = new (web3.eth.Contract)(contractPancakeRouterAbi, this.addressRouter);
+            const {allowanceA, allowanceB} = await this.getAllowance();
 
-        const amountInMax = Math.floor(amountFrom * (1 + slippage / 100));
-        const deadlineSeconds = deadline * 60 + Math.floor(Date.now() / 1000);
+            if (!allowanceA || !allowanceB) {
+                throw new Error('Approve required');
+            }
+
+            const web3 = new Web3(this.network);
+
+            const contractRouter = new (web3.eth.Contract)(contractPancakeRouterAbi, this.addressRouter);
+
+            const amountInMax = amountFrom * (1 + slippage / 100);
+            const deadlineSeconds = deadline * 60 + Math.floor(Date.now() / 1000);
+
+            const amountInMaxWei = Web3.utils.toWei(parseFloat(amountInMax).toString());
+            const amountToWei = Web3.utils.toWei(parseFloat(amountTo).toString());
 
 
-        const transactionParams = {
-            to: this.addressRouter,
-            from: this.wallet.address,
-            data: contractRouter.methods.swapTokensForExactTokens(
-                amountTo,
-                amountInMax,
-                [this.tokenA, this.tokenB],
-                this.wallet.address,
-                deadlineSeconds.toString()
+            const transactionParams = {
+                to: this.addressRouter,
+                from: this.wallet.address,
+                data: contractRouter.methods.swapTokensForExactTokens(
+                    amountToWei,
+                    amountInMaxWei,
+                    [this.tokenA, this.tokenB],
+                    this.wallet.address,
+                    deadlineSeconds.toString()
                 ).encodeABI()
+            }
+
+            const gas = await web3.eth.estimateGas(transactionParams);
+            const provider = await this.wallet.getProvider();
+
+            await provider.request({
+                method: 'eth_sendTransaction',
+                params: [{...transactionParams, gas: Web3.utils.toHex(Math.floor(gas))}],
+            });
+        } catch (e) {
+            this.errorAction.push(e.message);
         }
-
-        const gas = await web3.eth.estimateGas(transactionParams);
-
-        await window.ethereum.request({
-            method: 'eth_sendTransaction',
-            params: [{...transactionParams, gas: Web3.utils.toHex(Math.floor(gas))}],
-        });
     }
 
     checkWalletConnection = async () => {
         if (!this.wallet.address) {
             await this.wallet.checkConnection();
+        }
+    }
+
+    getChainId = async () => {
+        return await this.wallet.getChainId();
+    };
+
+
+    checkWalletChain = async (needException = true) => {
+        const chainId = await this.getChainId();
+
+        if (chainId !== CHAIN_ID_BSC) {
+            this.needChainId = NETWORK_BSC;
+            const message = 'Please switch your wallet to Binance Smart Chain network.';
+            this.errorAction.push(message);
+
+            if (needException) {
+                throw new Error(message);
+            }
         }
     }
 }

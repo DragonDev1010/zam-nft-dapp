@@ -16,6 +16,8 @@ export const ModalWalletConnect = (props) => {
             return false;
         }
 
+        wallet.resetWallet();
+
         const walletConnector = WalletFactory.getWallet(type);
         await walletConnector.connect();
 
@@ -40,8 +42,10 @@ export const ModalWalletConnect = (props) => {
                     <input type="checkbox" checked={agreement} onChange={() => setAgreement(!agreement)}/>
                     <IconCheckMark/>
                 </div>
-                <div className="checkbox-label">By using zam.io you agree to our <a href="https://zam.io/docs/debe5b38c66e212ac7afddf8293af433.pdf" target="_blank">
-                    Terms and Conditions</a> along with our <a href="https://zam.io/docs/5e7b377cde8403176232a4cff7b679b4.pdf" target="_blank">Privacy
+                <div className="checkbox-label">By using zam.io you agree to our <a
+                    href="https://zam.io/docs/debe5b38c66e212ac7afddf8293af433.pdf" target="_blank">
+                    Terms and Conditions</a> along with our <a
+                    href="https://zam.io/docs/5e7b377cde8403176232a4cff7b679b4.pdf" target="_blank">Privacy
                     Policy</a> and any other applicable documents.
                 </div>
             </label>
@@ -51,16 +55,24 @@ export const ModalWalletConnect = (props) => {
             </p>
 
             <div className="modal__wallet--wallets">
-                <div className={`wallet ${agreement ? 'active' : ''} ${wallet.type === 'metamask' && wallet.address ? 'current' : ''}`}
-                     onClick={() => connectWallet('metamask')}>
-                    <img src="images/icon_metamask.svg" alt="wallet"/>
+                <div
+                    className={`wallet ${agreement ? 'active' : ''} ${wallet.type === 'metamask' && wallet.address ? 'current' : ''}`}
+                    onClick={() => connectWallet('metamask')}>
+                    <img src="/images/icon_metamask.svg" alt="wallet"/>
                     <span className="wallet__name">Metamask</span>
                 </div>
-                <div className={`wallet ${agreement ? 'active' : ''} ${wallet.type === 'binance' && wallet.address ? 'current' : ''}`}
-                     onClick={() => connectWallet('binance')}>
-                    <img src="images/tokens/icon_token_bsc.svg" alt="wallet"/>
+                <div
+                    className={`wallet ${agreement ? 'active' : ''} ${wallet.type === 'binance' && wallet.address ? 'current' : ''}`}
+                    onClick={() => connectWallet('binance')}>
+                    <img src="/images/tokens/icon_token_bsc.svg" alt="wallet"/>
                     <span className="wallet__name">Binance Wallet</span>
                 </div>
+                {/*<div*/}
+                {/*    className={`wallet ${agreement ? 'active' : ''} ${wallet.type === 'walletconnect' && wallet.address ? 'current' : ''}`}*/}
+                {/*    onClick={() => connectWallet('walletconnect')}>*/}
+                {/*    <img src="/images/icon_walletconnector.svg" alt="wallet"/>*/}
+                {/*    <span className="wallet__name">Wallet Connect</span>*/}
+                {/*</div>*/}
             </div>
         </div>
     );

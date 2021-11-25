@@ -25,19 +25,19 @@ export const SwapChart = ({mainToken}) => {
 
     useEffect(() => {
         const query = `{
-              pairHourDatas(where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+              pairHourDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
                 token1Price
                 token0Price
                 periodBegin,
                 periodEnd,
               },
-              pairDayDatas(where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+              pairDayDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
                 token1Price
                 token0Price
                 periodBegin,
                 periodEnd,
               },
-              pairWeekDatas(where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+              pairWeekDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
                 token1Price
                 token0Price
                 periodBegin,

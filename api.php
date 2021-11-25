@@ -16,6 +16,8 @@ switch ($type) {
         $url = 'https://api.coingecko.com/api/v3/coins/zam-io/market_chart?vs_currency=usd&days=max&interval=daily';
         $file = 'coingeco_market';
         break;
+    default:
+        exit('Type is not defined');
 }
 $lifetime = 60; // seconds
 
@@ -25,8 +27,12 @@ if (file_exists($file)) {
     }
 }
 
+$newContent = @file_get_contents($url);
+if($newContent === false) {
+    exit(file_get_contents($file));
+}
 
 ob_start();
-echo file_get_contents($url);
+echo $newContent;
 file_put_contents($file, ob_get_contents());
 ob_end_flush();

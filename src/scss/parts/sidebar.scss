@@ -89,7 +89,7 @@
 
     &-box {
       @media (max-width: 768px) {
-        width: 25%;
+        width: 20%;
       }
     }
     &-more {
@@ -159,6 +159,7 @@
     display: flex;
 
     &-image {
+      display: block;
       width: 82px;
     }
 
@@ -176,6 +177,10 @@
     &-apps {
       display: flex;
       margin-top: 16px;
+
+      a {
+        display: block;
+      }
     }
 
     &-app {
@@ -228,11 +233,29 @@
       color: #FFFFFF;
     }
   }
+  &__icons {
+    display: flex;
+    align-items: center;
+    padding-bottom: 20px;
+    &-icon {
+      display: flex;
+      justify-content: center;
+      width: 25%;
+      opacity: .5;
+      text-decoration: none;
+      &:hover {
+        opacity: 1;
+      }
+    }
+  }
+  &__links {
+    padding-bottom: 20px;
+  }
   @media (max-width: 768px) {
     display: flex;
     align-items: center;
     position: fixed;
-    z-index: 2;
+    z-index: 3;
     top: calc(100% - 63px);
     height: 63px;
     padding: 0;
