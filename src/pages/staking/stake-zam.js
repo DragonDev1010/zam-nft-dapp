@@ -4,6 +4,7 @@ import {IconCalculator} from "@src/icons/icons";
 import {ModalContext, WalletContext, StakingContext} from "@src/context";
 import {float, numberFormat, toFixed} from "@src/utils";
 import {StakingAction} from "@src/actions/stakingAction";
+import {ButtonSpinner} from "@src/components/buttons/button-spinner";
 
 export const StakingZam = ({setCalculatorActive}) => {
     const [toStakeValue, setToStakeValue] = useState(0);
@@ -11,13 +12,13 @@ export const StakingZam = ({setCalculatorActive}) => {
     const [action, setAction] = useState('stake');
     const {setModalWalletOpen, setModalNetworkOpen} = useContext(ModalContext);
     const {wallet, walletError, setWalletError} = useContext(WalletContext);
-    const {staked, balance, allowance} = useContext(StakingContext);
+    const {staked, balance, allowance, isPending, setIsPending} = useContext(StakingContext);
 
     const value = (action === 'stake') ? toStakeValue : toUnStakeValue;
 
     const approve = async () => {
         const stakeAction = new StakingAction(wallet);
-        await stakeAction.approve();
+        await stakeAction.approve(setIsPending);
         setWalletError(stakeAction.errorAction);
         setModalNetworkOpen(stakeAction.needChainId);
     }
@@ -37,7 +38,7 @@ export const StakingZam = ({setCalculatorActive}) => {
 
     const stakeAction = async () => {
         const stakeAction = new StakingAction(wallet);
-        await stakeAction.stakeOrUnstake(action, toStakeValue, toUnStakeValue);
+        await stakeAction.stakeOrUnstake(action, toStakeValue, toUnStakeValue, setIsPending);
 
         setWalletError(stakeAction.errorAction);
         setModalNetworkOpen(stakeAction.needChainId);
@@ -71,11 +72,12 @@ export const StakingZam = ({setCalculatorActive}) => {
 
 
             <div className="filed-container-title mt-20">
-                <div>{action === 'stake' ? 'Stake' : 'Unstake'} ZAM <span className="field-container-title-span">BEP20</span></div>
+                <div>{action === 'stake' ? 'Stake' : 'Unstake'} ZAM <span
+                    className="field-container-title-span">BEP20</span></div>
                 {
                     action === 'stake' ?
                         <div>Available for stake: {numberFormat(toFixed(balance, 100))}</div>
-                        :  <div>Available for unstake: {numberFormat(toFixed(staked, 100))}</div>
+                        : <div>Available for unstake: {numberFormat(toFixed(staked, 100))}</div>
 
                 }
             </div>
@@ -93,8 +95,9 @@ export const StakingZam = ({setCalculatorActive}) => {
                                 <div className="zam-token-name">
                                     ZAM
                                 </div>
-                                <button onClick={() => setAmountValue(toFixed(action === 'stake' ? balance : staked, 100))}
-                                        className="max-button">Max
+                                <button
+                                    onClick={() => setAmountValue(toFixed(action === 'stake' ? balance : staked, 100))}
+                                    className="max-button">Max
                                 </button>
                             </div>
                         </div>
@@ -106,17 +109,16 @@ export const StakingZam = ({setCalculatorActive}) => {
             {
                 wallet?.address ?
                     allowance > 0 ?
-                        <button className="button-green button-blue w-full" disabled={!value} onClick={stakeAction}>
-                            {
-                                !value
-                                    ? 'Enter Amount'
-                                    : action === 'stake' ? 'Stake' : 'Unstake'
-                            }
-                        </button>
+                        <ButtonSpinner className="button-green button-blue w-full"
+                                       disabled={!value}
+                                       onClick={stakeAction}
+                                       title={!value ? 'Enter Amount' : (action === 'stake') ? 'Stake' : 'Unstake'}
+                                       isPending={isPending}/>
                         :
-                        <button className="button-green button-blue w-full" onClick={approve}>
-                            Approve
-                        </button>
+                        <ButtonSpinner className="button-green button-blue w-full"
+                                       onClick={approve}
+                                       title="Approve"
+                                       isPending={isPending}/>
                     :
                     <button className="button-green button-blue w-full" onClick={() => setModalWalletOpen(true)}>
                         Connect Wallet

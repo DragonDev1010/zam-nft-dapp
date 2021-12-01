@@ -1,27 +1,25 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {WalletFactory} from "@src/wallets/wallet-factory";
 import {WalletConnectConnector} from "@web3-react/walletconnect-connector";
 
 export const WalletContext = React.createContext();
 
 export const walletContextProps = () => {
-    const [wallet, setLocalWallet] = useState(WalletFactory.getWallet());
+    const res = useRef();
+    if (!res.current) {
+        res.current = WalletFactory.getWallet();
+    }
+    const [wallet, setLocalWallet] = useState(res.current);
     const [walletError, setWalletError] = useState('');
 
-    const checkWalletConnection = async () =>
-    {
+    useEffect(() => {
         const address = wallet.address;
         wallet.checkConnection().then(async () => {
             if (wallet.address !== address) {
-                    setWallet(wallet);
+                setWallet(wallet);
             }
         });
-    }
-
-    useEffect(() => {
-        checkWalletConnection();
-    }, []);
-
+    }, [wallet]);
 
     const setWallet = (localWallet) => {
         setLocalWallet(localWallet.createFromRequest(localWallet));
@@ -29,7 +27,7 @@ export const walletContextProps = () => {
 
     useEffect(async () => {
         await addWalletListener();
-    }, []);
+    }, [wallet]);
 
     const addWalletListener = () => {
         if (window.ethereum) {

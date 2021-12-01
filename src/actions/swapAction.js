@@ -50,7 +50,7 @@ export class SwapAction {
         const contractRouter = new (web3.eth.Contract)(contractPancakeRouterAbi, this.addressRouter);
         const {reserveA, reserveB} = await this.getReserves(this.addressPair, this.tokenA, this.tokenB);
 
-        return await contractRouter.methods.getAmountOut(amountA, reserveA, reserveB).call()
+        return await contractRouter.methods.getAmountOut(parseInt(amountA), reserveA, reserveB).call()
     }
 
     getAmountA = async (amountB) => {
@@ -62,7 +62,7 @@ export class SwapAction {
         const contractRouter = new (web3.eth.Contract)(contractPancakeRouterAbi, this.addressRouter);
         const {reserveA, reserveB} = await this.getReserves(this.addressPair, this.tokenA, this.tokenB);
 
-        return await contractRouter.methods.getAmountOut(amountB, reserveA, reserveB).call()
+        return await contractRouter.methods.getAmountOut(parseInt(amountB), reserveA, reserveB).call()
     }
 
     getAllowance = async () => {
@@ -92,7 +92,7 @@ export class SwapAction {
         }
     }
 
-    approve = async () => {
+    approve = async (setIsPending) => {
         this.error = '';
         try {
             await this.checkWalletConnection();
@@ -115,10 +115,14 @@ export class SwapAction {
                 const gas = await web3.eth.estimateGas(transactionParameters);
                 const provider = await this.wallet.getProvider();
 
-                await provider.request({
-                    method: 'eth_sendTransaction',
-                    params: [{...transactionParameters, gas: Web3.utils.toHex(Math.floor(gas * 1.1))}],
-                });
+                await new Web3(provider).eth
+                    .sendTransaction({...transactionParameters, gas: Web3.utils.toHex(Math.floor(gas * 1.1))})
+                    .once('transactionHash', (hash) => setIsPending(!!hash))
+                    .on('confirmation', (confNumber, receipt) => {
+                        if (confNumber.toString() === '0') {
+                            setIsPending(false)
+                        }
+                    })
             }
             if (!allowanceB) {
                 const contractTokenB = new (web3.eth.Contract)(contractPancakeIerc20, this.tokenB);
@@ -132,10 +136,14 @@ export class SwapAction {
                 const gas = await web3.eth.estimateGas(transactionParameters);
                 const provider = await this.wallet.getProvider();
 
-                await provider.request({
-                    method: 'eth_sendTransaction',
-                    params: [{...transactionParameters, gas: Web3.utils.toHex(Math.floor(gas * 1.1))}],
-                });
+                await new Web3(provider).eth
+                    .sendTransaction({...transactionParameters, gas: Web3.utils.toHex(Math.floor(gas * 1.1))})
+                    .once('transactionHash', (hash) => setIsPending(!!hash))
+                    .on('confirmation', (confNumber, receipt) => {
+                        if (confNumber.toString() === '0') {
+                            setIsPending(false)
+                        }
+                    })
             }
         } catch (e) {
             this.errorAction.push(e.message);
@@ -144,7 +152,7 @@ export class SwapAction {
     }
 
 
-    swap = async (amountFrom, amountTo, slippage = .1, deadline = 30) => {
+    swap = async (amountFrom, amountTo, setIsPending, slippage = .1, deadline = 30) => {
         try {
             await this.checkWalletConnection();
 
@@ -164,7 +172,7 @@ export class SwapAction {
             const deadlineSeconds = deadline * 60 + Math.floor(Date.now() / 1000);
 
             const amountInMaxWei = Web3.utils.toWei(parseFloat(amountInMax).toString());
-            const amountToWei = Web3.utils.toWei(parseFloat(amountTo).toString());
+            const amountToWei = Web3.utils.toWei(parseInt(amountTo).toString());
 
 
             const transactionParams = {
@@ -182,10 +190,14 @@ export class SwapAction {
             const gas = await web3.eth.estimateGas(transactionParams);
             const provider = await this.wallet.getProvider();
 
-            await provider.request({
-                method: 'eth_sendTransaction',
-                params: [{...transactionParams, gas: Web3.utils.toHex(Math.floor(gas))}],
-            });
+            await new Web3(provider).eth
+                .sendTransaction({...transactionParams, gas: Web3.utils.toHex(Math.floor(gas))})
+                .once('transactionHash', (hash) => setIsPending(!!hash))
+                .on('confirmation', (confNumber, receipt) => {
+                    if (confNumber.toString() === '0') {
+                        setIsPending(false)
+                    }
+                })
         } catch (e) {
             this.errorAction.push(e.message);
         }

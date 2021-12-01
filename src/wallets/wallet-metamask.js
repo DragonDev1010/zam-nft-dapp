@@ -14,16 +14,16 @@ export class WalletMetamask extends WalletAbstract {
     }
 
     checkConnection = async () => {
-        await this.query('eth_accounts');
+        await this.connectWallet('eth_accounts');
         return this;
     }
 
     connect = async () => {
-        await this.query('eth_requestAccounts');
+        await this.connectWallet('eth_requestAccounts');
         return this;
     }
 
-    async query(method) {
+    connectWallet = async (method) => {
         if (window.ethereum) {
             try {
                 const addressArray = await window.ethereum.request({method});
@@ -34,12 +34,13 @@ export class WalletMetamask extends WalletAbstract {
                 this.address = addressArray[0];
             } catch (err) {
                 this.error = err.message;
+                this.resetWallet();
             }
         } else {
             this.error = (
                 <span>
-                    Please install <a target='_blank' href={`https://metamask.io/download.html`}>Metamask</a>,
-                    a virtual Ethereum wallet, in your browser.
+                    Please install <a target='_blank' href={`https://metamask.io/download.html`}>Metamask</a> extension
+                    to your browser.
                 </span>
             )
         }
@@ -53,4 +54,37 @@ export class WalletMetamask extends WalletAbstract {
         return window.ethereum;
     }
 
+    switchNetwork = async (chainId, rpcUrl) => {
+        const provider = await this.getProvider();
+
+        try {
+            await provider.request({
+                method: 'wallet_switchEthereumChain',
+                params: [{ chainId }],
+            });
+        } catch (switchError) {
+            // This error code indicates that the chain has not been added to MetaMask.
+
+            if (switchError.code === 4902 || switchError.code === -32603 && chainId === '0x38') {
+                try {
+                    await provider.request({
+                        method: 'wallet_addEthereumChain',
+                        params: [{
+                            chainId: '0x38',
+                            chainName: 'Binance Smart Chain Mainnet',
+                            nativeCurrency: {
+                                name: 'Binance Coin',
+                                symbol: 'BNB',
+                                decimals: 18
+                            },
+                            rpcUrls: [process.env.RPC_URL_BSC],
+                            blockExplorerUrls: ['https://bscscan.com']
+                        }],
+                    });
+                } catch (addError) {
+                    console.log('addError', addError);
+                }
+            }
+        }
+    }
 }

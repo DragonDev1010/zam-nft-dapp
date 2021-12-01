@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {WalletContext} from "@src/context";
+import {BridgeContext, StakingContext, WalletContext} from "@src/context";
 import Web3 from "web3";
 import {bridgeAction} from "@src/actions/bridgeAction";
 
@@ -7,10 +7,11 @@ import {bridgeAction} from "@src/actions/bridgeAction";
 export const BridgeTransactions = () => {
     const [transactions, setTransactions] = useState([]);
     const {wallet} = useContext(WalletContext);
+    const {isPending} = useContext(BridgeContext);
 
     useEffect(async () => {
         getTransactions();
-    }, [wallet.address]);
+    }, [wallet.address, isPending]);
 
     const getTransactions = () => {
         new bridgeAction(wallet).getTransactions(setTransactions);

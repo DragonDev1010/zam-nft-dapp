@@ -1,7 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {numberFormat} from "@src/utils";
+import {RateContext} from "@src/context";
 
 
-export const TvrBlock = () => {
+export const TvlBlock = ({tvl}) => {
+    const {rate} = useContext(RateContext);
+
     return (
         <>
             <div className="tvr-block">
@@ -9,9 +13,9 @@ export const TvrBlock = () => {
                     TVL
                 </div>
                 <div className="tvr-block-body">
-                    TBA
+                    ${numberFormat(parseInt(tvl * rate))}
                     <div className="tvr-block-body-span">
-                        &nbsp;
+                        {numberFormat(tvl)} ZAM
                     </div>
                 </div>
             </div>

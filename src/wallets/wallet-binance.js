@@ -12,16 +12,16 @@ export class WalletBinance extends WalletAbstract {
     }
 
     checkConnection = async () => {
-        await this.query();
+        await this.connectWallet();
         return this;
     }
 
     connect = async () => {
-        await this.query();
+        await this.connectWallet();
         return this;
     }
 
-    async query() {
+    connectWallet = async () => {
         if (window.BinanceChain) {
             try {
                 const addressArray = await window.BinanceChain.send('eth_accounts');
@@ -33,13 +33,14 @@ export class WalletBinance extends WalletAbstract {
                 this.address = addressArray.result[0];
             } catch (err) {
                 this.error = err.message;
+                this.resetWallet();
             }
         } else {
             this.error = (
                 <span>
                     Please install <a target='_blank'
-                                      href={`https://www.binance.org/en/blog/binance-extension-wallet/`}>Binance Chain Wallet</a>,
-                    a virtual Wallet for Binance Chain, in your browser.
+                                      href={`https://www.binance.org/en/blog/binance-extension-wallet/`}>Binance Chain
+                    Wallet</a> extension to your browser.
                 </span>
             )
         }
@@ -47,7 +48,6 @@ export class WalletBinance extends WalletAbstract {
 
     getChainId = async () => {
         const response = await window.BinanceChain.send('eth_chainId');
-
         return response?.result;
     };
 
@@ -61,24 +61,16 @@ export class WalletBinance extends WalletAbstract {
 
         const chainMap = {
             [CHAIN_ID_ETH]: 'eth-mainnet',
-            [CHAIN_ID_BSC]: 'bbc-mainnet',
+            [CHAIN_ID_BSC]: 'bsc-mainnet',
         }
 
         try {
             await provider.switchNetwork(chainMap[chainId]);
         } catch (switchError) {
-            // This error code indicates that the chain has not been added to MetaMask.
-            // if (switchError.code === 4902) {
-            //     try {
-            //         await provider.request({
-            //             method: 'wallet_addEthereumChain',
-            //             params: [{ chainId, rpcUrl}],
-            //         });
-            //     } catch (addError) {
-            //         // handle "add" error
-            //     }
-            // }
-            // handle other "switch" errors
+            throw new Error(
+                'There is no way to add the new network using a Binance Chain Wallet. ' +
+                'Please add the network yourself in your wallet.'
+            );
         }
     }
 }

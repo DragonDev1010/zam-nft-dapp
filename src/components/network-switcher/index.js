@@ -1,9 +1,11 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {NETWORK_ETH, NETWORKS} from "@src/constants";
+import {ModalContext} from "@src/context";
 
 export const NetworkSwitcher = ({wallet}) => {
     const [selectedNetwork, setSelectedNetwork] = useState();
     const [dropdownActive, setDropdownActive] = useState();
+    const {setWarningOpen} = useContext(ModalContext);
     const ref = useRef(null);
 
     useEffect(() => {
@@ -25,7 +27,6 @@ export const NetworkSwitcher = ({wallet}) => {
         const chainId = await wallet.getChainId();
         if (chainId) {
             const network = Object.keys(NETWORKS).find(key => NETWORKS[key].chainId.includes(chainId));
-            console.log(network)
 
             setSelectedNetwork(network);
         }
@@ -35,8 +36,8 @@ export const NetworkSwitcher = ({wallet}) => {
         if (network.isSoon) {
             return false;
         }
-        wallet.switchNetwork(network.chainId[0], network.rpcUrl);
         setDropdownActive(false);
+        wallet.switchNetwork(network.chainId[0], network.rpcUrl).catch(error => setWarningOpen(error.message));
     }
 
     return (

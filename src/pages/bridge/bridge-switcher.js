@@ -3,6 +3,8 @@ import {SelectComponent} from "@src/components/fields/Select";
 import {NETWORK_BSC, NETWORK_ETH, NETWORKS, SWAP_BSC_ETH, SWAP_ETH_BSC, TOKEN_ZAM, TOKENS} from "@src/constants";
 import {BridgeContext, ModalContext, WalletContext} from "@src/context";
 import {bridgeAction} from "@src/actions/bridgeAction";
+import {ButtonSpinner} from "@src/components/buttons/button-spinner";
+import {float, toFixed} from "@src/utils";
 
 const optionsNetworks = [
     {
@@ -26,9 +28,17 @@ export const BridgeSwitcher = () => {
     const {wallet, setWalletError} = useContext(WalletContext);
     const [allowance, setAllowance] = useState(0);
     const [balance, setBalance] = useState(0);
-
-    const {bridgeFrom, setBridgeFrom, bridgeTo, setBridgeTo, swapMethod, setSwapMethod} = useContext(BridgeContext);
-    const [amount, setAmount] = useState(0);
+    const {
+        bridgeFrom,
+        setBridgeFrom,
+        bridgeTo,
+        setBridgeTo,
+        swapMethod,
+        setSwapMethod,
+        isPending,
+        setIsPending
+    } = useContext(BridgeContext);
+    const [amount, setAmount] = useState();
 
 
     useEffect(() => {
@@ -38,14 +48,16 @@ export const BridgeSwitcher = () => {
     }, []);
 
     useEffect(async () => {
-        const bridge = new bridgeAction(wallet, swapMethod);
-        const balanceResponse = await bridge.getBalance();
+        if (!isPending) {
+            const bridge = new bridgeAction(wallet, swapMethod);
+            const balanceResponse = await bridge.getBalance();
 
-        setAllowance(balanceResponse?.allowance);
-        setBalance(balanceResponse?.balance);
+            setAllowance(balanceResponse?.allowance);
+            setBalance(balanceResponse?.balance);
 
-        setWalletError(bridge.errorAction);
-    }, [swapMethod]);
+            setWalletError(bridge.errorAction);
+        }
+    }, [swapMethod, isPending]);
 
 
     useEffect(() => {
@@ -75,7 +87,7 @@ export const BridgeSwitcher = () => {
 
     async function approve() {
         const bridge = new bridgeAction(wallet, swapMethod);
-        await bridge.approve();
+        await bridge.approve(setIsPending);
 
         setWalletError(bridge.errorAction);
         setModalNetworkOpen(bridge.needChainId);
@@ -83,7 +95,7 @@ export const BridgeSwitcher = () => {
 
     async function transfer() {
         const bridge = new bridgeAction(wallet, swapMethod);
-        await bridge.transfer(amount);
+        await bridge.transfer(amount, setIsPending);
 
         setWalletError(bridge.errorAction);
         setModalNetworkOpen(bridge.needChainId);
@@ -155,8 +167,8 @@ export const BridgeSwitcher = () => {
                         <label className="input-field__label">Amount</label>
                         <div className="input-field mt-10 mb-10">
                             <input className="input-field__input"
-                                   onChange={(event) => setAmount(parseInt(event.target.value))}
-                                   value={amount || 0} placeholder="0"/>
+                                   onChange={(event) => setAmount(event.target.value)}
+                                   value={float(amount) || ''} placeholder="0"/>
                         </div>
                     </>
                     : ''
@@ -166,7 +178,7 @@ export const BridgeSwitcher = () => {
                 wallet?.address ? (
                     <div className="bridge-switcher__amount-value mb-10">
                         <span>Available for transaction:</span>&nbsp;
-                        <b>{balance}</b>
+                        <b>{toFixed(balance)}</b>
                     </div>
                 ) : <div className="mb-40"/>
             }
@@ -176,9 +188,15 @@ export const BridgeSwitcher = () => {
                 !wallet.error ?
                     wallet?.address ?
                         allowance > 0 ?
-                            <button className="button-green w-full" onClick={transfer}>Transfer</button>
+                            <ButtonSpinner className="button-green w-full"
+                                           onClick={transfer}
+                                           title="Transfer"
+                                           isPending={isPending}/>
                             :
-                            <button className="button-green w-full" onClick={approve}>Approve</button>
+                            <ButtonSpinner className="button-green w-full"
+                                           onClick={approve}
+                                           title="Approve"
+                                           isPending={isPending}/>
                         :
                         <button className="button-green w-full" onClick={() => setModalWalletOpen(true)}>Connect
                             Wallet</button>

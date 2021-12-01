@@ -28,16 +28,17 @@
     &__card-left {
         @media (max-width: 1722px) {
             width: 100%;
-            max-width: 1170px;
+            max-width: none;
         }
     }
     &__card-right {
         justify-content: space-between;
         max-width: 930px;
+        width: 100%;
 
         @media (max-width: 1722px) {
             width: 100%;
-            max-width: 1170px;
+            max-width: none;
         }
         @media (max-width: 768px) {
             flex-flow: column;

@@ -6,13 +6,27 @@ import {WalletFactory} from "@src/wallets/wallet-factory";
 export const ModalWalletConnect = (props) => {
     const {wallet, setWallet, setWalletError} = useContext(WalletContext);
     const [agreement, setAgreement] = useState(wallet?.address !== '');
+    const [hasNotMetamask, setHasNotMetamask] = useState(false);
+    const [hasNotBinance, setHasNotBinance] = useState(false);
 
     useEffect(() => {
         setAgreement(wallet.address !== '');
     }, [wallet.address]);
 
     const connectWallet = async (type) => {
+        setHasNotMetamask(false);
+        setHasNotBinance(false);
+
         if (!agreement) {
+            return false;
+        }
+
+        if (type === 'metamask' && !window.ethereum) {
+            setHasNotMetamask(true);
+            return false;
+        }
+        if (type === 'binance' && !window.BinanceChain) {
+            setHasNotBinance(true);
             return false;
         }
 
@@ -67,13 +81,30 @@ export const ModalWalletConnect = (props) => {
                     <img src="/images/tokens/icon_token_bsc.svg" alt="wallet"/>
                     <span className="wallet__name">Binance Wallet</span>
                 </div>
-                {/*<div*/}
-                {/*    className={`wallet ${agreement ? 'active' : ''} ${wallet.type === 'walletconnect' && wallet.address ? 'current' : ''}`}*/}
-                {/*    onClick={() => connectWallet('walletconnect')}>*/}
-                {/*    <img src="/images/icon_walletconnector.svg" alt="wallet"/>*/}
-                {/*    <span className="wallet__name">Wallet Connect</span>*/}
-                {/*</div>*/}
+                <div
+                    className={`wallet ${agreement ? 'active' : ''} ${wallet.type === 'walletconnect' && wallet.address ? 'current' : ''}`}
+                    onClick={() => connectWallet('walletconnect')}>
+                    <img src="/images/icon_walletconnector.svg" alt="wallet"/>
+                    <span className="wallet__name">Wallet Connect</span>
+                </div>
             </div>
+
+            {
+                hasNotMetamask &&
+                <div className="modal__wallet--error">
+                    Please install <a target='_blank' href={`https://metamask.io/download.html`}>Metamask</a> extension
+                    to your browser.
+                </div>
+            }
+            {
+                hasNotBinance &&
+                <div className="modal__wallet--error">
+                    Please install <a target='_blank'
+                                      href={`https://www.binance.org/en/blog/binance-extension-wallet/`}>Binance Chain
+                    Wallet</a> extension to your browser.
+                </div>
+            }
+
         </div>
     );
 }

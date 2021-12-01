@@ -85,6 +85,10 @@
   &:disabled {
     background: #64889C;
     color: #88b8d3;
+    &:hover {
+      background: #64889C;
+      cursor: default;
+    }
   }
 }
 

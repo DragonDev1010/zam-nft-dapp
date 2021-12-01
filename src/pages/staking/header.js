@@ -4,9 +4,6 @@ import {HeaderCarouselComponent} from "@src/components/header-carousel";
 
 export const Header = () => {
 
-    const onClickButton = () => {
-
-    }
     return (
         <>
             <div className="header-container">

@@ -56,27 +56,5 @@ export class WalletAbstract {
     }
 
     switchNetwork = async (chainId, rpcUrl) => {
-        const provider = await this.getProvider();
-
-        try {
-            await provider.request({
-                method: 'wallet_switchEthereumChain',
-                params: [{ chainId }],
-            });
-        } catch (switchError) {
-            console.log(switchError)
-            // This error code indicates that the chain has not been added to MetaMask.
-            if (switchError.code === 4902) {
-                try {
-                    await provider.request({
-                        method: 'wallet_addEthereumChain',
-                        params: [{ chainId, rpcUrl}],
-                    });
-                } catch (addError) {
-                    // handle "add" error
-                }
-            }
-            // handle other "switch" errors
-        }
     }
 }
