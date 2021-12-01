@@ -13,14 +13,10 @@ export class WalletConnector extends WalletAbstract {
         this.type = 'walletconnect';
 
         this.connector = new WalletConnectConnector({
-            rpc: {1: 'https://mainnet.infura.io/v3/2b5bedc31cf44e6cb63e5994a8e87761'},
+            rpc: {1: RPC_URLS_1, 56: RPC_URLS_56},
             qrcode: true,
-            infuraId: '2b5bedc31cf44e6cb63e5994a8e87761'
         });
         window.walletconnector = WalletConnectConnector;
-
-
-        // this.connector.then(response => console.log(response))
     }
 
     checkConnection = async () => {
@@ -30,38 +26,35 @@ export class WalletConnector extends WalletAbstract {
     connect = async () => {
         this.connector.handleDisconnect = () => this.resetWallet();
         this.connector.handleChainChanged = () => window.location.reload();
-        this.address = await this.connector.activate().then(response => response.account);
+        this.address = await this.connector.activate().then(response => response.account)
+            .catch(this.resetWallet);
 
 
         return this;
     }
 
     getProvider = async (chainId = CHAIN_ID_ETH) => {
-        // let rpc = {};
-        // if (chainId === CHAIN_ID_ETH) {
-        //     rpc = {1: RPC_URLS_1}
-        // } else if (chainId === CHAIN_ID_BSC) {
-        //     rpc = {56: RPC_URLS_56}
-        // }
-        // this.connector = new WalletConnectConnector({
-        //     rpc,
-        //     bridge: "https://bridge.walletconnect.org",
-        //     qrcode: true,
-        // });
         await this.connector.activate();
         return await this.connector.getProvider();
     }
 
     getChainId = async () => {
-        await this.connector.activate();
-        return await this.connector.getChainId();
+        const connector = await this.connector.activate();
+        return Web3.utils.toHex(connector.provider.chainId);
     };
 
-    getNetwork = (chainId) => {
-        if (chainId === CHAIN_ID_ETH) {
-            return process.env.RPC_URL_ETH_ANKR;
-        } else if (chainId === CHAIN_ID_BSC) {
-            return process.env.RPC_URL_BSC_ANKR;
-        }
+    // getNetwork = (chainId) => {
+    //     if (chainId === CHAIN_ID_ETH) {
+    //         return process.env.RPC_URL_ETH_ANKR;
+    //     } else if (chainId === CHAIN_ID_BSC) {
+    //         return process.env.RPC_URL_BSC_ANKR;
+    //     }
+    // }
+
+    switchNetwork = async (chainId, rpcUrl) => {
+        throw new Error(
+            'There is no way to switch the network using a Wallet Connect. ' +
+            'Please switch the network yourself in your wallet and reconnect.'
+        );
     }
 }

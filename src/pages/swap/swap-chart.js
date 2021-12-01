@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useMemo, useState} from 'react';
 import {TOKEN_USDT, TOKEN_ZAM, TOKENS, MONTH_NAMES} from "@src/constants";
 import {SwapContext, RateContext} from "@src/context";
 import {AreaChart, Area, XAxis, Tooltip, ResponsiveContainer} from 'recharts';
@@ -9,6 +9,28 @@ import {GRAPH_URL} from "@src/config/networks";
 const ranges = {'hour': 'H', 'day': 'D', 'week': 'W'};
 
 const schemas = {'hour': 'pairHourDatas', 'day': 'pairDayDatas', 'week': 'pairWeekDatas'};
+
+const query = `{
+              pairHourDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+                token1Price
+                token0Price
+                periodBegin,
+                periodEnd,
+              },
+              pairDayDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+                token1Price
+                token0Price
+                periodBegin,
+                periodEnd,
+              },
+              pairWeekDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+                token1Price
+                token0Price
+                periodBegin,
+                periodEnd,
+              },
+            }`;
+
 
 export const SwapChart = ({mainToken}) => {
     const {rate, priceChange24, priceChangePercentage24} = useContext(RateContext);
@@ -54,7 +76,7 @@ export const SwapChart = ({mainToken}) => {
         })
             .then(response => response.json())
             .then(response => setGraphData(response.data));
-    }, [range]);
+    }, []);
 
     useEffect(() => {
         if (!Object.keys(graphData).length) {

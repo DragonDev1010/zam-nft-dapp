@@ -1,17 +1,16 @@
 import Web3 from "web3";
 import contractZamStakingAbi from '@src/contracts/staking/ZamStackingABI.json';
-import {dec2hex} from "@src/utils";
+import {dec2hex, fromWei} from "@src/utils";
 import {CHAIN_ID_BSC, NETWORK_BSC} from "../constants";
 import contractZamBscAbi from "@src/contracts/bridge/zam_bsc.json";
 import {ADDRESS_STAKING, contractZamBscAddress} from "../config";
 
-const NETWORK_ENV = process.env.NETWORK_ENV;
 const RPC_URL_BSC = process.env.RPC_URL_BSC;
 
 export class StakingAction {
     constructor(wallet) {
         this.wallet = wallet;
-        this.network = 'https://bsc-dataseed.binance.org/'; // test env doesn't have contract
+        this.network = RPC_URL_BSC;
         this.addressStaking = ADDRESS_STAKING;
         this.addressZam = contractZamBscAddress;
         this.errorAction = [];
@@ -26,12 +25,18 @@ export class StakingAction {
         let apy = await this.stackingContract.methods.percent().call();
 
         if (apy >= 10000) {
-            apy = apy/1000;
+            apy = apy / 1000;
         } else {
-            apy = apy/100;
+            apy = apy / 100;
         }
 
         return parseFloat(apy) || 89;
+    }
+
+    getTotalRewards = async () => {
+        const rewards = await this.stackingContract.methods.rewardClaimed().call();
+
+        return parseInt(fromWei(rewards));
     }
 
     getReward = async () => {
@@ -93,7 +98,7 @@ export class StakingAction {
         }
     }
 
-    approve = async () => {
+    approve = async (setIsPending) => {
         try {
             await this.checkWalletConnection();
 
@@ -112,17 +117,22 @@ export class StakingAction {
             };
 
             const provider = await this.wallet.getProvider();
-            await provider.request({
-                method: 'eth_sendTransaction',
-                params: [transactionParameters],
-            });
+            const web3 = new Web3(provider);
+
+            await web3.eth.sendTransaction(transactionParameters)
+                .once('transactionHash', (hash) => setIsPending(!!hash))
+                .on('confirmation', (confNumber, receipt) => {
+                    if (confNumber.toString() === '0') {
+                        setIsPending(false)
+                    }
+                })
         } catch (err) {
             this.errorAction.push(err.message);
         }
     }
 
 
-    claimRewards = async () => {
+    claimRewards = async (setIsPending) => {
         try {
             await this.checkWalletConnection();
 
@@ -139,16 +149,21 @@ export class StakingAction {
             }
 
             const provider = await this.wallet.getProvider();
-            await provider.request({
-                method: 'eth_sendTransaction',
-                params: [transactionParameters],
-            });
+            const web3 = new Web3(provider);
+
+            await web3.eth.sendTransaction(transactionParameters)
+                .once('transactionHash', (hash) => setIsPending(!!hash))
+                .on('confirmation', (confNumber, receipt) => {
+                    if (confNumber.toString() === '0') {
+                        setIsPending(false)
+                    }
+                })
         } catch (err) {
             this.errorAction.push(err.message);
         }
     }
 
-    stakeOrUnstake = async (action, toState, toUnstake) => {
+    stakeOrUnstake = async (action, toStake, toUnstake, setIsPending) => {
         try {
             await this.checkWalletConnection();
             if (!this.wallet.address) {
@@ -161,13 +176,13 @@ export class StakingAction {
             if (action === 'stake') {
                 await this.getBalance();
 
-                if (toState > this.balance) {
+                if (toStake > this.balance) {
                     throw new Error('The specified amount exceeds your balance');
                 }
                 transactionParameters = {
                     from: this.wallet.address,
                     to: this.addressStaking,
-                    data: this.stackingContract.methods.deposit(Web3.utils.toWei(toState.toString())).encodeABI()
+                    data: this.stackingContract.methods.deposit(Web3.utils.toWei(parseFloat(toStake).toString())).encodeABI()
                 }
             } else if (action === 'unstake') {
                 const staked = await this.getStaked();
@@ -179,7 +194,7 @@ export class StakingAction {
                 transactionParameters = {
                     from: this.wallet.address,
                     to: this.addressStaking,
-                    data: this.stackingContract.methods.withdraw(Web3.utils.toWei(toUnstake.toString())).encodeABI()
+                    data: this.stackingContract.methods.withdraw(Web3.utils.toWei(parseFloat(toUnstake).toString())).encodeABI()
                 }
 
             } else {
@@ -187,15 +202,19 @@ export class StakingAction {
             }
 
             const provider = await this.wallet.getProvider();
-            await provider.request({
-                method: 'eth_sendTransaction',
-                params: [transactionParameters],
-            });
+            const web3 = new Web3(provider);
+
+            await web3.eth.sendTransaction(transactionParameters)
+                .once('transactionHash', (hash) => setIsPending(!!hash))
+                .on('confirmation', (confNumber, receipt) => {
+                    if (confNumber.toString() === '0') {
+                        setIsPending(false)
+                    }
+                })
         } catch (err) {
             this.errorAction.push(err.message);
         }
     }
-
 
 
     checkWalletConnection = async () => {

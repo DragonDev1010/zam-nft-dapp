@@ -11,7 +11,7 @@ export const NETWORKS = {
         icon: '/images/tokens/icon_token_eth.svg',
         name: 'ETH Network',
         color: '#4A9DFB',
-        chainId: ['0x1'],
+        chainId: ['0x1', '0x01'],
         rpcUrl: Web3.givenProvider,
     },
     [NETWORK_BSC]: {

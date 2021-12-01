@@ -6,6 +6,8 @@ import {float, toFixed, int} from "@src/utils";
 import {SwapAction} from "@src/actions/swapAction";
 import {IconArrowLeft, IconFilter} from "@src/icons/icons";
 import {Tooltip} from "@src/components/fields/Tooltip";
+import {ButtonSpinner} from "@src/components/buttons/button-spinner";
+import Web3 from "web3";
 
 const optionsTokens = [
     {
@@ -32,9 +34,9 @@ const deadlineText = `Your transaction will revert if it is pending for more tha
 
 export const SwapSwitcher = ({mainToken}) => {
     const {rate} = useContext(RateContext);
-    const {swapFrom, swapTo, setSwapFrom, setSwapTo} = useContext(SwapContext);
-    const [valueFrom, setValueFrom] = useState(0);
-    const [valueTo, setValueTo] = useState(0);
+    const {swapFrom, swapTo, setSwapFrom, setSwapTo, isPending, setIsPending} = useContext(SwapContext);
+    const [valueFrom, setValueFrom] = useState();
+    const [valueTo, setValueTo] = useState();
     const inputRefFrom = React.createRef();
     const inputRefTo = React.createRef();
     const {setModalWalletOpen, setModalNetworkOpen} = useContext(ModalContext);
@@ -52,12 +54,14 @@ export const SwapSwitcher = ({mainToken}) => {
     }, []);
 
     useEffect(async () => {
-        const swap = new SwapAction(wallet, swapFrom, swapTo);
-        const allowance = await swap.getAllowance();
+        if (!isPending) {
+            const swap = new SwapAction(wallet, swapFrom, swapTo);
+            const allowance = await swap.getAllowance();
 
-        setAllowance(allowance);
-        setWalletError(swap.errorAction);
-    }, [wallet]);
+            setAllowance(allowance);
+            setWalletError(swap.errorAction);
+        }
+    }, [wallet, isPending]);
 
     useEffect(async () => {
         if (lastInput === 'from') {
@@ -93,16 +97,16 @@ export const SwapSwitcher = ({mainToken}) => {
     }
 
     const changeValueFrom = (event) => {
-        setValueFrom(float(event.target.value))
+        setValueFrom(event.target.value)
         setLastInput('from');
     }
     const changeValueTo = (event) => {
-        setValueTo(toFixed(float(event.target.value)), 1000000)
+        setValueTo(event.target.value);
         setLastInput('to');
     }
     const approve = async () => {
         const swap = new SwapAction(wallet, swapFrom, swapTo);
-        await swap.approve();
+        await swap.approve(setIsPending);
         setWalletError(swap.errorAction);
         setModalNetworkOpen(swap.needChainId);
     }
@@ -111,7 +115,7 @@ export const SwapSwitcher = ({mainToken}) => {
             return;
         }
         const swap = new SwapAction(wallet, swapFrom, swapTo);
-        await swap.swap(valueFrom, valueTo, slippage, deadline);
+        await swap.swap(valueFrom, valueTo, setIsPending, slippage, deadline);
         setWalletError(swap.errorAction);
         setModalNetworkOpen(swap.needChainId);
     }
@@ -168,7 +172,7 @@ export const SwapSwitcher = ({mainToken}) => {
                                 <input className="input-field__input text-right"
                                        ref={inputRefFrom}
                                        onChange={changeValueFrom}
-                                       value={valueFrom || ''} placeholder="0"/>
+                                       value={parseInt(valueFrom) || ''} placeholder="0"/>
                             </div>
                             <div className="input-field__column input-field__column--token-name"
                                  onClick={() => inputRefFrom.current.focus()}>
@@ -179,7 +183,7 @@ export const SwapSwitcher = ({mainToken}) => {
 
                         <div className="swap-switcher__revert mt-20">
                             <a href="#" onClick={revertHandler}>
-                                <img src="images/icon_revert.svg" alt=""/>
+                                <img src="/images/icon_revert.svg" alt=""/>
                             </a>
                         </div>
 
@@ -199,7 +203,7 @@ export const SwapSwitcher = ({mainToken}) => {
                                 <input className="input-field__input text-right"
                                        ref={inputRefTo}
                                        onChange={changeValueTo}
-                                       value={valueTo || ''} placeholder="0"/>
+                                       value={parseInt(valueTo) || ''} placeholder="0"/>
                             </div>
                             <div className="input-field__column input-field__column--token-name"
                                  onClick={() => inputRefTo.current.focus()}>
@@ -215,8 +219,11 @@ export const SwapSwitcher = ({mainToken}) => {
                             wallet?.address ?
                                 (
                                     partAppove === 2 ?
-                                        <button className="button-green w-full" disabled={!valueFrom || !valueTo}
-                                                onClick={swapHandler}>{valueFrom && valueTo ? 'Swap' : 'Enter Amount'}</button>
+                                        <ButtonSpinner className="button-green w-full"
+                                                       onClick={swapHandler}
+                                                       title={valueFrom && valueTo ? 'Swap' : 'Enter Amount'}
+                                                       disabled={!valueFrom || !valueTo}
+                                                       isPending={isPending}/>
                                         :
                                         (
                                             partAppove !== null ?
@@ -225,9 +232,10 @@ export const SwapSwitcher = ({mainToken}) => {
                                                         <span>Approved progress:</span>
                                                         <span>{partAppove}/2</span>
                                                     </div>
-                                                    <button className="button-green w-full"
-                                                            onClick={approve}>Approve
-                                                    </button>
+                                                    <ButtonSpinner className="button-green w-full"
+                                                                   onClick={approve}
+                                                                   title="Approve"
+                                                                   isPending={isPending}/>
                                                 </>
                                                 : ''
                                         )
@@ -270,7 +278,7 @@ export const SwapSwitcher = ({mainToken}) => {
                                 <div className="input-field__column ">
                                     <input className="input-field__input text-right buttons-switcher"
                                            onChange={setCustomSlippage}
-                                           value={slippage && ![0.1, 0.5, 1].includes(slippage) ? slippage : ''}
+                                           value={slippage && ![0.1, 0.5, 1].includes(slippage) ? float(slippage) : ''}
                                            placeholder="Custom"/>
                                 </div>
                             </div>

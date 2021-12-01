@@ -19,8 +19,8 @@ const getRangeQuery = (range, offset, network) => `{
                         id
                         transferredToETH
                     }
-                    bridgeData: bridgeETHs(first: 500, where: {id_not: "singleton"}, orderBy: id) {
-                        id
+                    bridgeData: bridgeETHDayDatas(first: 500, orderBy: id, orderDirection: desc) {
+                        timestamp
                         transferredToETH
                     }
                     ` : 
@@ -29,9 +29,13 @@ const getRangeQuery = (range, offset, network) => `{
                         id
                         transferredToBSC
                     }
-                    bridgeData: bridgeBSCs(first: 500, where: {id_not: "singleton"}, orderBy: id) {
-                        id
+                    bridgeData: bridgeBSCDayDatas(first: 500, where: {id_not: "singleton"}, orderBy: id, orderDirection: desc) {
+                        timestamp
                         transferredToBSC
+                    }
+                    stackersTotal: stackerCounts(where: {id: "singleton"}) {
+                        id
+                        totalStake
                     }
                     `
               }
@@ -48,17 +52,17 @@ const getRangeQuery = (range, offset, network) => `{
                 id
                 count
               }
-              holderCountsData: holderCounts(first: 500, where: {id_not: "singleton"}, orderBy: id) {
-                id
-                count
+              holderCountsData: holderDayCounts(first: 500, orderBy: id, orderDirection: desc) {
+                timestamp
+                totalCount
               }
               participantCountsTotal: participantCounts(where: {id: "singleton"}) {
                 id
                 count
               }
-              participantCountsData: participantCounts(first: 500, where: {id_not: "singleton"}, orderBy: id) {
-                id
-                count
+              participantCountsData: participantDayCounts(first: 500, orderBy: id, orderDirection: desc) {
+                timestamp
+                totalCount
               }
               transferTotal: transferCounts(where:{id: "singleton"}) {
                 id
@@ -124,7 +128,6 @@ const rangeDateFormat = (range) => {
 export const zamGraphData = (network, range) => {
     const apiUrl = GRAPH_URL[network];
     const {rangeQuery, offset} = rangeMapQuery(range);
-    const rangeDate = rangeDateFormat(range);
 
     return fetch(apiUrl, {
         method: 'POST',
@@ -185,7 +188,7 @@ export const zamGraphData = (network, range) => {
 
             const bridgeData = {};
             response.data.bridgeData.forEach(
-                (item) => bridgeData[timestampToString(item.id)] = fromWei(item[`transferredTo${network.toUpperCase()}`])
+                (item) => bridgeData[timestampToString(item.timestamp)] = fromWei(item[`transferredTo${network.toUpperCase()}`])
             );
 
             const circulationsTotal = {};
@@ -200,7 +203,7 @@ export const zamGraphData = (network, range) => {
 
             const holderCountsData = {};
             response.data.holderCountsData.forEach(
-                ({id, count}) => holderCountsData[timestampToString(id)] = count
+                ({timestamp, totalCount}) => holderCountsData[timestampToString(timestamp)] = totalCount
             );
 
             const totalSupplies = {};
@@ -215,7 +218,12 @@ export const zamGraphData = (network, range) => {
 
             const participantCountsData = {};
             response.data.participantCountsData.forEach(
-                ({id, count}) => participantCountsData[timestampToString(id)] = count
+                ({timestamp, totalCount}) => participantCountsData[timestampToString(timestamp)] = totalCount
+            );
+
+            const stackersTotal = {};
+            response.data.stackersTotal?.forEach(
+                ({id, totalStake}) => stackersTotal[id] = fromWei(totalStake)
             );
 
             const holderAllTimeTotal = mergeObjects({key: holderCountsTotal}, {key: participantCountsTotal}).key;
@@ -238,6 +246,7 @@ export const zamGraphData = (network, range) => {
                 transferZamTotal,
                 transferZamData,
                 vestingCountsTotal,
+                stackersTotal,
             }
         });
 }

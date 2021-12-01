@@ -46,12 +46,10 @@ export class bridgeAction {
                 throw new Error('Way is not supported');
 
         }
-
         const web3 = new Web3(this.network);
         this.contractToken = new (web3.eth.Contract)(this.contractZamAbi, this.contractZamAddress);
 
     }
-
 
 
     getBalance = async () => {
@@ -77,7 +75,7 @@ export class bridgeAction {
     }
 
 
-    approve = async () => {
+    approve = async (setIsPending) => {
         try {
             await this.init();
 
@@ -96,10 +94,16 @@ export class bridgeAction {
             };
 
             const provider = await this.wallet.getProvider();
-            await provider.request({
-                method: 'eth_sendTransaction',
-                params: [transactionParameters],
-            });
+            const web3 = new Web3(provider);
+
+            await web3.eth.sendTransaction(transactionParameters)
+                .once('transactionHash', (hash) => setIsPending(!!hash))
+                .on('confirmation', (confNumber, receipt) => {
+                    if (confNumber.toString() === '0') {
+                        setIsPending(false)
+                    }
+                })
+
         } catch (e) {
             this.errorAction.push(e.message);
         }
@@ -107,7 +111,7 @@ export class bridgeAction {
     }
 
 
-    transfer = async (amount) => {
+    transfer = async (amount, setIsPending) => {
         try {
             if (parseFloat(amount) <= 0) {
                 throw new Error('Please enter an amount greater than 0');
@@ -136,13 +140,15 @@ export class bridgeAction {
             };
 
             const gas = await web3.eth.estimateGas(transactionParametersSwap);
-
             const provider = await this.wallet.getProvider();
 
-            await await provider.request({
-                method: 'eth_sendTransaction',
-                params: [{...transactionParametersSwap, gas: Web3.utils.toHex(gas)}],
-            });
+            await new Web3(provider).eth.sendTransaction({...transactionParametersSwap, gas: Web3.utils.toHex(gas)})
+                .once('transactionHash', (hash) => setIsPending(!!hash))
+                .on('confirmation', (confNumber, receipt) => {
+                    if (confNumber.toString() === '0') {
+                        setIsPending(false)
+                    }
+                })
 
         } catch (e) {
             this.errorAction.push(e.message);
@@ -160,7 +166,6 @@ export class bridgeAction {
                 return response.json();
             }).then((data) => {
             if (!Array.isArray(data.result)) {
-                console.error(data.result);
                 setTransactions([]);
             } else {
                 setTransactions(data.result);
@@ -174,12 +179,8 @@ export class bridgeAction {
         }
     }
 
-    getChainId = async () => {
-        return await this.wallet.getChainId();
-    };
-
     checkWalletChain = async (needException = true) => {
-        const chainId = await this.getChainId();
+        const chainId = await this.wallet.getChainId();
 
         if (chainId !== CHAIN_ID_ETH && chainId !== '0x01' && this.swapMethod === SWAP_ETH_BSC) {
             this.needChainId = NETWORK_ETH;

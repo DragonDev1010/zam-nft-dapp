@@ -9,12 +9,15 @@ export const BridgePage = () => {
     const [bridgeFrom, setBridgeFrom] = useState(NETWORK_ETH);
     const [bridgeTo, setBridgeTo] = useState(NETWORK_BSC);
     const [swapMethod, setSwapMethod] = useState(SWAP_ETH_BSC);
+    const [isPending, setIsPending] = useState();
 
     return (
         <article>
             <div className="cards cards-column-revert">
                 <BridgeContext.Provider
-                    value={{bridgeFrom, setBridgeFrom, bridgeTo, setBridgeTo, swapMethod, setSwapMethod}}>
+                    value={{bridgeFrom, setBridgeFrom, bridgeTo, setBridgeTo, swapMethod, setSwapMethod,
+                        isPending,
+                        setIsPending}}>
                     <BridgeTransactions/>
                     <BridgeSwitcher/>
                 </BridgeContext.Provider>

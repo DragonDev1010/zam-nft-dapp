@@ -20,7 +20,7 @@ export function dec2hex(str) {
 
 
 export function toFixed(number, precision = 100000000) {
-    return Math.round(number * precision) / precision
+    return Math.round(number * precision) / precision || 0;
 }
 
 export function sortTokens(tokenA, tokenB) {
@@ -29,15 +29,28 @@ export function sortTokens(tokenA, tokenB) {
 }
 
 export function float(value) {
-    return value;
-    return ['0', '0.', '0,'].includes(value.toString()) ? value : parseFloat(value.toString().replace(/,/g, '.'));
+    if (value === undefined) {
+        return '';
+    }
+    // return value.toString().replace(/(?<=^| )\d+(\.\d+)?(?=$| )/g, '');
+
+    if (value === 0) {
+        return '0.';
+    }
+    if (value === '') {
+        return 0;
+    }
+
+    return /^(\d+(\.|,)?\d{0,}?)$/u.test(value.toString())
+        ? value.toString().replace(/,/g, '.')
+        : parseFloat(value.toString().replace(/,/g, '.'));
 }
 
 export function int(value) {
     if (!value) {
         return 0;
     }
-    return parseInt(float(value));
+    return parseInt(value);
 }
 
 export function timestampToString(timestamp) {

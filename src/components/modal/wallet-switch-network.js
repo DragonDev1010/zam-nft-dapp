@@ -1,15 +1,21 @@
 import React, {useEffect, useState, useContext} from 'react';
 import {NETWORK_NAMES, NETWORKS} from "@src/constants";
-import {WalletContext} from "@src/context";
+import {ModalContext, WalletContext} from "@src/context";
 
 
 export const ModalSwitchNetwork = (props) => {
     const {wallet} = useContext(WalletContext);
+    const {setWarningOpen} = useContext(ModalContext);
 
     const switchNetwork = () => {
-        const {chainId, rpcUrl} = NETWORKS[props.targetNetwork]
-        wallet.switchNetwork(chainId[0], rpcUrl);
+        const {chainId, rpcUrl} = NETWORKS[props.targetNetwork];
         props.onClose();
+
+        try {
+            wallet.switchNetwork(chainId[0], rpcUrl);
+        } catch (error) {
+            setWarningOpen(error.message)
+        }
     }
     return (
         <div className="modal__network">

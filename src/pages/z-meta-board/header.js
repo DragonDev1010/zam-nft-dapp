@@ -8,16 +8,10 @@ import {zamGraphPairData} from "@src/pages/z-meta-board/chart-data";
 const ranges = {'day': '24H', 'week': '1W', 'month': '1M', 'all': 'All'};
 
 export const Header = () => {
-    const {network, setNetwork, range, setRange, chartData} = useContext(ZMetaBoardContext);
+    const {network, setNetwork, chartData} = useContext(ZMetaBoardContext);
     const {rate, volume24} = useContext(RateContext);
-    const [reserve, setReserve] = useState(0);
     const circulationsSupply = extractScalarDataByNetwork(chartData, 'circulationsTotal', network) ?? 0;
-
-    // useEffect(async () => {
-    //     const {reserve} = await zamGraphPairData();
-    //     setReserve(reserve);
-    // }, [])
-
+    const tvl = extractScalarDataByNetwork(chartData, 'stackersTotal', 'pair');
     return (
         <>
             <div className="z-meta-board__header-container">
@@ -51,14 +45,14 @@ export const Header = () => {
                                 Fully Diluted Market Cap
                             </div>
                         </div>
-                        {/*<div className="value-container">*/}
-                        {/*    <div className="zam-value">*/}
-                        {/*        ${numberFormat(reserve)}*/}
-                        {/*    </div>*/}
-                        {/*    <div className="zam-value-title">*/}
-                        {/*        Total Value Locked (TVL)*/}
-                        {/*    </div>*/}
-                        {/*</div>*/}
+                        <div className="value-container">
+                            <div className="zam-value">
+                                ${numberFormat(parseInt(tvl * rate))}
+                            </div>
+                            <div className="zam-value-title">
+                                Total Value Locked (TVL)
+                            </div>
+                        </div>
                     </div>
 
                     <div className="z-meta-board__filters">
