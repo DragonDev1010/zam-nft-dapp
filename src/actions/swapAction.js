@@ -43,26 +43,32 @@ export class SwapAction {
 
     getAmountB = async (amountA) => {
         if (!amountA) {
-            return 0;
+            return undefined;
         }
         const web3 = new Web3(this.network);
 
         const contractRouter = new (web3.eth.Contract)(contractPancakeRouterAbi, this.addressRouter);
         const {reserveA, reserveB} = await this.getReserves(this.addressPair, this.tokenA, this.tokenB);
 
-        return await contractRouter.methods.getAmountOut(parseInt(amountA), reserveA, reserveB).call()
+        const amount = await contractRouter.methods
+            .getAmountOut(Web3.utils.toWei(amountA.toString()), reserveA, reserveB).call();
+
+        return Web3.utils.fromWei(amount);
     }
 
     getAmountA = async (amountB) => {
         if (!amountB) {
-            return 0;
+            return undefined;
         }
         const web3 = new Web3(this.network);
 
         const contractRouter = new (web3.eth.Contract)(contractPancakeRouterAbi, this.addressRouter);
         const {reserveA, reserveB} = await this.getReserves(this.addressPair, this.tokenA, this.tokenB);
 
-        return await contractRouter.methods.getAmountOut(parseInt(amountB), reserveA, reserveB).call()
+        const amount = await contractRouter.methods
+            .getAmountOut(Web3.utils.toWei(amountB.toString()), reserveA, reserveB).call();
+
+        return Web3.utils.fromWei(amount);
     }
 
     getAllowance = async () => {
@@ -172,7 +178,7 @@ export class SwapAction {
             const deadlineSeconds = deadline * 60 + Math.floor(Date.now() / 1000);
 
             const amountInMaxWei = Web3.utils.toWei(parseFloat(amountInMax).toString());
-            const amountToWei = Web3.utils.toWei(parseInt(amountTo).toString());
+            const amountToWei = Web3.utils.toWei(parseFloat(amountTo).toString());
 
 
             const transactionParams = {

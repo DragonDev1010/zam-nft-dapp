@@ -40,7 +40,7 @@ export const SwapSwitcher = ({mainToken}) => {
     const inputRefFrom = React.createRef();
     const inputRefTo = React.createRef();
     const {setModalWalletOpen, setModalNetworkOpen} = useContext(ModalContext);
-    const {wallet, walletError, setWalletError} = useContext(WalletContext);
+    const {wallet, setWalletError} = useContext(WalletContext);
     const [lastInput, setLastInput] = useState('from');
     const [allowance, setAllowance] = useState({});
     const [filterActive, setFilterActive] = useState();
@@ -66,11 +66,11 @@ export const SwapSwitcher = ({mainToken}) => {
     useEffect(async () => {
         if (lastInput === 'from') {
             const swap = new SwapAction(wallet, swapFrom, swapTo);
-            const amountB = await swap.getAmountB(valueFrom);
+            const amountB = await swap.getAmountB(parseFloat(valueFrom));
             setValueTo(amountB);
         } else if (lastInput === 'to') {
             const swap = new SwapAction(wallet, swapTo, swapFrom);
-            const amountA = await swap.getAmountA(valueTo);
+            const amountA = await swap.getAmountA(parseFloat(valueTo));
             setValueFrom(amountA);
         }
     }, [valueTo, valueFrom, swapFrom, swapTo])
@@ -172,7 +172,7 @@ export const SwapSwitcher = ({mainToken}) => {
                                 <input className="input-field__input text-right"
                                        ref={inputRefFrom}
                                        onChange={changeValueFrom}
-                                       value={parseInt(valueFrom) || ''} placeholder="0"/>
+                                       value={float(valueFrom) || ''} placeholder="0"/>
                             </div>
                             <div className="input-field__column input-field__column--token-name"
                                  onClick={() => inputRefFrom.current.focus()}>
@@ -203,7 +203,7 @@ export const SwapSwitcher = ({mainToken}) => {
                                 <input className="input-field__input text-right"
                                        ref={inputRefTo}
                                        onChange={changeValueTo}
-                                       value={parseInt(valueTo) || ''} placeholder="0"/>
+                                       value={float(valueTo) || ''} placeholder="0"/>
                             </div>
                             <div className="input-field__column input-field__column--token-name"
                                  onClick={() => inputRefTo.current.focus()}>

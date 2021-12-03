@@ -9,13 +9,9 @@ export const ModalSwitchNetwork = (props) => {
 
     const switchNetwork = () => {
         const {chainId, rpcUrl} = NETWORKS[props.targetNetwork];
-        props.onClose();
-
-        try {
-            wallet.switchNetwork(chainId[0], rpcUrl);
-        } catch (error) {
-            setWarningOpen(error.message)
-        }
+        wallet.switchNetwork(chainId[0], rpcUrl)
+            .then(props.onClose)
+            .catch(error => setWarningOpen(error.message));
     }
     return (
         <div className="modal__network">

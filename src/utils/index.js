@@ -32,7 +32,6 @@ export function float(value) {
     if (value === undefined) {
         return '';
     }
-    // return value.toString().replace(/(?<=^| )\d+(\.\d+)?(?=$| )/g, '');
 
     if (value === 0) {
         return '0.';

@@ -66,7 +66,7 @@ module.exports = {
                                     })
                                 ],
                             },
-                            sourceMap: true
+                            sourceMap: mode !== 'prod'
                         }
                     },
                     'sass-loader'
@@ -84,7 +84,7 @@ module.exports = {
             process: 'process/browser',
         }),
     ],
-    devtool: 'source-map',
+    devtool: mode === 'dev' ? 'source-map' : false,
     devServer: {
         historyApiFallback: true,
         contentBase: './',
