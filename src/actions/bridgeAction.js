@@ -21,6 +21,7 @@ export class bridgeAction {
 
         this.swapMethod = swapMethod;
         this.wallet = wallet;
+        this.commissionValue = 0;
     }
 
     init = async () => {
@@ -33,7 +34,7 @@ export class bridgeAction {
                 this.contractZamAddress = contractZamEthAddress;
                 this.contractAgentAddress = contractEthAgentAddress;
                 this.network = this.wallet.getNetwork(CHAIN_ID_ETH);
-
+                this.commissionValue = 20000000000000000;
                 break;
             case 'swapBSC2ETH':
                 this.contractZamAbi = contractZamBscAbi;
@@ -41,6 +42,7 @@ export class bridgeAction {
                 this.contractZamAddress = contractZamBscAddress;
                 this.contractAgentAddress = contractBscAgentAddress;
                 this.network = this.wallet.getNetwork(CHAIN_ID_BSC);
+                this.commissionValue = 1000000000000000;
                 break;
             default:
                 throw new Error('Way is not supported');
@@ -142,7 +144,13 @@ export class bridgeAction {
             const gas = await web3.eth.estimateGas(transactionParametersSwap);
             const provider = await this.wallet.getProvider();
 
-            await new Web3(provider).eth.sendTransaction({...transactionParametersSwap, gas: Web3.utils.toHex(gas)})
+            await new Web3(provider).eth.sendTransaction(
+                {
+                    ...transactionParametersSwap,
+                    gas: Web3.utils.toHex(gas),
+                    value: this.commissionValue
+                }
+            )
                 .once('transactionHash', (hash) => setIsPending(!!hash))
                 .on('confirmation', (confNumber, receipt) => {
                     if (confNumber.toString() === '0') {
