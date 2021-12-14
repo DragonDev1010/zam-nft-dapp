@@ -9,7 +9,7 @@ export const getPrice = (setRate, setPriceChange24, setPriceChangePercentage24, 
         setRate(data['zam-io'].usd);
         setVolume24(data['zam-io'].usd_24h_vol);
         setPriceChange24(data['zam-io'].usd * data['zam-io'].usd_24h_change / 100);
-        setPriceChangePercentage24(toFixed(data['zam-io'].usd_24h_change, 1000));
+        setPriceChangePercentage24(toFixed(data['zam-io'].usd_24h_change, 3));
     });
 }
 

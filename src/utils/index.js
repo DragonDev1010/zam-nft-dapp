@@ -19,8 +19,13 @@ export function dec2hex(str) {
 }
 
 
-export function toFixed(number, precision = 100000000) {
-    return Math.round(number * precision) / precision || 0;
+export function toFixed(number, precision = 4) {
+    if (!number) {
+        return number;
+    }
+    const regexpStr = `^-?\\d+(?:\\.\\d{0,${precision}})?`;
+    const regexp = new RegExp(regexpStr);
+    return parseFloat(number.toString().match(regexp)[0]);
 }
 
 export function sortTokens(tokenA, tokenB) {

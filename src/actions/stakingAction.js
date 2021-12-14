@@ -174,15 +174,17 @@ export class StakingAction {
 
             let transactionParameters = {};
             if (action === 'stake') {
-                await this.getBalance();
+                const {balance} = await this.getBalance();
 
-                if (toStake > this.balance) {
+                if (toStake > balance) {
                     throw new Error('The specified amount exceeds your balance');
                 }
+                const amount = Web3.utils.toWei(parseFloat(toStake).toString());
+
                 transactionParameters = {
                     from: this.wallet.address,
                     to: this.addressStaking,
-                    data: this.stackingContract.methods.deposit(Web3.utils.toWei(parseFloat(toStake).toString())).encodeABI()
+                    data: this.stackingContract.methods.deposit(amount).encodeABI()
                 }
             } else if (action === 'unstake') {
                 const staked = await this.getStaked();
@@ -191,10 +193,11 @@ export class StakingAction {
                     throw new Error('The specified amount cannot exceed staked value');
                 }
 
+                const amount = Web3.utils.toWei(parseFloat(toUnstake).toString());
                 transactionParameters = {
                     from: this.wallet.address,
                     to: this.addressStaking,
-                    data: this.stackingContract.methods.withdraw(Web3.utils.toWei(parseFloat(toUnstake).toString())).encodeABI()
+                    data: this.stackingContract.methods.withdraw(amount).encodeABI()
                 }
 
             } else {
@@ -203,8 +206,9 @@ export class StakingAction {
 
             const provider = await this.wallet.getProvider();
             const web3 = new Web3(provider);
+            const gas = await web3.eth.estimateGas(transactionParameters);
 
-            await web3.eth.sendTransaction(transactionParameters)
+            await web3.eth.sendTransaction({...transactionParameters, gas: Web3.utils.toHex(Math.floor(gas))})
                 .once('transactionHash', (hash) => setIsPending(!!hash))
                 .on('confirmation', (confNumber, receipt) => {
                     if (confNumber.toString() === '0') {

@@ -30,9 +30,9 @@ export const StakingZam = ({setCalculatorActive}) => {
 
     const setAmountValue = (value) => {
         if (action === 'stake') {
-            setToStakeValue(value > balance ? toFixed(balance, 100) : value);
+            setToStakeValue(value > balance ? toFixed(balance, 2) : value);
         } else if (action === 'unstake') {
-            setToUnStakeValue(value > staked ? toFixed(staked, 100) : value);
+            setToUnStakeValue(value > staked ? toFixed(staked, 2) : value);
         }
     }
 
@@ -76,8 +76,8 @@ export const StakingZam = ({setCalculatorActive}) => {
                     className="field-container-title-span">BEP20</span></div>
                 {
                     action === 'stake' ?
-                        <div>Available for stake: {numberFormat(toFixed(balance, 100))}</div>
-                        : <div>Available for unstake: {numberFormat(toFixed(staked, 100))}</div>
+                        <div>Available for stake: {numberFormat(toFixed(balance, 2))}</div>
+                        : <div>Available for unstake: {numberFormat(toFixed(staked, 2))}</div>
 
                 }
             </div>
@@ -96,7 +96,7 @@ export const StakingZam = ({setCalculatorActive}) => {
                                     ZAM
                                 </div>
                                 <button
-                                    onClick={() => setAmountValue(toFixed(action === 'stake' ? balance : staked, 100))}
+                                    onClick={() => setAmountValue(toFixed(action === 'stake' ? balance : staked, 2))}
                                     className="max-button">Max
                                 </button>
                             </div>

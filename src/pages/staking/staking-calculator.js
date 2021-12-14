@@ -55,10 +55,10 @@ export const StakingCalculator = () => {
                         Daily
                     </div>
                     <div className="period-zam">
-                        {numberFormat(toFixed(stakeRewardDay, 100))} ZAM
+                        {numberFormat(toFixed(stakeRewardDay, 2))} ZAM
                     </div>
                     <div className="period-zam-cost">
-                        ${numberFormat(toFixed(rate * stakeRewardDay, 100))}
+                        ${numberFormat(toFixed(rate * stakeRewardDay, 2))}
                     </div>
                 </div>
                 <div className="calculator-footer-column">
@@ -66,10 +66,10 @@ export const StakingCalculator = () => {
                         Monthly
                     </div>
                     <div className="period-zam">
-                        {numberFormat(toFixed(stakeRewardMonth, 100))} ZAM
+                        {numberFormat(toFixed(stakeRewardMonth, 2))} ZAM
                     </div>
                     <div className="period-zam-cost">
-                        ${numberFormat(toFixed(rate * stakeRewardMonth, 100))}
+                        ${numberFormat(toFixed(rate * stakeRewardMonth, 2))}
                     </div>
                 </div>
                 <div className="calculator-footer-column">
@@ -77,10 +77,10 @@ export const StakingCalculator = () => {
                         Yearly
                     </div>
                     <div className="period-zam">
-                        {numberFormat(toFixed(stakeRewardYear, 100))} ZAM
+                        {numberFormat(toFixed(stakeRewardYear, 2))} ZAM
                     </div>
                     <div className="period-zam-cost">
-                        ${numberFormat(toFixed(rate * stakeRewardYear, 100))}
+                        ${numberFormat(toFixed(rate * stakeRewardYear, 2))}
                     </div>
                 </div>
             </div>

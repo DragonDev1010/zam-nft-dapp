@@ -25,7 +25,7 @@ export const Rewards = () => {
                 </div>
                 <div className="rewards-body-card mb-40">
                     <div className="rewards-body-card-value">
-                        {numberFormat(toFixed(rewards, 100))}
+                        {numberFormat(toFixed(rewards, 2))}
                     </div>
                 </div>
                 <div className="connect-wallet-button-container">
