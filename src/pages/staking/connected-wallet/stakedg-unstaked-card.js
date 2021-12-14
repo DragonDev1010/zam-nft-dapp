@@ -19,7 +19,7 @@ export const StakedUnstaked = () => {
                             <img src="/images/zam.svg"/>
                         </div>
                         <div className="stake-unstake-body-card-value">
-                            {numberFormat(toFixed(staked, 100))}
+                            {numberFormat(toFixed(staked, 2))}
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@ export const StakedUnstaked = () => {
                             <img src="/images/zam.svg"/>
                         </div>
                         <div className="stake-unstake-body-card-value">
-                            {numberFormat(toFixed(balance, 100))}
+                            {numberFormat(toFixed(balance, 2))}
                         </div>
                     </div>
                 </div>
@@ -43,7 +43,7 @@ export const StakedUnstaked = () => {
                     Your Average Rewards per day
                 </div>
                 <div className="stake-unstake-footer-card-value">
-                    ≈{numberFormat(toFixed(stakeRewardDay, 100))} ZAM
+                    ≈{numberFormat(toFixed(stakeRewardDay, 2))} ZAM
                 </div>
             </div>
         </div>
