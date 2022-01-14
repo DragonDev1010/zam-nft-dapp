@@ -10,28 +10,6 @@ const ranges = {'hour': 'H', 'day': 'D', 'week': 'W'};
 
 const schemas = {'hour': 'pairHourDatas', 'day': 'pairDayDatas', 'week': 'pairWeekDatas'};
 
-const query = `{
-              pairHourDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
-                token1Price
-                token0Price
-                periodBegin,
-                periodEnd,
-              },
-              pairDayDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
-                token1Price
-                token0Price
-                periodBegin,
-                periodEnd,
-              },
-              pairWeekDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
-                token1Price
-                token0Price
-                periodBegin,
-                periodEnd,
-              },
-            }`;
-
-
 export const SwapChart = ({mainToken}) => {
     const {rate, priceChange24, priceChangePercentage24} = useContext(RateContext);
     const {swapFrom, swapTo, setSwapFrom, setSwapTo} = useContext(SwapContext);
@@ -47,19 +25,19 @@ export const SwapChart = ({mainToken}) => {
 
     useEffect(() => {
         const query = `{
-              pairHourDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+              pairHourDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}, orderBy: periodBegin, orderDirection: desc) {
                 token1Price
                 token0Price
                 periodBegin,
                 periodEnd,
               },
-              pairDayDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+              pairDayDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}, orderBy: periodBegin, orderDirection: desc) {
                 token1Price
                 token0Price
                 periodBegin,
                 periodEnd,
               },
-              pairWeekDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}) {
+              pairWeekDatas(first: 1000, where: {pair: "0x40b901e5f12bd33ba33a752dab41240d80b97082"}, orderBy: periodBegin, orderDirection: desc) {
                 token1Price
                 token0Price
                 periodBegin,
@@ -83,8 +61,7 @@ export const SwapChart = ({mainToken}) => {
             return;
         }
         const schema = schemas[range];
-        const data = graphData[schema].map(({periodBegin, token1Price, token0Price}) => {
-
+        const data = graphData[schema].slice().reverse().map(({periodBegin, token1Price, token0Price}) => {
             return {
                 name: formatChartDate(periodBegin, range),
                 [TOKEN_ZAM]: toFixed(token1Price),

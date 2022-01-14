@@ -89,15 +89,10 @@ export function mergeObjects(ob1, ob2) {
 
     Object.keys(ob1).map(key => {
         if (typeof ob1[key] === 'object') {
-            const stockSum = {...ob1[key]};
-            let instersection = 0;
-            Object.keys(ob2[key]).forEach(name => {
-                if (stockSum[name]) {
-                    stockSum[name] = parseInt(stockSum[name]) + parseInt(ob2[key][name]);
-                    instersection = stockSum[name];
-                } else {
-                    stockSum[name] = parseInt(ob2[key][name]) + instersection;
-                }
+            const stockSum = array_fill_keys(Object.keys({...ob1[key], ...ob2[key]}), 0);
+
+            Object.keys(stockSum).forEach(name => {
+                stockSum[name] = parseInt(ob1[key][name] ?? 0) + parseInt(ob2[key][name] ?? 0);
             });
 
             merged[key] = Object.entries(stockSum)
@@ -144,4 +139,13 @@ export function numberFormat(value) {
 
 export const fromWei = (value) => {
     return parseInt(Web3.utils.fromWei(value?.toString()));
+}
+
+export function array_fill_keys(keys, value) {
+    const retObj = {}
+    let key = ''
+    for (key in keys) {
+        retObj[keys[key]] = value
+    }
+    return retObj
 }
