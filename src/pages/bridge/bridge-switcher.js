@@ -1,6 +1,15 @@
 import React, {useContext, useState, useMemo, useEffect} from 'react';
 import {SelectComponent} from "@src/components/fields/Select";
-import {NETWORK_BSC, NETWORK_ETH, NETWORKS, SWAP_BSC_ETH, SWAP_ETH_BSC, TOKEN_ZAM, TOKENS} from "@src/constants";
+import {
+    NETWORK_BSC,
+    NETWORK_ETH,
+    NETWORKS,
+    SWAP_BSC_ETH,
+    SWAP_ETH_BSC,
+    TOKEN_UCO,
+    TOKEN_ZAM,
+    TOKENS
+} from "@src/constants";
 import {BridgeContext, ModalContext, WalletContext} from "@src/context";
 import {bridgeAction} from "@src/actions/bridgeAction";
 import {ButtonSpinner} from "@src/components/buttons/button-spinner";
@@ -21,12 +30,35 @@ const optionsNetworks = [
     },
 ];
 
-const getOptionByValue = (token) => optionsNetworks[optionsNetworks.findIndex(option => option.value === token)];
+const optionsTokens = [
+    {
+        value: TOKEN_ZAM,
+        label: <div className="select-field__token">
+            <img alt="" src={TOKENS[TOKEN_ZAM].icon} height="30px" width="30px"/>
+            <div className="select-field__token--name">
+                {TOKENS[TOKEN_ZAM].name} <small>({TOKENS[TOKEN_ZAM].hind})</small>
+            </div>
+        </div>
+    },
+    {
+        value: TOKEN_UCO,
+        label: <div className="select-field__token">
+            <img alt="" src={TOKENS[TOKEN_UCO].icon} height="30px" width="30px"/>
+            <div className="select-field__token--name">
+                {TOKENS[TOKEN_UCO].name} <small>({TOKENS[TOKEN_UCO].hind})</small>
+            </div>
+        </div>
+    },
+];
+
+const getNetworkByValue = (token) => optionsNetworks[optionsNetworks.findIndex(option => option.value === token)];
+const getTokenByValue = (token) => optionsTokens[optionsTokens.findIndex(option => option.value === token)];
 
 export const BridgeSwitcher = () => {
     const {setModalWalletOpen, setModalNetworkOpen} = useContext(ModalContext);
     const {wallet, setWalletError} = useContext(WalletContext);
     const [allowance, setAllowance] = useState(0);
+    const [token, setToken] = useState(TOKEN_ZAM);
     const [balance, setBalance] = useState(0);
     const {
         bridgeFrom,
@@ -49,7 +81,7 @@ export const BridgeSwitcher = () => {
 
     useEffect(async () => {
         if (!isPending) {
-            const bridge = new bridgeAction(wallet, swapMethod);
+            const bridge = new bridgeAction(wallet, swapMethod, token);
             const balanceResponse = await bridge.getBalance();
 
             setAllowance(balanceResponse?.allowance);
@@ -57,7 +89,7 @@ export const BridgeSwitcher = () => {
 
             setWalletError(bridge.errorAction);
         }
-    }, [swapMethod, isPending]);
+    }, [swapMethod, isPending, token]);
 
 
     useEffect(() => {
@@ -69,7 +101,7 @@ export const BridgeSwitcher = () => {
     }, [bridgeFrom]);
 
 
-    const handleChange = (option, type) => {
+    const handleChangeNetwork = (option, type) => {
 
         if (type === 'from') {
             if (option.value === bridgeTo) {
@@ -86,7 +118,7 @@ export const BridgeSwitcher = () => {
 
 
     async function approve() {
-        const bridge = new bridgeAction(wallet, swapMethod);
+        const bridge = new bridgeAction(wallet, swapMethod, token);
         await bridge.approve(setIsPending);
 
         setWalletError(bridge.errorAction);
@@ -94,7 +126,7 @@ export const BridgeSwitcher = () => {
     }
 
     async function transfer() {
-        const bridge = new bridgeAction(wallet, swapMethod);
+        const bridge = new bridgeAction(wallet, swapMethod, token);
         await bridge.transfer(amount, setIsPending);
 
         setWalletError(bridge.errorAction);
@@ -115,14 +147,14 @@ export const BridgeSwitcher = () => {
 
             <label className="input-field__label">Asset</label>
             <div className="input-field mt-10 mb-40">
-                <div className="select-field select-field-transparent">
-                    <div className="select-field__control">
-                        <div className="select-field__token">
-                            <img alt="" src={TOKENS[TOKEN_ZAM].icon} height="30px"
-                                 width="30px"/>{TOKENS[TOKEN_ZAM].name}
-                        </div>
-                    </div>
-                </div>
+                <SelectComponent
+                    classNamePrefix="select-field"
+                    className="select-field select-field-transparent"
+                    onChange={(selectedOption) => setToken(selectedOption.value)}
+                    defaultValue={getTokenByValue(token)}
+                    value={getTokenByValue(token)}
+                    options={optionsTokens}
+                />
             </div>
 
 
@@ -133,9 +165,9 @@ export const BridgeSwitcher = () => {
                         <SelectComponent
                             classNamePrefix="select-field"
                             className="select-field select-field-transparent"
-                            onChange={(selectedOption) => handleChange(selectedOption, 'from')}
-                            defaultValue={getOptionByValue(bridgeFrom)}
-                            value={getOptionByValue(bridgeFrom)}
+                            onChange={(selectedOption) => handleChangeNetwork(selectedOption, 'from')}
+                            defaultValue={getNetworkByValue(bridgeFrom)}
+                            value={getNetworkByValue(bridgeFrom)}
                             options={optionsNetworks}
                         />
                     </div>
@@ -151,9 +183,9 @@ export const BridgeSwitcher = () => {
                         <SelectComponent
                             classNamePrefix="select-field"
                             className="select-field select-field-transparent"
-                            onChange={(selectedOption) => handleChange(selectedOption, 'to')}
-                            defaultValue={getOptionByValue(bridgeTo)}
-                            value={getOptionByValue(bridgeTo)}
+                            onChange={(selectedOption) => handleChangeNetwork(selectedOption, 'to')}
+                            defaultValue={getNetworkByValue(bridgeTo)}
+                            value={getNetworkByValue(bridgeTo)}
                             options={optionsNetworks}
                         />
                     </div>

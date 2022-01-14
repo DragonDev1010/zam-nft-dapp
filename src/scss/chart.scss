@@ -1,5 +1,7 @@
 .chart {
-  zoom: 111.111%;
+  @media (min-width: 769px) and (max-width: 1500px) {
+    zoom: 111.111%;
+  }
 
   .recharts-cartesian-axis {
     display: none; // disable temporary

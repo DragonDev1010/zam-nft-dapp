@@ -1,25 +1,48 @@
 import Web3 from "web3";
 import {
     contractBscAgentAddress,
-    contractEthAgentAddress,
+    contractEthAgentAddress, contractUcoBscAddress, contractUcoEthAddress,
     contractZamBscAddress,
     contractZamEthAddress, etherScanApiKey,
 } from "@src/config";
 import {dec2hex} from "@src/utils";
-import contractZamEthAbi from "@src/contracts/bridge/zam_eth.json";
 import contractEthAgentAbi from "@src/contracts/bridge/eth_agent.json";
-import contractZamBscAbi from "@src/contracts/bridge/zam_bsc.json";
 import contractBscAgentAbi from "@src/contracts/bridge/bsc_agent.json";
-import {NETWORK_BSC, NETWORK_ETH, SWAP_BSC_ETH, SWAP_ETH_BSC} from "@src/constants";
+import contractZamEthAbi from "@src/contracts/bridge/zam_eth.json";
+import contractZamBscAbi from "@src/contracts/bridge/zam_bsc.json";
+import contractUcoEthAbi from "@src/contracts/bridge/uco_eth.json";
+import contractUcoBscAbi from "@src/contracts/bridge/uco_bsc.json";
+import {NETWORK_BSC, NETWORK_ETH, SWAP_BSC_ETH, SWAP_ETH_BSC, TOKEN_UCO, TOKEN_ZAM} from "@src/constants";
 import {CHAIN_ID_BSC, CHAIN_ID_ETH} from "../constants";
 
+const tokenToContractAddressMap = {
+    eth: {
+        [TOKEN_ZAM]: contractZamEthAddress,
+        [TOKEN_UCO]: contractUcoEthAddress,
+    },
+    bsc: {
+        [TOKEN_ZAM]: contractZamBscAddress,
+        [TOKEN_UCO]: contractUcoBscAddress,
+    },
+}
+const tokenToContractTokenAbiMap = {
+    eth: {
+        [TOKEN_ZAM]: contractZamEthAbi,
+        [TOKEN_UCO]: contractUcoEthAbi,
+    },
+    bsc: {
+        [TOKEN_ZAM]: contractZamBscAbi,
+        [TOKEN_UCO]: contractUcoBscAbi,
+    },
+}
 
 export class bridgeAction {
-    constructor(wallet, swapMethod) {
+    constructor(wallet, swapMethod, token) {
         this.errorAction = [];
         this.needChainId = 0;
 
         this.swapMethod = swapMethod;
+        this.token = token;
         this.wallet = wallet;
         this.commissionValue = 0;
     }
@@ -29,17 +52,17 @@ export class bridgeAction {
 
         switch (this.swapMethod) {
             case 'swapETH2BSC':
-                this.contractZamAbi = contractZamEthAbi;
+                this.contractTokenAbi = tokenToContractTokenAbiMap['eth'][this.token];
                 this.contractAgentAbi = contractEthAgentAbi;
-                this.contractZamAddress = contractZamEthAddress;
+                this.contractTokenAddress = tokenToContractAddressMap['eth'][this.token];
                 this.contractAgentAddress = contractEthAgentAddress;
                 this.network = this.wallet.getNetwork(CHAIN_ID_ETH);
                 this.commissionValue = 20000000000000000;
                 break;
             case 'swapBSC2ETH':
-                this.contractZamAbi = contractZamBscAbi;
+                this.contractTokenAbi = tokenToContractTokenAbiMap['bsc'][this.token];
                 this.contractAgentAbi = contractBscAgentAbi;
-                this.contractZamAddress = contractZamBscAddress;
+                this.contractTokenAddress = tokenToContractAddressMap['bsc'][this.token];
                 this.contractAgentAddress = contractBscAgentAddress;
                 this.network = this.wallet.getNetwork(CHAIN_ID_BSC);
                 this.commissionValue = 1000000000000000;
@@ -49,7 +72,7 @@ export class bridgeAction {
 
         }
         const web3 = new Web3(this.network);
-        this.contractToken = new (web3.eth.Contract)(this.contractZamAbi, this.contractZamAddress);
+        this.contractToken = new (web3.eth.Contract)(this.contractTokenAbi, this.contractTokenAddress);
 
     }
 
@@ -90,7 +113,7 @@ export class bridgeAction {
             const maxAmount = '0x' + dec2hex('1' + '0'.repeat(60));
 
             const transactionParameters = {
-                to: this.contractZamAddress,
+                to: this.contractTokenAddress,
                 from: this.wallet.address,
                 'data': this.contractToken.methods.approve(this.contractAgentAddress, maxAmount).encodeABI()
             };
@@ -136,18 +159,23 @@ export class bridgeAction {
                 to: this.contractAgentAddress,
                 from: this.wallet.address,
                 data: contractAgent.methods[this.swapMethod](
-                    this.contractZamAddress,
+                    this.contractTokenAddress,
                     Web3.utils.toHex(amountInWei)
                 ).encodeABI()
             };
 
-            const gas = await web3.eth.estimateGas(transactionParametersSwap);
+            const gas = await web3.eth.estimateGas({value: this.commissionValue});
+            // const gas = await contractAgent.methods[this.swapMethod](
+            //     this.contractTokenAddress,
+            //     Web3.utils.toHex(amountInWei)
+            // ).estimateGas({value: this.commissionValue, from: this.wallet.address});
+
             const provider = await this.wallet.getProvider();
 
             await new Web3(provider).eth.sendTransaction(
                 {
                     ...transactionParametersSwap,
-                    gas: Web3.utils.toHex(gas),
+                    gas: Web3.utils.toHex(parseInt(gas * 1.1)),
                     value: this.commissionValue
                 }
             )

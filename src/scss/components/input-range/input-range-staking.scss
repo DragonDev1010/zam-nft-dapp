@@ -1,7 +1,9 @@
 .input-range-container {
   margin: 0 auto;
   padding: 0 10px;
-  zoom: 111.111%;
+  @media (min-width: 769px) and (max-width: 1500px) {
+    zoom: 111.111%;
+  }
 
   .input-range {
     margin-bottom: 15px;
