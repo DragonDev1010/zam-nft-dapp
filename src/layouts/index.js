@@ -22,6 +22,7 @@ import {ZMetaBoardPage} from "../pages/z-meta-board";
 import {StakingPage} from "../pages/staking";
 import {MainPage} from "../pages/main";
 import {ModalsGlobal} from "@src/parts/modals";
+import { ZamPadPage } from "@src/pages/zam-pad";
 
 export const IndexLayout = () => {
     const [rate, setRate] = useState(0);
@@ -53,6 +54,7 @@ export const IndexLayout = () => {
                                 <Route path="/z-meta-board" component={ZMetaBoardPage}/>
                                 <Route path="/staking" component={StakingPage}/>
                                 <Route path="/audits" component={AuditsPage} />
+                                <Route path="/zam-pad" component={ZamPadPage} />
                                 <Route path="/" component={MainPage}/>
                             </Switch>
                         </main>

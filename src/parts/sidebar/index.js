@@ -97,7 +97,15 @@ const Sidebar = (props) => {
                                         <span>More</span>
                                     </a>
                                 </li>
-
+                                <li className="sidebar__nav-box hidden-sm">
+                                    <Link to="/zam-pad"
+                                          className={`sidebar__nav-item ${props.location?.pathname === '/zam-pad' ? `active` : ''}`}>
+                                        <div className="sidebar__nav-icon">
+                                            <IconBridge/>
+                                        </div>
+                                        <span>ZAMpad</span>
+                                    </Link>
+                                </li>
                                 <li className="sidebar__nav-box hidden-sm">
                                     <Link to="/bridge"
                                           className={`sidebar__nav-item ${props.location?.pathname === '/bridge' ? `active` : ''}`}>
