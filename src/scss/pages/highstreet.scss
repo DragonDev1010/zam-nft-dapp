@@ -1,0 +1,114 @@
+.highstreet-header {
+    background: url("../../../images/zam-pad/highstreet-header.svg") top right no-repeat;
+    padding: 23% 0 5% 4%;
+    background-size: cover;
+    width: 100%;
+    display: flex;
+    &__button {
+        background: #000000;
+        border-radius: 9px;
+        padding: 0.4%;
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 18px;
+        text-align: center;
+        color: #ff00f5;
+        cursor: pointer;
+        border: none;
+    }
+}
+.highstreet-body {
+    &__cards {
+        display: flex;
+        justify-content: flex-start;
+        &__left {
+            &__bsc {
+                border: 1px solid rgba(47, 41, 84, 0.09);
+                box-sizing: border-box;
+                backdrop-filter: blur(24px);
+                border-radius: 20px;
+                padding: 3%;
+                margin: 2%;
+                background: #191c29;
+                display: flex;
+                justify-content: space-between;
+                width: 1000px;
+                &__header {
+                    display: flex;
+                    justify-content: space-between;
+                    &__bsc {
+                        width: 50%;
+                    }
+                    &__badges {
+                        width: 50%;
+                    }
+                }
+            }
+            &__followers {
+                border: 1px solid rgba(47, 41, 84, 0.09);
+                box-sizing: border-box;
+                width: 1000px;
+                backdrop-filter: blur(24px);
+                border-radius: 20px;
+                padding: 20%;
+                margin: 2%;
+                background: #191c29;
+            }
+        }
+        &__right {
+            margin: 2%;
+            border: 1px solid rgba(47, 41, 84, 0.09);
+            box-sizing: border-box;
+            backdrop-filter: blur(24px);
+            border-radius: 20px;
+            margin: 1.2% 0% 1.2% 2%;
+            width: 20%;
+            background: #191c29;
+        }
+    }
+    padding: 4%;
+    &__title-container {
+        font-family: Maven Pro;
+        font-style: normal;
+        display: flex;
+        &__desc {
+            font-weight: 500;
+            font-size: 16px;
+            color: #5c626c;
+        }
+        &__image {
+            padding: 0.5%;
+        }
+        &__highstreet {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+
+            &__title {
+                &__icons {
+                    display: flex;
+                    justify-content: space-between;
+                    padding: 0%;
+                    &__icon {
+                        padding: 1%;
+                    }
+                    &__button {
+                        cursor: pointer;
+                        background: transparent;
+                        border: none;
+                    }
+                }
+
+                &__h {
+                    font-size: 40px;
+                    color: #ffffff;
+                }
+                &__desc {
+                    font-size: 18px;
+                    color: #ffffff;
+                }
+            }
+        }
+    }
+}

@@ -26,24 +26,26 @@
 @import "pages/main.scss";
 @import "pages/audits.scss";
 @import "pages/zam-pad.scss";
+@import "pages/highstreet.scss";
 
 @import "tooltip";
 
 @import "atomic";
 
-*, :after, :before {
+*,
+:after,
+:before {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   font-family: "Maven Pro", sans-serif;
 }
 
-
 body {
-  background: #0E1017;
+  background: #0e1017;
 }
 
-#app{
+#app {
   @media (min-width: 769px) and (max-width: 1500px) {
     zoom: 90%;
   }
@@ -91,7 +93,7 @@ article {
   font-weight: bold;
   font-size: 22px;
   line-height: 120%;
-  color: #FFFFFF;
+  color: #ffffff;
 }
 
 .background-glow {
@@ -101,11 +103,10 @@ article {
   background-size: 100%;
 }
 
-
 .soon {
-  background: #36E269;
+  background: #36e269;
   border-radius: 15px;
-  color: #0E1017;
+  color: #0e1017;
   font-size: 14px;
   padding: 5px 15px;
   width: fit-content;
@@ -115,17 +116,15 @@ article {
   }
 }
 
-
 .walletconnect-modal__base {
   max-width: 325px;
 }
-
 
 .gray-link {
   display: block;
   text-decoration: none;
   padding: 10px 4px;
-  color: #6C6F80;
+  color: #6c6f80;
   font-size: 12px;
   cursor: pointer;
   &:hover {

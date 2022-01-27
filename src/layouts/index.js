@@ -1,15 +1,15 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../parts/header";
 import Sidebar from "../parts/sidebar";
-import {SwapPage} from "@src/pages/swap";
+import { SwapPage } from "@src/pages/swap";
 import { AuditsPage } from "@src/pages/audits";
 import {
     BrowserRouter as Router,
     Switch,
     Route,
 } from "react-router-dom";
-import {BridgePage} from "@src/pages/bridge";
-import {FarmPage} from "@src/pages/farming";
+import { BridgePage } from "@src/pages/bridge";
+import { FarmPage } from "@src/pages/farming";
 import {
     WalletContext,
     walletContextProps,
@@ -17,12 +17,13 @@ import {
     modalContextProps,
     RateContext
 } from "@src/context";
-import {getPrice} from "@src/api";
-import {ZMetaBoardPage} from "../pages/z-meta-board";
-import {StakingPage} from "../pages/staking";
-import {MainPage} from "../pages/main";
-import {ModalsGlobal} from "@src/parts/modals";
+import { getPrice } from "@src/api";
+import { ZMetaBoardPage } from "../pages/z-meta-board";
+import { StakingPage } from "../pages/staking";
+import { MainPage } from "../pages/main";
+import { ModalsGlobal } from "@src/parts/modals";
 import { ZamPadPage } from "@src/pages/zam-pad";
+import { HighstreetPage } from "@src/pages/highstreet";
 
 export const IndexLayout = () => {
     const [rate, setRate] = useState(0);
@@ -42,23 +43,24 @@ export const IndexLayout = () => {
     return (
         <Router>
             <WalletContext.Provider value={walletContextProps()}>
-                <RateContext.Provider value={{rate, priceChange24, priceChangePercentage24, volume24}}>
+                <RateContext.Provider value={{ rate, priceChange24, priceChangePercentage24, volume24 }}>
                     <ModalContext.Provider value={modalContextProps()}>
-                        <Header/>
+                        <Header />
                         <main>
-                            <Sidebar/>
+                            <Sidebar />
                             <Switch>
-                                <Route path="/swap" component={SwapPage}/>
-                                <Route path="/bridge" component={BridgePage}/>
-                                <Route path="/farming" component={FarmPage}/>
-                                <Route path="/z-meta-board" component={ZMetaBoardPage}/>
-                                <Route path="/staking" component={StakingPage}/>
+                                <Route path="/swap" component={SwapPage} />
+                                <Route path="/bridge" component={BridgePage} />
+                                <Route path="/farming" component={FarmPage} />
+                                <Route path="/z-meta-board" component={ZMetaBoardPage} />
+                                <Route path="/staking" component={StakingPage} />
                                 <Route path="/audits" component={AuditsPage} />
                                 <Route path="/zam-pad" component={ZamPadPage} />
-                                <Route path="/" component={MainPage}/>
+                                <Route path="/highstreet" component={HighstreetPage} />
+                                <Route path="/" component={MainPage} />
                             </Switch>
                         </main>
-                        <ModalsGlobal/>
+                        <ModalsGlobal />
                     </ModalContext.Provider>
                 </RateContext.Provider>
             </WalletContext.Provider>
