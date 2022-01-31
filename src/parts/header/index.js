@@ -11,6 +11,10 @@ const Header = () => {
 
     return (
         <>
+            <a href="/staking" className="top-banner">
+                <img src="/images/banners/top_trillion_heirs_2x.png" className="hidden-sm"/>
+                <img src="/images/banners/top_trillion_heirs_mobile_2x.png" className="visible-sm"/>
+            </a>
             <header className="site-header">
                 <div className="site-header__left">
                     <a href="/">

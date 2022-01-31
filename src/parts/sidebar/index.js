@@ -158,7 +158,7 @@ const Sidebar = (props) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="sidebar__balance">
+                        <a href="/staking" className="sidebar__balance">
                             <div className="sidebar__balance-token">
                                 <img src="/images/tokens/icon_token_zam.svg" height="30px" width="30px"/>
                                 ZAM
@@ -166,7 +166,7 @@ const Sidebar = (props) => {
                             <div className="sidebar__balance-price">
                                 ${rate}
                             </div>
-                        </div>
+                        </a>
                         <div className="sidebar__icons">
                             <a className="sidebar__icons-icon" href="https://github.com/Zamzam-Technology" target="_blank">
                                 <img src="/images/icon_github.svg" height="31px" width="31px"/>

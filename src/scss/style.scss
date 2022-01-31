@@ -131,3 +131,12 @@ article {
     text-decoration: underline;
   }
 }
+
+.top-banner {
+  display: flex;
+  justify-content: center;
+
+  img {
+    max-width: 100%;
+  }
+}
