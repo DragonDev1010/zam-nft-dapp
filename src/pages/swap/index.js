@@ -3,6 +3,7 @@ import {SwapContext} from "@src/context";
 import {SwapSwitcher} from "@src/pages/swap/swap-switcher";
 import {SwapChart} from "@src/pages/swap/swap-chart";
 import {TOKEN_USDT, TOKEN_ZAM} from "@src/constants";
+import {MetaTagsComponent} from "@src/components/metatags";
 
 
 export const SwapPage = () => {
@@ -12,6 +13,8 @@ export const SwapPage = () => {
 
     return (
         <article>
+            <MetaTagsComponent page="swap"/>
+
             <div className="cards cards-column-revert">
                 <SwapContext.Provider value={{swapFrom, setSwapFrom, swapTo, setSwapTo, isPending, setIsPending}}>
                     <SwapChart mainToken={TOKEN_ZAM}/>

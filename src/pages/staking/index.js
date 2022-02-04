@@ -2,11 +2,9 @@ import React, {useContext, useState, useEffect} from 'react';
 import {Header} from './header';
 import {StakingBody} from './staking-body';
 import {StakingContext} from "@src/context/staking-context";
-import {ModalContext, WalletContext} from "@src/context";
+import {WalletContext} from "@src/context";
 import {StakingAction} from "@src/actions/stakingAction";
-import {Modal} from "@src/components/modal/modal";
-import {ModalSwitchNetwork} from "@src/components/modal/wallet-switch-network";
-
+import {MetaTagsComponent} from "@src/components/metatags";
 
 export const StakingPage = () => {
     const [apy, setApy] = useState(50);
@@ -45,6 +43,8 @@ export const StakingPage = () => {
     return (
         <StakingContext.Provider value={{apy, staked, balance, rewards, totalRewards, allowance, isPending, setIsPending}}>
             <article className="staking background-glow">
+                <MetaTagsComponent page="staking"/>
+
                 <div className="general-container">
                     <Header/>
                     <StakingBody/>

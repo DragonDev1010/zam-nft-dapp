@@ -1,10 +1,13 @@
 import React from 'react';
 import { Header } from './header';
 import { BodyCard } from './body-card';
+import {MetaTagsComponent} from "@src/components/metatags";
 
 export const AuditsPage = () => {
     return (
         <article>
+            <MetaTagsComponent page="audits"/>
+
             <div className="general-container">
                 <Header />
             </div>

@@ -19,7 +19,7 @@ module.exports = {
     entry: "./src/index.js",
     output: {
         path: path.join(__dirname, "/dist"),
-        filename: "bundle.[fullhash].js",
+        filename: "bundle.[fullhash].js?v=[fullhash]",
     },
     resolve: {
         alias: {
@@ -76,7 +76,8 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: "./src/index.html"
+            template: "./src/index.html",
+            hash: true,
         }),
         new NodePolyfillPlugin(),
         new webpack.DefinePlugin(envKeys),

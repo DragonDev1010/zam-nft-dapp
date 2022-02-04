@@ -1,11 +1,14 @@
 import React from 'react';
+
 import { Header } from './header';
 import { MainCard } from './main-card';
+import {MetaTagsComponent} from "@src/components/metatags";
 export const MainPage = () => {
 
 
     return (
         <article className="background-glow">
+            <MetaTagsComponent page="main"/>
             <Header />
             <div className="main-cards">
                 <MainCard className="main-card main-card__bg_1" text={<>Create <span>DeFi Wallet</span> in ZamWallet</>} href="https://mobile.zam.io" isExt/>

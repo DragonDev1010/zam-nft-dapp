@@ -11,7 +11,7 @@ const Header = () => {
 
     return (
         <>
-            <a href="/staking" className="top-banner">
+            <a href="https://trillioheirs.zam.io/" target="_blank" className="top-banner">
                 <img src="/images/banners/top_trillion_heirs_2x.png" className="hidden-sm"/>
                 <img src="/images/banners/top_trillion_heirs_mobile_2x.png" className="visible-sm"/>
             </a>
