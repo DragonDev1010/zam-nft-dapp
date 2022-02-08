@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import {BridgePage} from "@src/pages/bridge";
 import {FarmPage} from "@src/pages/farming";
+import {NftPage} from "@src/pages/nft";
 import {
     WalletContext,
     walletContextProps,
@@ -49,6 +50,7 @@ export const IndexLayout = () => {
                             <Switch>
                                 <Route path="/swap" component={SwapPage}/>
                                 <Route path="/bridge" component={BridgePage}/>
+                                <Route path="/nft" component={NftPage}/>
                                 <Route path="/farming" component={FarmPage}/>
                                 <Route path="/z-meta-board" component={ZMetaBoardPage}/>
                                 <Route path="/staking" component={StakingPage}/>
