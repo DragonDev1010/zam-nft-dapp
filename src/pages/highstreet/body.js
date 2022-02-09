@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useRef } from "react";
 import Countdown from "react-countdown";
 import ProgressBar from "@ramonak/react-progress-bar";
 import { Button } from "@src/components/buttons/button";
@@ -8,10 +8,37 @@ import { Article } from "./article";
 import { ARTICLES_INFO, ROUNDS_INFO, TOKENS_INFO } from "./info";
 import { TokenInfo } from "./tokenInfo";
 import { Round } from "./roundInfo";
+import { ModalContext, WalletContext } from "@src/context";
+import { Link } from "react-router-dom";
 
 export const Body = () => {
+  const { setModalWalletOpen } = useContext(ModalContext);
+  const { wallet } = useContext(WalletContext);
+
   const btnHandler = () => {
-    console.log("BTN");
+    if (!wallet.address) {
+      setModalWalletOpen(true);
+    } else console.log("wallet is connected");
+  };
+
+  const about = useRef(null);
+  const features = useRef(null);
+  const roadmap = useRef(null);
+  const tokenomics = useRef(null);
+
+  const refs = {
+    about,
+    features,
+    roadmap,
+    tokenomics,
+  };
+
+  const goToSection = (title) => {
+    let ref = refs[title.toLowerCase()];
+    window.scrollTo({
+      top: ref.current.offsetTop - 160,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -148,7 +175,7 @@ export const Body = () => {
                     <div className="highstreet-body__cards__left__bsc__community__access__status ">Private</div>
                   </div>
                 </div>
-                <Button onClick={btnHandler} title="Connect wallet" />
+                <Button onClick={btnHandler} title={wallet.address ? "Whitelist Yourself!" : "Connect wallet"} />
               </div>
               <div className="highstreet-body__cards__left__rounds">
                 <div className="highstreet-body__cards__left__rounds__title">IDO Process:</div>
@@ -188,15 +215,15 @@ export const Body = () => {
         </div>
         <div className="highstreet-body__information">
           <div className="highstreet-body__information__tabs">
-            {ARTICLES_INFO.map(({ title }) => (
-              <div className="highstreet-body__information__tabs__title" onClick={() => goToSection(title)}>
+            {ARTICLES_INFO.map(({ title }, i) => (
+              <div className="highstreet-body__information__tabs__title" onClick={() => goToSection(title)} key={i}>
                 {title}
               </div>
             ))}
           </div>
           <div className="highstreet-body__information__articles">
             {ARTICLES_INFO.map(({ title, description, imgUrl }) => (
-              <Article title={title} description={description} imgUrl={imgUrl} />
+              <Article title={title} description={description} imgUrl={imgUrl} customRef={refs[title.toLowerCase()]} />
             ))}
           </div>
         </div>

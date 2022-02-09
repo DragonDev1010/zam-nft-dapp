@@ -40,7 +40,7 @@
         display: flex;
         justify-content: space-between;
         width: 100%;
-        max-width: 1000px;
+        // max-width: 1000px;
         height: 436px;
         @media (max-width: 1450px) {
           max-width: inherit;
@@ -353,7 +353,7 @@
         border: 1px solid rgba(47, 41, 84, 0.09);
         box-sizing: border-box;
         width: 100%;
-        max-width: 1000px;
+        // max-width: 1000px;
         height: 102px;
         backdrop-filter: blur(24px);
         border-radius: 20px;
