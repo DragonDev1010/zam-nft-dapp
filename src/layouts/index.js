@@ -24,6 +24,7 @@ import { MainPage } from "../pages/main";
 import { ModalsGlobal } from "@src/parts/modals";
 import { ZamPadPage } from "@src/pages/zam-pad";
 import { HighstreetPage } from "@src/pages/highstreet";
+import { WhiteListPage } from "@src/pages/whitelist";
 
 export const IndexLayout = () => {
     const [rate, setRate] = useState(0);
@@ -57,6 +58,7 @@ export const IndexLayout = () => {
                                 <Route path="/audits" component={AuditsPage} />
                                 <Route path="/zam-pad" component={ZamPadPage} />
                                 <Route path="/highstreet" component={HighstreetPage} />
+                                <Route path="/whitelist" component={WhiteListPage} />
                                 <Route path="/" component={MainPage} />
                             </Switch>
                         </main>

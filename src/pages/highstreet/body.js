@@ -10,15 +10,17 @@ import { TokenInfo } from "./tokenInfo";
 import { Round } from "./roundInfo";
 import { ModalContext, WalletContext } from "@src/context";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export const Body = () => {
   const { setModalWalletOpen } = useContext(ModalContext);
   const { wallet } = useContext(WalletContext);
+  const history = useHistory();
 
   const btnHandler = () => {
     if (!wallet.address) {
       setModalWalletOpen(true);
-    } else console.log("wallet is connected");
+    } else history.push("/whitelist");
   };
 
   const about = useRef(null);
