@@ -24,6 +24,9 @@ export const NftBody = () => {
 
   const [isWhiteListed, setIsWhiteListed] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  // const [firstLevel, setFirstLevel] = useState(false);
+  const [secondLevel, setSecondLevel] = useState(false);
+  const [thirdLevel, setThirdLevel] = useState(false);
   const [balance, setBalance] = useState("");
   const [nftAmount, setNftAmount] = useState("");
   const [nftPriceCoef, setNftPriceCoef] = useState(0.18);
@@ -33,6 +36,7 @@ export const NftBody = () => {
   const [nftAction, setNftAction] = useState(null);
   const [stakeAction, setStakeAction] = useState(null);
   const [nftsIds, setNftsIds] = useState([]);
+  const [nftsInfo, setNftsInfo] = useState([]);
   const [sliderItems, setSliderItems] = useState([
     <div className="no-nft-item">
       <img src="../images/nft/allMintedNfts.png" alt="" />
@@ -56,6 +60,10 @@ export const NftBody = () => {
       const isAccountInWhitelist = await nftAction.getWhiteListed();
       const userBalance = await nftAction.getWalletBalance();
       const userNftsIds = await nftAction.walletOfOwner();
+      const getSecondLevel = await nftAction.getSecondLevel();
+      const getThirdLevel = await nftAction.getThirdLevel();
+      setSecondLevel(getSecondLevel);
+      setThirdLevel(getThirdLevel);
       setBalance(Number(userBalance).toFixed(5));
       setIsWhiteListed(isAccountInWhitelist);
       setNftsIds(userNftsIds);
@@ -63,6 +71,28 @@ export const NftBody = () => {
       setStaked(staked);
     }
   }, [wallet, chainId]);
+
+  const getActiveLevel = (arr, level) => {
+    let info = arr.map((item, i, arr) => {
+      if (item.level === level) {
+        item.isActive = true;
+      } else {
+        item.isActive = false;
+      }
+      return item;
+    });
+    setNftsInfo(info);
+  };
+
+  useEffect(() => {
+    if (thirdLevel) {
+      getActiveLevel(NFTS_INFO, "3");
+    } else if (secondLevel) {
+      getActiveLevel(NFTS_INFO, "2");
+    } else if (!thirdLevel && !secondLevel) {
+      getActiveLevel(NFTS_INFO, "1");
+    }
+  }, [secondLevel, thirdLevel]);
 
   useEffect(async () => {
     if (nftsIds && nftsIds.length > 0 && chainId === 80001) {
@@ -88,7 +118,7 @@ export const NftBody = () => {
 
   useEffect(() => {
     if (isWhiteListed) {
-      setNftPriceCoef(0.14);
+      setNftPriceCoef(0.15);
     } else setNftPrice(0.18);
   }, [isWhiteListed]);
 
@@ -181,7 +211,7 @@ export const NftBody = () => {
           <h2>Rarity Levels</h2>
         </div>
         <div className="nft-body__nfts__cards">
-          {NFTS_INFO.map((item, i) => (
+          {nftsInfo.map((item, i) => (
             <NftCard {...item} key={i} />
           ))}
         </div>

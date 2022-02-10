@@ -47,7 +47,7 @@ export class NftAction {
       let isWhitelistedNftPrice = 0.18;
 
       if (isAccountInWhitelist) {
-        isWhitelistedNftPrice = 0.14;
+        isWhitelistedNftPrice = 0.15;
       }
 
       const nftsPrice = isWhitelistedNftPrice * amount;
@@ -71,6 +71,36 @@ export class NftAction {
       const isWhiteListed = await this.nftContract.methods.whitelisted(this.wallet.address).call();
 
       return isWhiteListed;
+    } catch (err) {
+      this.errorAction.push(err.message);
+    }
+  };
+  getSecondLevel = async () => {
+    try {
+      await this.checkWalletConnection();
+
+      if (!this.wallet.address) {
+        return;
+      }
+
+      const secondLevel = await this.nftContract.methods.secondLevel(this.wallet.address).call();
+
+      return secondLevel;
+    } catch (err) {
+      this.errorAction.push(err.message);
+    }
+  };
+  getThirdLevel = async () => {
+    try {
+      await this.checkWalletConnection();
+
+      if (!this.wallet.address) {
+        return;
+      }
+
+      const thirdLevel = await this.nftContract.methods.thirdLevel(this.wallet.address).call();
+
+      return thirdLevel;
     } catch (err) {
       this.errorAction.push(err.message);
     }

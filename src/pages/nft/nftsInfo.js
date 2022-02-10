@@ -11,7 +11,7 @@ export const NFTS_INFO = [
     amount: "1,500",
     amountTitle: "Brutal NFTs",
     subtitle: "Available for users who staked $ZAM for $ 1,000",
-    isActive: true,
+    isActive: false,
   },
   {
     level: "3",
