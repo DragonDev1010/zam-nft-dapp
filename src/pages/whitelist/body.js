@@ -1,16 +1,52 @@
 import React, { useContext, useRef } from "react";
 import "swiper/css";
+import { useAuth0 } from "@auth0/auth0-react";
 import { ModalContext, WalletContext } from "@src/context";
 import { Button } from "@src/components/buttons/button";
+import { SocialItem } from "./social-item";
+import { SOCIALS_INFO } from "./info";
+import { SelectComponent } from "@src/components/fields/Select";
+import { IconCheckMark } from "@src/icons/icons";
+import { useEffect } from "react/cjs/react.development";
 
 export const Body = () => {
   const { setModalWalletOpen } = useContext(ModalContext);
   const { wallet } = useContext(WalletContext);
 
+  const { loginWithRedirect, user, isAuthenticated, isLoading } = useAuth0();
+
+  useEffect(() => {
+    console.log("USER", user);
+  }, [user]);
+
+  useEffect(() => {
+    console.log("isAuthenticated", isAuthenticated);
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    console.log("isLoading", isLoading);
+  }, [isLoading]);
+
   const btnHandler = () => {
     if (!wallet.address) {
       setModalWalletOpen(true);
     } else console.log("wallet is connected");
+  };
+
+  const optionsTokens = [
+    {
+      value: "London",
+      label: "London",
+    },
+    {
+      value: "Paris",
+      label: "Paris",
+    },
+  ];
+
+  const DEFAULT_SELECT_VALUE = {
+    value: "Choose Country",
+    label: "Choose Country",
   };
 
   return (
@@ -113,9 +149,9 @@ export const Body = () => {
           </div>
           <div className="whitelist-body__card__twitter">
             <div className="whitelist-body__card__twitter__title">Connect Twitter</div>
-            <button className="whitelist-body__card__twitter__button">
+            <button className="whitelist-body__card__twitter__button" onClick={loginWithRedirect}>
               {" "}
-              <img src="/images/whitelist/twitter-img.png" /> Connect Twitter
+              <img src="/images/whitelist/twitter-img.png" /> <p>Connect Twitter</p>
             </button>
           </div>
           <div className="whitelist-body__card__wallet">
@@ -155,6 +191,57 @@ export const Body = () => {
               </div>
             </div>
           </div>
+          <div className="whitelist-body__card__socials">
+            <div className="whitelist-body__card__socials__title">Social Media Tasks</div>
+            <div className="whitelist-body__card__socials__subtitle">
+              Please complete the social tasks below. They’re optional, but provide increased chances of getting whitelisted.
+            </div>
+            <div className="whitelist-body__card__socials__items">
+              {SOCIALS_INFO.map((item, i) => (
+                <SocialItem {...item} key={i} />
+              ))}
+            </div>
+          </div>
+          <div className="whitelist-body__card__select">
+            <label className="input-field__label">What’s your Country?</label>
+            <div className="input-field mt-10 mb-40">
+              <SelectComponent
+                classNamePrefix="select-field"
+                className="select-field select-field-transparent"
+                //   onChange={(selectedOption) => setCity(selectedOption.value)}
+                defaultValue={DEFAULT_SELECT_VALUE}
+                //   value={getTokenByValue(token)}
+                options={optionsTokens}
+              />
+            </div>
+          </div>
+          <div className="whitelist-body__card__terms">
+            <div className="whitelist-body__card__terms__title">Do you agree with the Terms and Conditions</div>
+            <label className="modal__wallet-agreement">
+              <div className="checkbox">
+                <input
+                  type="checkbox"
+                  //  checked={agreement}
+                  //  onChange={() => setAgreement(!agreement)}
+                />
+                <IconCheckMark />
+              </div>
+              <div className="checkbox-label">
+                I accept the
+                <a
+                  className="whitelist-body__card__terms__label"
+                  href="https://zam.io/docs/debe5b38c66e212ac7afddf8293af433.pdf"
+                  target="_blank"
+                >
+                  Terms and Conditions
+                </a>{" "}
+              </div>
+            </label>
+          </div>
+          <button className="whitelist-body__card__twitter__button">
+            {" "}
+            <p>Submit Your Application</p>
+          </button>
         </div>
       </div>
     </div>
