@@ -1,4 +1,5 @@
 import { WalletContext } from "@src/context";
+import useWindowSize from "@src/hooks/useWindowSize";
 import React, { useContext, useState, useEffect } from "react";
 import { PREJECTS_INFO, STATS_INFO } from "./info";
 import { Project } from "./project-item";
@@ -6,6 +7,7 @@ import { StatsItem } from "./stats-item";
 
 export const ProfileBody = () => {
   const { wallet } = useContext(WalletContext);
+  const { width } = useWindowSize();
 
   return (
     <div className="profile-body">
@@ -29,7 +31,11 @@ export const ProfileBody = () => {
                     ""
                   )}
                 </div>
-                <span>{wallet.address}</span>
+                <span>
+                  {width > 650
+                    ? wallet.address
+                    : `${String(wallet.address).substring(0, 5)}...${String(wallet.address).substring(30)}`}
+                </span>
                 <img src="/images/profile/copy-img.png" />
               </div>
               <div className="profile-body__top-cards__wallet__info__address__disconnect">

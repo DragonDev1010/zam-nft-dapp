@@ -15,17 +15,17 @@ export const Body = () => {
 
   const { loginWithRedirect, user, isAuthenticated, isLoading } = useAuth0();
 
-  useEffect(() => {
-    console.log("USER", user);
-  }, [user]);
+  //   useEffect(() => {
+  //     console.log("USER", user);
+  //   }, [user]);
 
-  useEffect(() => {
-    console.log("isAuthenticated", isAuthenticated);
-  }, [isAuthenticated]);
+  //   useEffect(() => {
+  //     console.log("isAuthenticated", isAuthenticated);
+  //   }, [isAuthenticated]);
 
-  useEffect(() => {
-    console.log("isLoading", isLoading);
-  }, [isLoading]);
+  //   useEffect(() => {
+  //     console.log("isLoading", isLoading);
+  //   }, [isLoading]);
 
   const btnHandler = () => {
     if (!wallet.address) {
@@ -149,7 +149,7 @@ export const Body = () => {
           </div>
           <div className="whitelist-body__card__twitter">
             <div className="whitelist-body__card__twitter__title">Connect Twitter</div>
-            <button className="whitelist-body__card__twitter__button" onClick={loginWithRedirect}>
+            <button className="whitelist-body__card__twitter__button">
               {" "}
               <img src="/images/whitelist/twitter-img.png" /> <p>Connect Twitter</p>
             </button>

@@ -5,7 +5,7 @@ import { NftBody } from "./body";
 export const NftPage = () => {
   return (
     <article>
-      <div className="nft-container">
+      <div className="nft-page-container ">
         <Header />
         <NftBody />
       </div>
