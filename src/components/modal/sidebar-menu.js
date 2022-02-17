@@ -94,6 +94,14 @@ export const ModalSidebarMenu = (props) => {
         </Link>
       </li>
       <li className="sidebar__nav-box">
+        <Link to="/highstreet" className={`sidebar__nav-item ${props.location?.pathname === "/highstreet" ? `active` : ""}`}>
+          <div className="sidebar__nav-icon">
+            <IconFarming />
+          </div>
+          <span>Highstreet</span>
+        </Link>
+      </li>
+      <li className="sidebar__nav-box">
         <Link to="/audits" className={`sidebar__nav-item ${props.location?.pathname === "/audits" ? `active` : ""}`}>
           <div className="sidebar__nav-icon">
             <IconAudits />

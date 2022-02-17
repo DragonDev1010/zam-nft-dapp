@@ -1,0 +1,239 @@
+.login-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 826px;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+
+.login-title {
+  font-family: Maven Pro;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 35px;
+  line-height: 120%;
+  color: #ffffff;
+  margin-bottom: 28px;
+}
+
+.login-body {
+  width: 100%;
+  height: 741px;
+  background: #191c29;
+  border: 1px solid rgba(47, 41, 84, 0.09);
+  box-sizing: border-box;
+  backdrop-filter: blur(24px);
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  &__registration {
+    width: 100%;
+    min-width: 423px;
+    max-width: 481px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 33px 29px;
+    &__wallet {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      &__title {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 15px;
+        line-height: 120%;
+        color: #ffffff;
+        margin-bottom: 20px;
+      }
+      &__info {
+        width: 100%;
+        height: 50px;
+        border: 2px solid #2bf07b;
+        border-radius: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        &__address {
+          display: flex;
+          align-items: center;
+          span {
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 15px;
+            line-height: 17px;
+            color: #ffffff;
+            margin-left: 10px;
+          }
+        }
+        &__status {
+          font-family: Maven Pro;
+          font-style: normal;
+          font-weight: 600;
+          font-size: 13px;
+          line-height: 17px;
+          color: #2bf07b;
+        }
+      }
+    }
+    &__caution {
+      display: flex;
+      align-items: center;
+      margin: 25px 0;
+      img {
+        margin-right: 10px;
+      }
+      p {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 18px;
+        color: #ffffff;
+        span {
+          color: #2bf07b;
+          text-decoration: underline;
+        }
+      }
+    }
+    &__input {
+      width: 100%;
+      margin-bottom: 25px;
+    }
+    button {
+      width: 100%;
+      height: 50px;
+      background: #008cdc;
+      border-radius: 12px;
+      cursor: pointer;
+      margin-top: 20px;
+
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      // line-height: 17px;
+      text-align: center;
+      letter-spacing: 0.01em;
+      color: #ffffff;
+    }
+  }
+  &__signin {
+    width: 100%;
+    min-width: 293px;
+    max-width: 351px;
+    display: flex;
+    flex-direction: column;
+    padding: 33px 29px;
+    &__title {
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 120%;
+      text-align: center;
+      color: #ffffff;
+      margin-bottom: 16px;
+    }
+    button {
+      width: 100%;
+      height: 50px;
+      background: rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+      border: none;
+      cursor: pointer;
+
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 16px;
+      line-height: 17px;
+      text-align: center;
+      letter-spacing: 0.01em;
+      color: #ffffff;
+    }
+  }
+  &__line {
+    height: 100%;
+    width: 1px;
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+.login-modal {
+  width: 486px;
+  height: 516px;
+  //   background: rgba(35, 39, 55, 0.73);
+  //   border: 1px solid rgba(47, 41, 84, 0.09);
+  box-sizing: border-box;
+  backdrop-filter: blur(37px);
+  border-radius: 20px;
+  &__title {
+    font-family: Maven Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 22px;
+    line-height: 120%;
+    text-align: center;
+    color: #ffffff;
+    margin-bottom: 30px;
+  }
+  &__input {
+    margin: 20px 0;
+  }
+  &__forgot {
+    font-family: Maven Pro;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #2bf07b;
+    text-decoration: none;
+  }
+  button {
+    width: 100%;
+    height: 50px;
+    background: #00a3ff;
+    border-radius: 12px;
+    border: none;
+    cursor: pointer;
+    margin-top: 30px;
+
+    font-family: Maven Pro;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 17px;
+    text-align: center;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+  }
+  &__line {
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin-top: 37px;
+    margin-bottom: 21px;
+  }
+  &__create {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    p {
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 120%;
+      color: #ffffff;
+      span {
+        color: #2bf07b;
+        text-decoration-line: underline;
+      }
+    }
+  }
+}

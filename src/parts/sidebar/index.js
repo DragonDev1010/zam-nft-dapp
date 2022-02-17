@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import {
   IconAppApple,
   IconAppGoogle,
@@ -122,6 +122,17 @@ const Sidebar = (props) => {
                       <IconFarming />
                     </div>
                     <span>Farming</span>
+                  </Link>
+                </li>
+                <li className="sidebar__nav-box hidden-sm">
+                  <Link
+                    to="/highstreet"
+                    className={`sidebar__nav-item ${props.location?.pathname === "/highstreet" ? `active` : ""}`}
+                  >
+                    <div className="sidebar__nav-icon">
+                      <IconBridge />
+                    </div>
+                    <span>Highstreet</span>
                   </Link>
                 </li>
                 <li className="sidebar__nav-box hidden-sm">
