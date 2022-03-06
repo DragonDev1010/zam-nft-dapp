@@ -1,6 +1,6 @@
 import React from 'react';
 import { Header } from './header';
-import { Body } from './Body';
+import { Body } from './body';
 
 
 export const ZamPadPage = () => {
