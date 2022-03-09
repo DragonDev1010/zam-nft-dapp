@@ -53,10 +53,10 @@ export const NftBody = () => {
     setStakeAction(stake);
     const chainIdInHex = await nftAction.getChainId();
     setChainId(Web3.utils.hexToNumber(chainIdInHex));
-  }, [wallet]);
+  }, [wallet, nftAction]);
 
   useEffect(async () => {
-    if (wallet && chainId === 80001) {
+    if (wallet && chainId === 56) {
       const isAccountInWhitelist = await nftAction.getWhiteListed();
       const userBalance = await nftAction.getWalletBalance();
       const userNftsIds = await nftAction.walletOfOwner();
@@ -95,7 +95,7 @@ export const NftBody = () => {
   }, [secondLevel, thirdLevel]);
 
   useEffect(async () => {
-    if (nftsIds && nftsIds.length > 0 && chainId === 80001) {
+    if (nftsIds && nftsIds.length > 0 && chainId === 56) {
       setIsLoading(true);
       setSliderItems([]);
       let arr = [];
@@ -130,7 +130,7 @@ export const NftBody = () => {
   }, [nftAmount, nftPriceCoef]);
 
   const btnMintHandler = async () => {
-    if (chainId !== 80001) return;
+    if (chainId !== 56) return;
     if (nftAmount) {
       await nftAction.mintNft(+nftAmount);
       const userNftsIds = await nftAction.walletOfOwner();
@@ -195,7 +195,7 @@ export const NftBody = () => {
               <div className="info-card__header__title__all">
                 <img src="../images/nft/myNftsLogo.png" alt="" /> My NFTs
               </div>
-              <div className="info-card__header__title__amount">{nftsIds.length} NFTs</div>
+              <div className="info-card__header__title__amount">{nftsIds !== undefined ? nftsIds.length : 0} NFTs</div>
             </div>
           </div>
           <div className="info-card__body nfts">
