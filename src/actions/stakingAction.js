@@ -48,24 +48,24 @@ export class StakingAction {
             }
 
             await this.checkWalletChain(false);
-
+            
             const reward = await this.stackingContract.methods.pendingReward(this.wallet.address).call();
             return parseFloat(Web3.utils.fromWei(reward));
         } catch (err) {
             this.errorAction.push(err.message);
         }
     }
-
+    
     getStaked = async () => {
         try {
             await this.checkWalletConnection();
-
+            
             if (!this.wallet.address) {
                 return;
             }
-
+            
             await this.checkWalletChain(false);
-
+            
             const stakers = await this.stackingContract.methods.userInfo(this.wallet.address).call();
             if (stakers[0]) {
                 return parseFloat(Web3.utils.fromWei(stakers[0]));

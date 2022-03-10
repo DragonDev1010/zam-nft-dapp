@@ -1,9 +1,9 @@
 import Web3 from "web3";
-import contractZamStakingAbi from "@src/contracts/nft/nftContractAbi.json";
-import { dec2hex, fromWei } from "@src/utils";
-import { CHAIN_ID_BSC } from "../constants";
+import nftContractAbi from "@src/contracts/nft/nftContractAbi.json";
 import contractZamBscAbi from "@src/contracts/bridge/zam_bsc.json";
 import { ADDRESS_NFT, contractZamBscAddress } from "../config";
+import {MerkleTree} from "merkletreejs"
+import keccak256 from "keccak256"
 
 export class NftAction {
   constructor(wallet) {
@@ -14,8 +14,14 @@ export class NftAction {
     this.needChainId = 0;
 
     const web3 = new Web3(window.ethereum);
-    this.nftContract = new web3.eth.Contract(contractZamStakingAbi, this.addressNft);
+    this.nftContract = new web3.eth.Contract(nftContractAbi, this.addressNft);
     this.zamTokenContract = new web3.eth.Contract(contractZamBscAbi, this.addressZam);
+
+    const address_list = ["0x8C04e1707519cA28Bb73b008Cb9E1DA46Ecd6609", "0x5D5F5d0b95fCD20d3Fb837d6341Da4B0B02f224b", "0x453B8D46D3D41d3B3DdC09B20AE53aa1B6aB186E", "0x656947E79f546e011DB4d2b4b27135Fb46ccb9Fe"]
+    this.leafNodes = address_list.map(addr => keccak256(addr))
+    this.merkleTree_1 = new MerkleTree(this.leafNodes, keccak256, {sortPairs: true});
+    this.merkleTree_2 = new MerkleTree(this.leafNodes, keccak256, {sortPairs: true});
+    this.merkleTree_3 = new MerkleTree(this.leafNodes, keccak256, {sortPairs: true});
   }
 
   getWalletBalance = () => {
@@ -41,20 +47,18 @@ export class NftAction {
         console.log("WALEET ERROR");
         return;
       }
+      const root = this.merkleTree_1.getHexRoot()
+      console.log("root: ", root)
+      const proof = this.merkleTree_1.getHexProof(keccak256(this.wallet.address));
+      console.log("proof: ", proof)
+      if(proof.length != 0) {
+        const nftsPrice = amount * 0.15
+        await this.nftContract.methods
+          .mint(amount, 1, proof)
+          .send({ from: this.wallet.address, value: Web3.utils.toWei(String(nftsPrice), "ether") });
+      } else {
 
-      const isAccountInWhitelist = await this.getWhiteListed();
-
-      let isWhitelistedNftPrice = 0.18;
-
-      if (isAccountInWhitelist) {
-        isWhitelistedNftPrice = 0.15;
       }
-
-      const nftsPrice = isWhitelistedNftPrice * amount;
-
-      await this.nftContract.methods
-        .mint(amount)
-        .send({ from: this.wallet.address, value: Web3.utils.toWei(String(nftsPrice), "ether") });
     } catch (err) {
       this.errorAction.push(err.message);
     }
