@@ -130,7 +130,7 @@ export const NftBody = () => {
   }, [nftAmount, nftPriceCoef]);
 
   const btnMintHandler = async () => {
-    if (chainId !== 56) return;
+    // if (chainId !== 56) return;
     if (nftAmount) {
       await nftAction.mintNft(+nftAmount);
       const userNftsIds = await nftAction.walletOfOwner();

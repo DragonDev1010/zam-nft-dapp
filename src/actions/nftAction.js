@@ -17,7 +17,7 @@ export class NftAction {
     this.nftContract = new web3.eth.Contract(nftContractAbi, this.addressNft);
     this.zamTokenContract = new web3.eth.Contract(contractZamBscAbi, this.addressZam);
 
-    const address_list = ["0x8C04e1707519cA28Bb73b008Cb9E1DA46Ecd6609", "0x5D5F5d0b95fCD20d3Fb837d6341Da4B0B02f224b", "0x453B8D46D3D41d3B3DdC09B20AE53aa1B6aB186E", "0x656947E79f546e011DB4d2b4b27135Fb46ccb9Fe"]
+    const address_list = ["0x8C04e1707519cA28Bb73b008Cb9E1DA46Ecd6609", "0x5D5F5d0b95fCD20d3Fb837d6341Da4B0B02f224b", "0x453B8D46D3D41d3B3DdC09B20AE53aa1B6aB186E", "0x656947E79f546e011DB4d2b4b27135Fb46ccb9Fe", "0x0E12bbf43Aa03506f2b133aE38FCfe6083236e7F"]
     this.leafNodes = address_list.map(addr => keccak256(addr))
     this.merkleTree_1 = new MerkleTree(this.leafNodes, keccak256, {sortPairs: true});
     this.merkleTree_2 = new MerkleTree(this.leafNodes, keccak256, {sortPairs: true});
