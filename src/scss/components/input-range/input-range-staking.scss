@@ -1,0 +1,52 @@
+.input-range-container {
+  margin: 0 auto;
+  padding: 0 10px;
+  @media (min-width: 769px) and (max-width: 1500px) {
+    zoom: 111.111%;
+  }
+
+  .input-range {
+    margin-bottom: 15px;
+
+  }
+  .input-range__track {
+    background: #0E1118;
+    border-radius: 23px;
+    height: 12px;
+  }
+  .input-range__track--active {
+    background: linear-gradient(270deg, rgba(27, 230, 109, 0.78) 0%, rgba(41, 230, 117, 0.27) 100%);
+    border-radius: 23px;
+    height: 12px;
+  }
+  .input-range__slider {
+    width: 26px;
+    height: 26px;
+    background: #2DFF82;
+    margin-left: -13px;
+    margin-top: -19px;
+  }
+  .input-range__label--value {
+    display: none;
+  }
+  .input-range__label--min, .input-range__label--max {
+    color: #fff;
+    bottom: -2rem;
+    display: none;
+  }
+
+  .input-range__custom-legend {
+    display: table;
+    font-size: 13px;
+    color: #fff;
+    @media (max-width: 768px) {
+      font-size: 10px;
+    }
+    &-item {
+      width: 16.66%;
+      display: table-cell;
+    }
+  }
+}
+
+

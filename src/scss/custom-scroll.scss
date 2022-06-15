@@ -1,0 +1,23 @@
+.custom-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(70, 74, 91, 0.64) transparent;
+  &::-webkit-scrollbar {
+    width: 5px;
+    height: 100%;
+  }
+  /* Track */
+  &::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: transparent;
+  }
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(70, 74, 91, 0.64);
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+  }
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: rgba(49, 56, 85, 0.34);
+  }
+}

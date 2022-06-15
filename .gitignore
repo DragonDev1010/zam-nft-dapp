@@ -1,0 +1,7 @@
+/node_modules
+/dist
+coingeco_market
+coingeco_price
+yarn.lock
+vscode
+.idea

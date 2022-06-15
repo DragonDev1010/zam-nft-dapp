@@ -1,0 +1,601 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_admin",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [],
+    "name": "admin",
+    "outputs": [
+      {
+        "internalType": "contract IAdmin",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "guaranteedWithoutNft",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "guaranteedWithNft",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "calculateMaxAllocations",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "participant",
+        "type": "address"
+      }
+    ],
+    "name": "getAvailableAllocationAtRound2",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      }
+    ],
+    "name": "getBelt",
+    "outputs": [
+      {
+        "internalType": "enum ZAMPadSale.Belts",
+        "name": "belt",
+        "type": "uint8"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getCurrentRound",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "roundId",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPools",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "minStakedZAM",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allocationTotal",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allocationSold",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "usersWithoutNft",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "usersWithNft",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxAllocationGuaranteedWithoutNft",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "maxAllocationGuaranteedWithNft",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct ZAMPadSale.BeltPool[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getPoolsCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "start",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "count",
+        "type": "uint256"
+      }
+    ],
+    "name": "getRegisteredUsers",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "enum ZAMPadSale.Belts",
+            "name": "belt",
+            "type": "uint8"
+          },
+          {
+            "internalType": "uint256",
+            "name": "stakedZAM",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "NFT",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allocationBoughtAtRound1",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "allocationBoughtAtRound2",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "userAddress",
+            "type": "address"
+          }
+        ],
+        "internalType": "struct ZAMPadSale.RegisteredUser[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getRegisteredUsersCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getRounds",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "startTime",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "endTime",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct ZAMPadSale.Round[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getRoundsCount",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "string",
+        "name": "name_",
+        "type": "string"
+      },
+      {
+        "internalType": "address",
+        "name": "token_",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "allocationTotal_",
+        "type": "uint256"
+      }
+    ],
+    "name": "initSale",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "isPaused",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "nftBalance",
+        "type": "uint256"
+      }
+    ],
+    "name": "joinWhitelist",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "participate",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "participant",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
+      }
+    ],
+    "name": "participateFrom",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "pools",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "minStakedZAM",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "allocationTotal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "allocationSold",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "usersWithoutNft",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "usersWithNft",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxAllocationGuaranteedWithoutNft",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "maxAllocationGuaranteedWithNft",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "registeredUsers",
+    "outputs": [
+      {
+        "internalType": "enum ZAMPadSale.Belts",
+        "name": "belt",
+        "type": "uint8"
+      },
+      {
+        "internalType": "uint256",
+        "name": "stakedZAM",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "NFT",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "allocationBoughtAtRound1",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "allocationBoughtAtRound2",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "userAddress",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "name": "rounds",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "startTime",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "endTime",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "sale",
+    "outputs": [
+      {
+        "internalType": "string",
+        "name": "name",
+        "type": "string"
+      },
+      {
+        "internalType": "contract IERC20",
+        "name": "token",
+        "type": "address"
+      },
+      {
+        "internalType": "bool",
+        "name": "isInitialized",
+        "type": "bool"
+      },
+      {
+        "internalType": "uint256",
+        "name": "allocationTotal",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "allocationSold",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "users_",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "counts_",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "setNfts",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bool",
+        "name": "paused_",
+        "type": "bool"
+      }
+    ],
+    "name": "setPause",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "minRates",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "poolWeights",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "setPools",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "startTimes",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "endTimes",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "setRounds",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "address_",
+        "type": "address"
+      }
+    ],
+    "name": "setZamStaking",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "creator",
+        "type": "address"
+      }
+    ],
+    "name": "withdraw",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "zamStaking",
+    "outputs": [
+      {
+        "internalType": "contract IZamStaking",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

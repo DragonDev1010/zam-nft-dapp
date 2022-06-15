@@ -1,0 +1,31 @@
+.badge {
+  padding: 4px 8px;
+  border-radius: 10px;
+  align-items: center;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 138%;
+  @media (max-width: 767px) {
+    padding: 3px 6px;
+    font-size: 10px;
+    border-radius: 7px;
+  }
+  &_green {
+    background: linear-gradient(252.42deg, #3CEB97 4.87%, #03B735 98.36%);
+  }
+  &_blue {
+    background: linear-gradient(254.62deg, #00C4EF 12.46%, #2596FF 77.13%);
+  }
+  &_orange {
+    background: linear-gradient(263.8deg, #F4A125 4.47%, #E27A00 80.38%);
+  }
+  &_violet {
+    background: linear-gradient(258.2deg, #924FFF 6.27%, #6F2BFF 88.95%);
+  }
+  &_red {
+    background: linear-gradient(263.45deg, #FF4B6B 11.06%, #CC205E 99.06%);
+  }
+  p {
+    margin-bottom: 0;
+  }
+}

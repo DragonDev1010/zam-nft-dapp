@@ -1,0 +1,534 @@
+.profile-wrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1482px;
+  margin: 50px auto;
+  margin-top: 50px;
+  padding: 0 40px;
+  @media (max-width: 1199px) {
+    padding: 4%;
+    margin-top: 0;
+  }
+}
+
+.profile-title {
+  font-family: Maven Pro;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 35px;
+  line-height: 120%;
+  color: #ffffff;
+  margin-bottom: 28px;
+}
+
+.profile-body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1402px;
+  &__cards {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -12px;
+  }
+  &__card {
+    padding: 0 12px;
+    margin-bottom: 24px;
+    width: calc(100% / 3);
+    @media (max-width: 1359px) {
+      width: 50%;
+    }
+    @media (max-width: 767px) {
+      width: 100%;
+    }
+    &_wallet {
+      width: 67%;
+      @media (max-width: 1359px) {
+        width: 100%;
+      }
+    }
+    &_stats {
+      width: 33%;
+      @media (max-width: 1359px) {
+        width: 100%;
+      }
+    }
+    &_soon {
+      opacity: 0.5;
+    }
+  }
+}
+
+.profile-btn {
+  width: max-content;
+  max-width: 100%;
+  display: flex;
+  padding: 0 10px;
+  align-items: center;
+  height: 38px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  &.telegram {
+    background: #f54646;
+  }
+  &.twitter {
+    background: #00a3ff;
+  }
+  img {
+    margin-right: 5px;
+  }
+  span {
+    font-family: Maven Pro;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 15px;
+    line-height: 17px;
+    text-align: center;
+    letter-spacing: 0.01em;
+    color: #ffffff;
+  }
+}
+
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  background: #1F2032;
+  backdrop-filter: blur(24px);
+  border-radius: 20px;
+
+  &__block {
+    border-bottom: 1px solid white;
+  }
+
+  &__title {
+    display: flex;
+    font-family: Maven Pro;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 120%;
+    color: #ffffff;
+    &-icon {
+      display: block;
+      width: 20px;
+      height: 20px;
+      flex: 0 0 auto;
+      margin-right: 10px;
+      margin-top: 2px;
+    }
+    &-soon {
+      display: inline-block;
+      border-radius: 10px;
+      border: 1px solid #2dff82;
+      margin-left: auto;
+      padding: 5px 10px;
+      color: #2dff82;
+      font-size: 14px;
+      line-height: 1;
+    }
+  }
+  &__wallet {
+    margin-top: 36px;
+    background: #16172A;
+    border-radius: 23px;
+    &-address {
+      display: flex;
+      justify-content: space-between;
+      display: flex;
+      height: 50px;
+      background: linear-gradient(180deg, #27415d 0%, #263750 100%);
+      border-radius: 15px;
+      padding: 14px 20px 14px 10px;
+    }
+    &-title {
+      display: flex;
+      align-items: center;
+      margin-right: 10px;
+      &-text {
+        display: block;
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 17px;
+        color: #ffffff;
+        margin: 0 10px;
+      }
+    }
+  }
+  &__copy {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background: none;
+    text-decoration: none;
+    border: none;
+    outline: none;
+    width: 15px;
+    flex: 0 0 auto;
+    &-icon {
+      display: block;
+      width: 100%;
+    }
+  }
+  &__disconnect {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+    &-icon {
+      flex: 0 0 auto;
+      display: block;
+      width: 15px;
+      margin-right: 5px;
+    }
+    &-text {
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 18px;
+      color: #2dff82;
+    }
+  }
+  &__data {
+    padding: 30px 25px 10px;
+    &-content {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -22px;
+    }
+    &-item {
+      padding: 0 22px;
+      margin-bottom: 10px;
+    }
+    &-title {
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 120%;
+      color: #868896;
+      margin-bottom: 10px;
+    }
+    &-value {
+      display: flex;
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 120%;
+      color: #ffffff;
+      margin-bottom: 5px;
+    }
+    &-usd {
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 120%;
+      color: #868896;
+      margin-bottom: 10px;
+    }
+    &-icon {
+      display: block;
+      width: 20px;
+      margin-right: 10px;
+    }
+    &-btn {
+      height: 38px;
+      border-radius: 12px;
+      font-size: 15px;
+      padding: 12px 15px 12px;
+    }
+  }
+  &__transaction {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 25px -15px 0;
+    &-btn {
+      display: flex;
+      align-items: center;
+      padding: 0 15px;
+      margin-bottom: 5px;
+    }
+    &-icon {
+      display: block;
+      width: 18px;
+      flex: 0 0 auto;
+      margin-right: 7px;
+    }
+    &-text {
+      text-decoration: none;
+      display: inline-block; 
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 17px;
+      text-align: center;
+      color: #2dff82;
+    }
+  }
+  &__stats {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 23px -14px 0;
+    &-item {
+      width: 50%;
+      padding: 0 14px;
+      display: flex;
+      margin-bottom: 20px;
+      @media (max-width: 1359px) {
+        width: 20%;
+      }
+      @media (max-width: 1199px) {
+        width: calc(100% / 3);
+      }
+      @media (max-width: 767px) {
+        width: 50%;
+      }
+      @media (max-width: 479px) {
+        width: 100%;
+      }
+    }
+    &-img {
+      flex: 0 0 auto;
+      display: block;
+      width: 46px;
+      height: 46px;
+      margin-right: 15px;
+      @media (max-width: 1439px) {
+        width: 40px;
+        height: 40px;
+      }
+    }
+    &-title {
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 20px;
+      line-height: 141.5%;
+      color: #FFFFFF;
+      margin-bottom: 5px;
+      white-space: nowrap;
+    }
+    &-subtitle {
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 117.5%;
+      color: #90939E;
+      margin-bottom: 5px;
+    }
+  }
+  &__inputs {
+    margin-top: 23px;
+  }
+  &__scl {
+    &-btn-wrapper {
+      margin-bottom: 25px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    &-btn-title {
+      margin-bottom: 15px;
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 700;
+      font-size: 15px;
+      line-height: 120%;
+      color: #FFFFFF;
+    }
+  }
+  &__projects {
+    margin-top: 23px;
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+  &__project {
+    display: flex;
+    background: #16172A;
+    border-radius: 20px;
+    margin-bottom: 11px;
+    padding: 17px;
+    &-img {
+      display: block;
+      flex: 0 0 auto;
+      margin-right: 10px;
+      border-radius: 50%;
+      width: 37px;
+      height: 37px;
+      object-fit: cover;
+    }
+    &-title {
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 141.5%;
+      color: #ffffff;
+    }
+    &-date {
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 117.5%;
+      color: #ffffff;
+    }
+  }
+  &__alert {
+    margin: 15px 0;
+    span.green-span {
+      color: #2bf07b;
+    }
+    span.error-span {
+      color: #e52f40;
+    }
+  }
+  &__input {
+    margin-bottom: 24px;
+  }
+  &__level {
+    width: 100%;
+    height: 120px;
+    background: #16172A url("../../images/profile/profile-bg1.png") top left / cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    margin-top: 30px;
+    &-title {
+      font-family: Work Sans;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 38px;
+      text-align: center;
+      color: #ffffff;
+    }
+    &-color {
+      color: yellow;
+    }
+    &-count {
+      padding: 2px 10px;
+      height: 26px;
+      border: 1.6129px solid #2dff82;
+      backdrop-filter: blur(10.4839px);
+      border-radius: 10px;
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 1.5;
+      text-align: center;
+      color: #2dff82;
+    }
+  }
+  &__info {
+    display: flex;
+    flex-direction: column;
+    margin-top: 35px;
+    &-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      &_last {
+        padding-top: 20px;
+        border-top: 1px solid rgba(255, 255, 255, 0.09);
+        .profile-card__info-key {
+          color: #fff;
+        }
+      }
+    }
+    &-key {
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 117.5%;
+      color: #90939e;
+      margin-right: 10px;
+    }
+    &-value {
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 14px;
+      line-height: 141.5%;
+      text-align: right;
+      color: #ffffff;
+      &_text-left {
+        text-align: left;
+      }
+    }
+
+    &-table {
+      width: 100%;
+      td {
+        padding: 5px 5px 5px 0;
+      }
+    }
+  }
+  &__button {
+    width: 100%;
+    height: 50px;
+    background: #00a3ff;
+    border-radius: 13px;
+    border: none;
+    font-family: Maven Pro;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 17px;
+    line-height: 16px;
+    text-align: center;
+    color: #ffffff;
+    margin-top: auto;
+    cursor: pointer;
+  }
+  &__buttons {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 30px -12px 0;
+  }
+  &__btn {
+    padding: 0 12px;
+    margin-bottom: 24px;
+    width: 100%;
+    @media (max-width: 1450px) {
+      width: 50%;
+    }
+    @media (max-width: 419px) {
+      width: 100%;
+    }
+    &-link {
+      display: block;
+      width: 100%;
+      cursor: pointer;
+      border: 2px solid #2dff82;
+      border-radius: 15px;
+      padding: 10px 20px;
+      text-decoration: none;
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 15px;
+      line-height: 17px;
+      letter-spacing: 0.01em;
+      color: #2dff82;
+      background: transparent;
+      text-align: center;
+    }
+  }
+}

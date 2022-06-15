@@ -1,0 +1,13 @@
+export const specialList = [
+    '0x59d363ead328485d561e3491eda0c139de92c0bd',
+    '0x86a400eb8257b936b668f713b75ecd72d61a0dc5',
+    '0xcbe66cbc5ef205acc5a53ac194922d39de286c70',
+    '0x4bfc1ab6d248cc572dba25be929027e37b4fa111',
+    '0x9aa40dd2ee4232cc0e40d20a0b6d4fbe6137f5cf',
+    '0x802e5094a4a9bc6127863955a47a283e3bc8e4c0',
+    '0x1ed770dfda8f0b71f31c931d6e34645a99e54f19',
+    '0x27779d17ec893e751bb126418aaa7155edd00be2',
+    '0x1ed770dfda8f0b71f31c931d6e34645a99e54f19',
+    '0xdc04d56bfbf89d7124abe7cd7d63ce220dd6f2fc',
+    '0x2ddb0e4a79d18dd64ffe32631c0aafa3eef61bf9',
+]

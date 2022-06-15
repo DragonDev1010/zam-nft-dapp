@@ -1,0 +1,402 @@
+.nft-page-container {
+  padding: 0;
+}
+
+.nft-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 20px;
+  &__cards {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    @media (max-width: 1450px) {
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+  }
+  &__nfts {
+    margin-top: 50px;
+    &__title {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 25px;
+      h2 {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 36px;
+        line-height: 106%;
+        text-align: center;
+        color: #ffffff;
+      }
+    }
+    &__cards {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      @media (max-width: 1500px) {
+        // flex-wrap: wrap;
+        justify-content: space-around;
+      }
+    }
+  }
+}
+
+.nft-header {
+  &__title {
+    width: 613px;
+    height: 105.86px;
+    font-family: Bruno Ace;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 86.5849px;
+    line-height: 104px;
+    letter-spacing: 0.03em;
+
+    text-shadow: -0.311747px 1.87048px 1.87048px #00ff66;
+  }
+}
+
+.info-card {
+  width: 100%;
+  max-width: 431px;
+  height: 353px;
+  background: rgba(49, 56, 85, 0.34);
+  border: 1px solid rgba(47, 41, 84, 0.09);
+  box-sizing: border-box;
+  backdrop-filter: blur(18px);
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 10px 0;
+  &.nfts-card {
+    padding: 0px 25px;
+    background: rgba(49, 56, 85, 0.34);
+    backdrop-filter: blur(24px);
+  }
+  &__header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 27px 0;
+    &.nfts-header {
+      width: 100%;
+    }
+    &__title {
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 33px;
+      line-height: 120%;
+      text-align: center;
+      color: #ffffff;
+      &.small {
+        font-size: 20px;
+      }
+      &.nfts {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+      &__all {
+        display: flex;
+        align-items: center;
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 120%;
+        color: #ffffff;
+        img {
+          margin-right: 5px;
+        }
+      }
+      &__amount {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 120%;
+        color: rgba(255, 255, 255, 0.4);
+      }
+    }
+    &__subtitle {
+      font-family: Maven Pro;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 15px;
+      line-height: 120%;
+      text-align: center;
+      color: #6988ff;
+    }
+  }
+  &__body {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 410px;
+    padding: 0 15px;
+    &.nfts {
+      align-items: center;
+    }
+    &__info {
+      display: flex;
+      justify-content: space-between;
+      &__number {
+        font-family: Work Sans;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 120%;
+        color: #ffffff;
+      }
+    }
+    &__input {
+      margin-bottom: 27px;
+    }
+    &__staking {
+      width: 100%;
+      height: 145px;
+      background: url("../images/nft/staking-card-bg.png") top left / cover no-repeat;
+      margin-bottom: 27px;
+      display: flex;
+      flex-direction: column;
+      border-radius: 15px;
+      &__title {
+        font-family: Work Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 31.1071px;
+        line-height: 38px;
+        text-align: center;
+        color: #2dfc87;
+        margin: 20px 0;
+      }
+      &__staked {
+        font-family: Work Sans;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 119.8%;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.56);
+      }
+      &__amount {
+        font-family: Work Sans;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 48px;
+        text-align: center;
+        color: #ffffff;
+      }
+    }
+    &__slider {
+      display: flex;
+      justify-content: center;
+      width: 160px;
+      &__loader {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 200px;
+        color: #ffffff;
+      }
+    }
+  }
+}
+
+.nft-input__currency {
+  font-family: Maven Pro;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 120%;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.42);
+  width: 100%;
+  height: 100%;
+  background: 0;
+  border: 0;
+  outline: none;
+  min-height: 66px;
+  padding: 0 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.nft-card {
+  width: 22%;
+  padding-bottom: 20px;
+  background: rgba(49, 56, 85, 0.34);
+  border-radius: 20px;
+  margin: 20px;
+  @media (max-width: 1700px) {
+    margin: 20px 10px;
+  }
+  @media (max-width: 1599px) {
+    width: 45%;
+  }
+  @media (max-width: 989px) {
+    width: 100%;
+    margin: 20px 10px;
+  }
+  &.active {
+    box-shadow: 0px 2px 22px -1px #2dff82;
+    background: #000000;
+    backdrop-filter: blur(24px);
+  }
+  &__level {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    &__img {
+      height: 240px;
+      filter: grayscale(1);
+      max-width: 200px;
+      &.active {
+        filter: grayscale(0);
+      }
+      img {
+        height: 100%;
+      }
+    }
+    &__title {
+      font-family: Work Sans;
+      font-style: normal;
+      font-weight: 800;
+      color: rgba(255, 255, 255, 0.1);
+      width: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &__num {
+        font-size: 120px;
+        text-align: center;
+        height: 120px;
+        &.active {
+          color: #2cfe81;
+        }
+      }
+      &__desc {
+        font-size: 54.1973px;
+        &.active {
+          color: #2cfe81;
+        }
+      }
+    }
+  }
+  &__title {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 106%;
+    text-align: center;
+    color: #ffffff;
+    margin-top: 30px;
+    padding: 0 10px;
+    span {
+      color: #2cfc80;
+    }
+  }
+  &__subtitle {
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 15px;
+    line-height: 119.8%;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.58);
+    margin-top: 15px;
+    padding: 0 10px;
+  }
+}
+
+.no-nft-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 180px;
+  img {
+    width: 46px;
+    height: 46px;
+    margin-bottom: 10px;
+  }
+  &__title {
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 121.5%;
+    text-align: center;
+    color: #ffffff;
+  }
+}
+
+.nft-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 180px;
+  img {
+    width: 140px;
+    height: 100%;
+    margin-bottom: 10px;
+  }
+  &__title {
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 121.5%;
+    text-align: center;
+    color: #ffffff;
+  }
+}
+
+.nft-header {
+  @media (max-width: 1100px) {
+    padding-right: 20px;
+    width: 100%;
+  }
+  img {
+    @media (max-width: 1100px) {
+      width: 100%;
+    }
+  }
+  &__title {
+    width: 100%;
+    height: auto;
+    max-width: 578px;
+    font-family: Maven Pro;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 2;
+    color: rgba(255, 255, 255, 0.58);
+    margin-top: 20px;
+  }
+  &__carousel {
+    @media (max-width: 1100px) {
+      display: none;
+    }
+  }
+}

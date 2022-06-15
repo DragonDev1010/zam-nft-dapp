@@ -1,0 +1,167 @@
+@import "parts/header";
+@import "parts/sidebar";
+@import "buttons";
+@import "card";
+@import "chart";
+
+@import "react-alice-carousel/lib/scss/alice-carousel.scss";
+@import "react-input-range/lib/css/index";
+
+@import "components/modals/modal";
+@import "components/modals/wallet";
+@import "components/modals/network";
+@import "components/modals/warning";
+@import "components/fields/input";
+@import "components/fields/select";
+@import "components/input-range/input-range-staking";
+@import "components/header-carousel/index";
+@import "components/network-switcher/network-switcher";
+@import "components/buttons/button-spinner";
+@import "components/buttons/button";
+@import "components/badge/badge";
+
+@import "pages/swap";
+@import "pages/bridge";
+@import "pages/nft";
+@import "pages/farming";
+@import "pages/z-meta-board.scss";
+@import "pages/staking.scss";
+@import "pages/main.scss";
+@import "pages/audits.scss";
+@import "pages/zam-pad.scss";
+@import "pages/highstreet.scss";
+@import "pages/whitelist.scss";
+@import "pages/profile.scss";
+@import "pages/login.scss";
+@import "pages/recover.scss";
+@import "pages/calendar.scss";
+
+@import "tooltip";
+@import "custom-scroll";
+
+@import "atomic";
+
+*,
+:after,
+:before {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Maven Pro", sans-serif;
+  -webkit-font-smoothing: antialiased
+}
+
+body {
+  background: #0e1017;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+}
+
+h1 {
+  font-style: normal;
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 120%;
+  color: #383856;
+  margin: 10px 20px 10px 0;
+}
+
+main {
+  display: flex;
+  min-height: calc(100vh - 95px);
+  background: #16172A;
+  @media (max-width: 989px) {
+    flex-flow: column-reverse;
+    padding-bottom: 80px;
+  }
+}
+article {
+  padding: 0;
+  width: 100%;
+  overflow: hidden;
+}
+.overflow-unset {
+  overflow: unset;
+  width: calc(100% - 200px);
+  @media (max-width: 989px) {
+    width: 100%;
+  }
+}
+
+.alert {
+  color: #ff0000;
+  padding-top: 20px;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 22px;
+  line-height: 120%;
+  color: #ffffff;
+}
+
+.background-glow {
+  background-image: url(../images/background_glow.png);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+}
+
+.soon {
+  background: #36e269;
+  border-radius: 15px;
+  color: #0e1017;
+  font-size: 14px;
+  padding: 5px 15px;
+  width: fit-content;
+
+  @media (max-width: 768px) {
+    font-size: 11px;
+  }
+}
+
+.walletconnect-modal__base {
+  max-width: 325px;
+}
+
+.gray-link {
+  display: block;
+  text-decoration: none;
+  padding: 10px 4px;
+  color: #6c6f80;
+  font-size: 12px;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.top-banner {
+  display: flex;
+  justify-content: center;
+
+  img {
+    max-width: 100%;
+    width: 100%;
+  }
+}
+
+.green-span {
+  color: #2DFF82;
+}
+
+.disable {
+  opacity: 0.5;
+}

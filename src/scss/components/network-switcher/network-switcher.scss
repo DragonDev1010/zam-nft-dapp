@@ -1,0 +1,117 @@
+.network-switcher {
+  margin-right: 8px;
+  position: relative;
+
+  &__icon {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+  }
+
+  &__name {
+    color: #fff;
+    display: flex;
+    flex-flow: column;
+    font-family: Work Sans;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 120%;
+    b {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 13px;
+      color: #2DFB89;
+    }
+    i {
+      font-weight: 500;
+      font-size: 13px;
+      line-height: 13px;
+      font-style: normal;
+    }
+  }
+
+  &__checked {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    right: 15px;
+    top: 50%;
+    margin-top: -11px;
+  }
+
+  &__current {
+    background: transparent;
+    backdrop-filter: blur(13px);
+    border-radius: 15px;
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    padding: 6px 20px 6px 15px;
+    position: relative;
+    z-index: 2;
+    cursor: pointer;
+    padding-right: 31px;
+    border: 1px solid rgba(255, 255, 255, 0.22);
+    transition: all 0.3s ease;
+    @media (max-width: 767px) {
+      padding: 6px 13px 7px;
+      padding-right: 20px;
+    }
+
+    &:hover {
+      background: rgba(240, 185, 11, 0.37);
+    }
+    &--arrow {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      width: 10px;
+      margin-top: -2px;
+      transform: rotate(180deg);
+      &.active {
+        transform: rotate(0deg);
+      }
+    }
+  }
+
+  &__dropdown {
+    display: flex;
+    flex-flow: column;
+    background: #0E1017;
+    border: 2px solid #292C3A;
+    border-radius: 16px;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+    padding-top: 45px;
+    overflow: hidden;
+    @media (max-width: 768px) {
+      position: fixed;
+      left: 50%;
+      top: 70px;
+      width: 90%;
+      margin-left: -45%;
+      padding-top: 0;
+      z-index: 10;
+    }
+
+
+    li {
+      border-bottom: 1px solid #292C3A;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      position: relative;
+
+      &:hover {
+        background: #262a34;
+      }
+      &:last-child {
+        border-bottom: 0;
+      }
+    }
+  }
+}

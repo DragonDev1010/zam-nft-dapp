@@ -1,0 +1,1689 @@
+.zam-pad {
+    padding: 0;
+    &__header {
+        &-container {
+            padding: 40px;
+            backdrop-filter: blur(92px);
+            background: linear-gradient(180deg, #2A3B49 0%, rgba(49, 91, 104, 0.44) 100%);
+            @media (max-width: 767px) {
+                padding-left: 20px;
+                padding-right: 20px;
+            }
+        }
+        &-wrapper {
+            max-width: 1402px;
+            display: flex;
+            justify-content: space-between;
+            margin: 0 auto;
+            @media (max-width: 767px) {
+                display: block;
+            }
+        }
+        &-left {
+            margin-right: 20px;
+        }
+        &-right {
+            max-width: 478px;
+        }
+        &-text {
+            margin-bottom: 40px;
+        }
+        &-title {
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: bold;
+            font-size: 40px;
+            line-height: 106%;
+            margin-bottom: 30px;
+            @media (max-width: 767px) {
+                font-size: 33px;
+            }
+        }
+        &-description {
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: normal;
+            font-size: 14px;
+            line-height: 123.5%;
+            font-weight: 500;
+            color: #757E96;
+            margin-bottom: 5px;
+            @media (max-width: 767px) {
+                display: none;
+            }
+        }
+        &-metrics {
+            font-family: Maven Pro;
+            font-style: normal;
+            display: flex;
+            justify-content: flex-start;
+            flex-wrap: wrap;
+            color: #ffffff;
+            margin: 0 -9px;
+            &-item {
+                margin-bottom: 18px;
+                padding: 0 9px;
+                flex: 1 1 auto;
+            }
+            &-content {
+                padding: 19px 25px 15px;
+                background: #16172A;
+                border-radius: 15px;
+            }
+            &-count {
+                font-weight: bold;
+                font-size: 20px;
+                margin-bottom: 7px;
+                white-space: nowrap;
+                @media (max-width: 767px) {
+                    font-size: 18px;
+                }
+                &_green {
+                    color: #2DFF82;
+                }
+            }
+            &-description {
+                font-size: 14px;
+                font-weight: 500;
+                color: #757E96;
+                margin-bottom: 7px;
+                @media (max-width: 767px) {
+                    font-size: 11px;
+                }
+            }
+        }
+    }
+    
+    &__badges-container {
+        display: flex;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        margin: 0 -5px 24px;
+        .badge {
+            margin: 0 5px 10px;
+        }
+    }
+
+    &__body-container {
+        padding: 40px;
+        background: #16172A;
+        @media (max-width: 1799px) {
+            padding: 40px;
+        }
+        @media (max-width: 767px) {
+            padding: 40px 20px;
+        }
+    }
+    &__body-wrapper {
+        max-width: 1402px;
+        margin: 0 auto;
+    }
+
+    &__title {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 30px;
+        color: #ffffff;
+        margin-bottom: 29px;
+        @media (max-width: 767px) {
+            width: 100%;
+            font-size: 20px;
+            text-align: center;
+        }
+    }
+    &__sales-body {
+        display: flex;
+        margin: 0 -15px;
+        flex-wrap: nowrap;
+        @media (max-width: 1199px) {
+            flex-wrap: wrap;
+        }
+    }
+    &__small-cards {
+        width: 33%;
+        padding: 0 15px;
+        @media (max-width: 1199px) {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0;
+        }
+    }
+    &__small-card {
+        padding-bottom: 25px;
+        height: 50%;
+        width: 100%;
+        @media screen and (max-width: 1199px) {
+            height: auto;
+            width: 50%;
+            padding: 0 11px 25px;
+        }
+        @media screen and (max-width: 599px) {
+            width: 100%;
+        }
+    }
+    &__large-card {
+        width: 67%;
+        height: 100%;
+        margin-bottom: 25px;
+        padding: 0 15px;
+        @media (max-width: 1199px) {
+            order: -1;
+            width: 100%;
+            justify-content: center;
+        }
+    }
+    &__cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-column-gap: 20px;
+        grid-row-gap: 25px;
+        @media (max-width: 1359px) {
+            grid-template-columns: 1fr 1fr;
+        }
+        @media (max-width: 699px) {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+.small-card {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 22px 29px;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #1F2032 url("../../../images/zam-pad/small-card-zam-new.jpg") top right/cover no-repeat;
+    backdrop-filter: blur(28px);
+    &_green {
+        background: #1F2032 url("../../../images/zam-pad/green-zam-card-new.jpg") top center/cover no-repeat;
+    }
+    &__title {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 20px;
+        line-height: 120%;
+        color: #ffffff;
+        mix-blend-mode: normal;
+        margin-bottom: 20px;
+        @media (max-width: 767px) {
+            font-size: 18px;
+        }
+        &-span {
+            color: #2dff82;
+        }
+    }
+}
+
+.detailed-card {
+    display: flex;
+    background: #1F2032;
+    border-radius: 22px;
+    overflow: hidden;
+    text-decoration: none;
+    @media (max-width: 767px) {
+        flex-direction: column;
+        width: 100%;
+    }
+    &__img-block {
+        position: relative;
+        background-size: cover;
+        width: 49%;
+        text-align: end;
+        border-radius: 20px;
+        padding-right: 5%;
+        padding-top: 1%;
+        @media (max-width: 767px) {
+            width: 100%;
+            padding-right: 0%;
+            height: 232px;
+        }
+    }
+    &__img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        &-icon {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            width: 85px;
+            height: 85px;
+        }
+    }
+    &__content-block {
+        width: 51%;
+        @media (max-width: 767px) {
+            width: 100%;
+        }
+    }
+    &__content {
+        padding: 30px 32px 32px 50px;
+        @media (max-width: 1630px) {
+            padding: 30px 20px;
+        }
+        @media (max-width: 767px) {
+            padding: 20px;
+        }
+    }
+    &__head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 0 -5px 5px;
+    }
+    &__bsc {
+        display: flex;
+        align-items: center;
+        padding: 0 5px;
+        margin-bottom: 8px;
+        &-text {
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            color: #f0b90b;
+            margin-top: 6px;
+            margin-left: 5px;
+        }
+    }
+    &__badges {
+        display: flex;
+        align-items: flex-start;
+        padding: 0 5px;
+        .badge {
+            margin: 0 4px 8px;
+        }
+        &-soon {
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            margin: 0 4px 8px;
+            text-align: center;
+            padding: 4px 10px 4px 10px;
+            border-radius: 10px;
+            background: #1f2336;
+            border: 1.6129px solid #2dff82;
+            backdrop-filter: blur(10.4839px);
+            color: #2dff82;
+            @media (max-width: 767px) {
+                font-size: 10px;
+                padding: 2px 10px 3px;
+                border-radius: 7px;
+            }
+        }
+    }
+    &__text {
+        margin-bottom: 30px;
+    }
+    &__title {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 141.5%;
+        color: #ffffff;
+        margin-bottom: 10px;
+        @media (max-width: 767px) {
+            font-size: 22px;
+        }
+    }
+    &__description {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        color: #757E96;
+        margin-bottom: 12px;
+        line-height: 1.2;
+        @media (max-width: 767px) {
+            font-size: 13px;
+        }
+    }
+    &__info {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 -5px 19px;
+    }
+    &__timer {
+        color: #ffffff;
+        padding: 0 5px;
+        margin-bottom: 20px;
+        &-title {
+            font-weight: 500;
+            font-size: 15px;
+            margin-bottom: 5px;
+            @media (max-width: 767px) {
+                font-size: 11px;
+            }
+        }
+        &-content {
+            font-weight: bold;
+            font-size: 38px;
+            @media (max-width: 1599px) {
+                font-size: 28px;
+            }
+            @media (max-width: 1439px) {
+                font-size: 24px;
+            }
+            @media (max-width: 1199px) {
+                font-size: 28px;
+            }
+        }
+    }
+    &__raise {
+        color: #ffffff;
+        padding: 0 5px;
+        margin-bottom: 20px;
+        &-title {
+            font-weight: 500;
+            font-size: 15px;
+            text-align: end;
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            margin-bottom: 20px;
+            @media (max-width: 1599px) {
+                margin-bottom: 12px;
+            }
+            @media (max-width: 1439px) {
+                margin-bottom: 8px;
+            }
+            @media (max-width: 767px) {
+                font-size: 11px;
+                margin-bottom: 16px;
+            }
+        }
+        &-content {
+            position: relative;
+            display: flex;
+            justify-content: flex-end;
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 141.5%;
+            @media (max-width: 767px) {
+                font-size: 12px;
+            }
+        }
+        &-icon {
+            margin-right: 10px;
+            width: 23px;
+            height: 23px;
+            flex: 0 0 auto;
+            @media (max-width: 767px) {
+                width: 17px;
+                height: 17px;
+            }
+        }
+        &-text {
+            text-align: center;
+            @media (max-width: 767px) {
+                padding-top: 2px;
+            }
+        }
+    }
+    &__footer {
+        display: flex;
+        margin: 0 -17px;
+        @media (max-width: 1359px) {
+            margin: 0 -5px;
+        }
+        @media (max-width: 1199px) {
+            margin: 0 -10px;
+        }
+        &-item {
+            padding: 0 17px;
+            margin-bottom: 10px;
+            @media (max-width: 1359px) {
+                padding: 0 5px;
+            }
+            @media (max-width: 1199px) {
+                padding: 0 10px;
+            }
+        }
+        &-title {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 120%;
+            color: #686e7a;
+            margin-bottom: 7px;
+            @media (max-width: 1439px) {
+                font-size: 11px;
+            }
+            @media (max-width: 1199px) {
+                font-size: 14px;
+            }
+            @media (max-width: 767px) {
+                font-size: 11px;
+            }
+        }
+        &-content {
+            font-weight: bold;
+            font-size: 18px;
+            color: #ffffff;
+            margin-bottom: 7px;
+            white-space: nowrap;
+            @media (max-width: 767px) {
+                font-size: 13px;
+            }
+            &_green {
+                color: #2dff82;
+            }
+        }
+    }
+}
+
+.large-card {
+    width: 54%;
+    @media (max-width: 768px) {
+        width: 100%;
+    }
+    &__footer {
+        display: flex;
+        justify-content: space-between;
+        font-family: Maven Pro;
+        font-style: normal;
+        margin-top: 11.5%;
+        @media (max-width: 1866px) {
+            margin-top: 8%;
+        }
+        @media (max-width: 768px) {
+            margin-bottom: 4%;
+        }
+        &__title {
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 120%;
+            color: #686e7a;
+            @media (max-width: 768px) {
+                font-size: 11px;
+            }
+        }
+        &__content {
+            font-weight: bold;
+            font-size: 18px;
+            text-align: center;
+            color: #ffffff;
+            @media (max-width: 768px) {
+                font-size: 13px;
+            }
+            &__center {
+                color: #2dff82;
+                font-weight: bold;
+                font-size: 18px;
+                @media (max-width: 768px) {
+                    font-size: 13px;
+                }
+            }
+        }
+    }
+    &__time {
+        display: flex;
+        justify-content: space-between;
+        font-family: Maven Pro;
+        font-style: normal;
+        color: #ffffff;
+        line-height: 120%;
+        margin-top: 11.5%;
+        @media (max-width: 1866px) {
+            margin-top: 8%;
+        }
+        &__title {
+            font-weight: 500;
+            font-size: 15px;
+            @media (max-width: 768px) {
+                font-size: 11px;
+            }
+        }
+        &__content {
+            font-weight: bold;
+            font-size: 38px;
+            margin-top: 5%;
+            @media (max-width: 768px) {
+                font-size: 28px;
+            }
+        }
+        &__raise-title {
+            font-weight: 500;
+            font-size: 15px;
+            text-align: end;
+            @media (max-width: 768px) {
+                font-size: 11px;
+            }
+            text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+        &__raise-content {
+            font-weight: bold;
+            font-size: 18px;
+            line-height: 141.5%;
+            @media (max-width: 768px) {
+                font-size: 12px;
+                width: 100%;
+            }
+            justify-content: flex-end;
+            display: flex;
+            align-items: center;
+            width: 110%;
+            margin-top: 6%;
+        }
+    }
+    &__description {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        color: #5c626c;
+        @media (max-width: 768px) {
+            font-size: 13px;
+        }
+    }
+    &__content {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 141.5%;
+        color: #ffffff;
+        @media (max-width: 768px) {
+            font-size: 22px;
+        }
+    }
+    &__title {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &__bsc {
+            display: flex;
+            align-items: center;
+            &__p {
+                font-family: Maven Pro;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                color: #f0b90b;
+                margin-top: 15%;
+                margin-left: 10%;
+            }
+        }
+        &__badges {
+            display: flex;
+            justify-content: space-between;
+            &__meta {
+                background: linear-gradient(258.2deg, #924fff 6.27%, #6f2bff 88.95%);
+                border-radius: 10px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                padding-left: 10px;
+                padding-right: 10px;
+                margin: 4px;
+                color: #ffffff;
+                @media (max-width: 768px) {
+                    padding: 2% 4% 1% 4%;
+                    font-size: 12px;
+                }
+            }
+            &__soon {
+                @media (max-width: 768px) {
+                    flex-direction: column;
+                }
+                font-family: Maven Pro;
+                font-style: normal;
+                font-weight: 500;
+                font-size: 14px;
+                margin: 4px;
+                text-align: center;
+                padding-top: 4px;
+                padding-bottom: 5px;
+                padding-left: 10px;
+                padding-right: 10px;
+                border-radius: 10px;
+                background: #1f2336;
+                border: 1.6129px solid #2dff82;
+                box-sizing: border-box;
+                backdrop-filter: blur(10.4839px);
+                color: #2dff82;
+                @media (max-width: 768px) {
+                    padding: 1% 1% 1% 1%;
+                    font-size: 12px;
+                    width: 100px;
+                }
+            }
+        }
+    }
+}
+
+.big-card {
+    display: block;
+    text-decoration: none;
+    backdrop-filter: blur(24px);
+    width: 100%;
+    &__wrapper {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        border-radius: 0px 0px 20px 20px;
+        overflow: hidden;
+    }
+    &__icon-container {
+        width: 60px;
+        height: 60px;
+        margin: 0 auto;
+        margin-bottom: -60px;
+        @media (max-width: 1599px) {
+            width: 50px;
+            height: 50px;
+            margin-bottom: -50px;
+        }
+    }
+    &__icon {
+        position: relative;
+        z-index: 1;
+        width: 100%;
+        margin-top: 5px;
+        border-radius: 50%;
+        box-shadow: 0 0 49px 5px #fff;
+    }
+    &__header {
+        background: rgba(255, 255, 255, 0.11);
+        backdrop-filter: blur(48px);
+        border-radius: 20px 20px 0px 0px;
+        display: flex;
+        padding: 15px 30px 10px;
+        justify-content: space-between;
+        min-height: 78px;
+        @media (max-width: 767px) {
+            padding: 15px 20px;
+        }
+    }
+    &__ended {
+        &-title {
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 120%;
+            color: #ffffff;
+            margin-bottom: 9px;
+            @media (max-width: 767px) {
+                font-size: 11px;
+            }
+        }
+        &-time {
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 15px;
+            line-height: 120%;
+            color: #ffffff;
+            margin-bottom: 5px;
+            @media (max-width: 1440px) {
+                font-size: 11px;
+            }
+        }
+    }
+    &__platforms {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: -12px;
+        @media (max-width: 767px) {
+            margin-top: -6px;
+        }
+    }
+    &__platform {
+        display: flex;
+        align-items: center;
+        &-icon {
+            width: 19px;
+            flex: 0 0 auto;
+            @media (max-width: 767px) {
+                width: 14px;
+            }
+        }
+        &-text {
+            margin-left: 6px;
+            color: #F0B90B;
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 141.5%;
+            @media (max-width: 767px) {
+                font-size: 10px;
+            }
+        }
+    }
+    &__price {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 141.5%;
+        text-align: right;
+        color: #FFFFFF;
+        margin-bottom: 5px;
+        @media (max-width: 1440px) {
+            font-size: 11px;
+        }
+    }
+    &__img-wrapper {
+        position: relative;
+        padding-top: 52%;
+        z-index: 1;
+    }
+    &__img-link {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    &__img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    &__content {
+        display: flex;
+        flex-direction: column;
+        padding: 19px 30px;
+        background: #1F2032;
+        border-radius: 0 0 20px 20px;
+        flex: 1 1 auto;
+        @media (max-width: 767px) {
+            padding: 15px 20px;
+        }
+        &-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin: 0 -10px;
+        }
+    }
+    &__title {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 141.5%;
+        color: #FFFFFF;
+        margin-bottom: 20px;
+        padding: 0 10px;
+        @media (max-width: 767px) {
+            font-size: 18px;
+        }
+    }
+    &__badges {
+        display: flex;
+        padding: 0 10px;
+        margin: 0 -3px;
+        align-items: flex-start;
+        justify-content: flex-end;
+        flex-wrap: wrap;
+        .badge {
+            margin: 0 3px 5px;
+        }
+    }
+    &__stage {
+        margin: 0 3px 5px;
+        background: #1f2336;
+        padding: 2px 10px 3px;
+        border-radius: 10px;
+        border: 1.6129px solid #2dff82;
+        backdrop-filter: blur(10.4839px);
+        color: #2dff82;
+        line-height: 120%;
+        text-align: center;
+        min-width: 62px;
+        white-space: nowrap;
+        max-width: 180px;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        @media (max-width: 767px) {
+            font-size: 12px;
+            padding: 1px 8px;
+            border-radius: 7px;
+            min-width: 42px;
+        }
+    }
+    &__description {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 117.5%;
+        margin-bottom: 18px;
+        color: rgba(204, 214, 221, 0.43);
+        @media (max-width: 767px) {
+            font-size: 11px;
+        }
+    }
+    &__total-raise {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 -10px;
+        &-text {
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 138%;
+            color: #FFFFFF;
+            margin-bottom: 10px;
+            padding: 0 10px;
+            flex: 0 0 auto;
+            @media (max-width: 767px) {
+                font-size: 11px;
+            }
+        }
+        &-usdt {
+            padding: 0 10px;
+            display: flex;
+            margin-bottom: 5px;
+        }
+        &-icon {
+            flex: 0 0 auto;
+            width: 24px;
+            height: 24px;
+            @media (max-width: 767px) {
+                width: 18px;
+                height: 18px;
+            }
+        }
+        &-count {
+            margin-left: 10px;
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 141.5%;
+            text-align: center;
+            color: #FFFFFF;
+            @media (max-width: 767px) {
+                font-size: 14px;
+            }
+        }
+    }
+    &__progress {
+        margin-top: 8px;
+        margin-bottom: 8px;
+        &-metrics {
+            display: flex;
+            justify-content: space-between;
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 15px;
+            line-height: 141.5%;
+            text-align: right;
+            color: #ffffff;
+            margin-bottom: 35px;
+            @media (max-width: 767px) {
+                font-size: 11px;
+            }
+        }
+    }
+    &__currentPercent {
+        color: #2dff82;
+    }
+    &__footer {
+        display: flex;
+        margin: auto -10px 0;
+        &-item {
+            padding: 0 10px;
+            &:last-child {
+                margin-left: auto;
+            }
+        }
+        &-stage {
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 1;
+            margin-bottom: 10px;
+            color: #757E96;
+            padding: 13px 30px;
+            text-align: center;
+            background: #303141;
+            border-radius: 12px;
+            min-height: 40px;
+            @media (max-width: 767px) {
+                font-size: 13px;
+            }
+            &_green {
+                color: #fff;
+                background: #33D964;
+            }
+        }
+        &-title {
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 14px;
+            line-height: 120%;
+            margin-bottom: 5px;
+            color: #686E7A;
+            @media (max-width: 767px) {
+                font-size: 11px;
+            }
+        }
+        &-content {
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 18px;
+            line-height: 141.5%;
+            margin-bottom: 5px;
+            color: #FFFFFF;
+            @media (max-width: 767px) {
+                font-size: 13px;
+            }
+        }
+    }
+}
+.participate {
+    margin-top: 45px;
+    &__title {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 30px;
+        line-height: 106%;
+        color: #ffffff;
+        margin-bottom: 33px;
+        @media (max-width: 767px) {
+            font-size: 20px;
+            text-align: center;
+            margin-bottom: 24px;
+        }
+    }
+    &__cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-column-gap: 25px;
+        grid-row-gap: 20px;
+        @media (max-width: 1199px) {
+            grid-template-columns: 1fr 1fr;
+        }
+        @media (max-width: 767px) {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+.participate-card {
+    position: relative;
+    padding: 20px 20px 80px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    font-family: Maven Pro;
+    font-style: normal;
+    background: #1F2032;
+    backdrop-filter: blur(24px);
+    border-radius: 20px;
+    @media (max-width: 1199px) {
+        padding: 20px;
+    }
+    &__top-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    &__img-wrapper {
+        height: 123px;
+        display: flex;
+        align-items: center;
+        margin-bottom: 24px;
+        margin-right: 15px;
+        @media (max-width: 767px) {
+            height: 92px;
+        }
+    }
+    &__img {
+        max-width: 100%;
+        @media (max-width: 479px) {
+            height: 100%;
+        }
+    }
+    &__top-buttons {
+        position: absolute;
+        bottom: 37px;
+        left: 20px;
+        @media (max-width: 1199px) {
+            display: flex;
+            position: relative;
+            bottom: auto;
+            left: auto;
+        }
+    }
+    &__content-title {
+        font-weight: bold;
+        font-size: 24px;
+        margin-bottom: 18px;
+        line-height: 106%;
+        color: #ffffff;
+        @media (max-width: 1919px) {
+            font-size: 22px;
+        }
+        @media (max-width: 1600px) {
+            min-height: 51px;
+        }
+        @media (max-width: 768px) {
+            font-size: 20px;
+            min-height: 0;
+        }
+    }
+    &__content {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 138%;
+        color: #ffffff;
+        margin-bottom: 23px;
+        @media (max-width: 768px) {
+            font-size: 11px;
+        }
+    }
+}
+.funded-projects {
+    margin-top: 122px;
+    margin-bottom: 70px;
+    @media (max-width: 767px) {
+        margin-top: 40px;
+        margin-bottom: 30px;
+    }
+    &__wrapper {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 35px;
+        @media (max-width: 767px) {
+            display: block;
+        }
+    }
+    &__title-block {
+        margin-right: 20px;
+        min-width: 310px;
+        @media (max-width: 767px) {
+            text-align: center;
+            margin-right: 0;
+            min-width: 0;
+        }
+    }
+    &__title {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 40px;
+        line-height: 106%;
+        color: #FFFFFF;
+        margin-bottom: 10px;
+        @media (max-width: 767px) {
+            font-size: 25px;
+        }
+    }
+    &__description {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 138%;
+        color: #666C76;
+        margin-bottom: 10px;
+        @media (max-width: 767px) {
+            font-size: 12px;
+        }
+    }
+    &__filters {
+        display: flex;
+        flex-wrap: wrap;
+        margin: 0 -4px;
+        justify-content: flex-end;
+        @media (max-width: 767px) {
+            justify-content: center;
+        }
+        .network-button {
+            margin: 0 4px 8px;
+        }
+    }
+    &__projects {
+        margin-bottom: 34px;
+    }
+    &__more-btn {
+        margin-bottom: 34px;
+        display: flex;
+        justify-content: center;
+    }
+}
+.network-button {
+    background: #212535;
+    border-radius: 26px;
+    border: none;
+    padding: 7px 13px;
+    font-family: Maven Pro;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    @media (max-width: 767px) {
+        font-size: 13px;
+        padding: 5px 6px;
+    }
+    &.active {
+        background: #2DFF82;
+        .network-button__text {
+            color: #0E1017;
+        }
+    }
+    &__img {
+        width: 22px;
+        margin-right: 5px;
+        @media (max-width: 767px) {
+            width: 15px;
+        }
+    }
+    &__text {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 141.5%;
+        text-align: center;
+        color: #FFFFFF;
+        @media (max-width: 767px) {
+            font-size: 9px;
+        }
+        &_orange {
+            color: #F0B90B;
+        }
+        &_violet {
+            color: #8247E5;
+        }
+    }
+}
+.more-pools {
+    background-color: #0092e5;
+    border-radius: 12.4703px;
+    cursor: pointer;
+    border: none;
+    padding: 15px 90px 15px 90px;
+    color: #fff;
+    font-family: Maven Pro;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 14px;
+    transition: background-color 0.3s ease;
+    @media (max-width: 767px) {
+        font-size: 13px;
+    }
+    &:hover {
+        background-color: #2b5878;
+    }
+}
+.performance {
+    &__title {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 40px;
+        line-height: 106%;
+        color: #ffffff;
+        margin-top: 64px;
+        margin-bottom: 32px;
+        @media (max-width: 767px) {
+            font-size: 23px;
+            text-align: center;
+            margin-top: 34px;
+            margin-bottom: 30px;
+            font-size: 25px;
+        }
+    }
+    &__table {
+        overflow-x: auto;
+        margin-bottom: 34px;
+    }
+    &__more-btn {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 34px;
+    }
+}
+.table {
+    border-collapse: collapse;
+    min-width: 1020px;
+    width: 100%;
+    &__head {
+        display: table;
+        width: 100%;
+        text-align: left;
+        .table__cell {
+            color: #838699;
+            padding: 0 5px 25px 0;
+            font-family: Maven Pro;
+            font-style: normal;
+            font-weight: 700;
+            font-size: 13px;
+            line-height: 120%;
+            @media (max-width: 767px) {
+                font-size: 10px;
+                padding: 0 5px 25px 0;
+            }
+        }
+    }
+    &__body {
+        display: table;
+        width: 100%;
+        background: #1F2032;
+        backdrop-filter: blur(44px);
+        border-radius: 20px;
+        overflow: hidden;
+        .table__row {
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            &_first {
+                background: linear-gradient(90deg, rgba(24, 255, 255, 0.08) 0.5%, rgba(182, 27, 255, 0.08) 100%);
+                border-top: 1px solid transparent;
+            }
+        }
+        .table__cell {
+            &:first-child {
+                text-align: center;
+                padding: 24px 5px 24px 5px;
+            }
+        }
+    }
+    &__cell {
+        width: 8%;
+        color: #fff;
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 141.5%;
+        padding: 24px 5px 24px 0;
+        @media (max-width: 767px) {
+            font-size: 13px;
+            padding: 11px 5px 11px 0;
+        }
+        &_name {
+            width: 20%;
+        }
+    }
+    &__token {
+        display: flex;
+        align-items: center;
+        &-img-wrapper {
+            width: 37px;
+            height: 37px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin-right: 19px;
+            flex: 0 0 auto;
+            @media (max-width: 767px) {
+                width: 30px;
+                height: 30px;
+                margin-right: 15px;
+            }
+        }
+        &-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        &-name {
+            font-weight: 700;
+            line-height: 133%;
+            overflow: hidden;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical; 
+            margin-bottom: 5px;
+        }
+        &-description {
+            font-size: 14px;
+            line-height: 117.5%;
+            color: rgba(204, 214, 221, 0.43);
+        }
+    }
+    &__rise {
+        color: #FF6868;
+        &_green {
+            color: #2DFF82;
+        }
+    }
+    &__network {
+        display: flex;
+        align-items: center;
+        background: #0E1017;
+        border-radius: 26px;
+        justify-content: center;
+        align-items: center;
+        width: fit-content;
+        padding: 5px 12px 5px 9px;
+        &-img-wrapper {
+            flex: 0 0 auto;
+            width: 22px;
+            height: 22px;
+        }
+        &-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        &-text {
+            font-size: 14px;
+            text-transform: uppercase;
+            margin-left: 7px;
+            &_orange {
+                color: #F0B90B;
+            }
+            &_violet {
+                color: #8247E5;
+            }
+        }
+    }
+    &__high {
+        display: flex;
+        align-items: center;
+        &-img-wrapper {
+            margin-right: 6px;
+            width: 9px;
+            flex: 0 0 auto;
+        }
+        &-img {
+            width: 100%;
+        }
+        &-text {
+            color: #2DFF82;
+        }
+    }
+}
+
+.nft-main {
+    &__head {
+        padding: 125px 0 0;
+        @media (max-width: 767px) {
+            padding: 50px 0 0;
+        }
+    }
+    &__title {
+        font-family: Maven Pro;
+        font-style: normal;
+        font-weight: bold;
+        font-size: 40px;
+        text-align: center;
+        color: #ffffff;
+        margin-bottom: 21px;
+        line-height: 106%;
+        @media (max-width: 767px) {
+            font-size: 25px;
+            margin-bottom: 10px;
+        }
+    }
+    &__description {
+        font-family: Work Sans;
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        color: #757E96;
+        margin-bottom: 28px;
+        text-align: center;
+        @media (max-width: 767px) {
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+    }
+    &__actions {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin: 0 -8px;
+        @media (max-width: 767px) {
+            margin: 0 -5px;
+        }
+    }
+    &__button {
+        margin: 0 8px 16px;
+        min-width: 160px;
+        // Убрать если в мобильной версии не нужно будет менять дизайн
+        // @media (max-width: 767px) {
+        //     padding: 6px 19px 7px;
+        //     margin: 0 5px 10px;
+        //     font-size: 12px;
+        //     min-width: 0;
+        //     height: auto;
+        // }
+        &_grey {
+            background: #303141;
+        }
+    }
+    &__carousel {
+        margin-bottom: 100px;
+        @media (max-width: 767px) {
+            margin-bottom: 50px;
+        }
+    }
+}
+.nft-carousel {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-column-gap: 25px;
+    grid-row-gap: 50px;
+    padding-bottom: 25px;
+    @media screen and (max-width: 1919px) {
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    @media screen and (max-width: 1199px) {
+        display: block;
+    }
+}
+
+.nft {
+    max-width: 332px;
+    width: 100%;
+    margin: 40px auto 0 auto;
+    backdrop-filter: blur(24px);
+    border-radius: 27px;
+    background: rgba(255, 255, 255, 0.04);
+    font-family: Maven Pro;
+    font-style: normal;
+    @media screen and (max-width: 1599px) {
+        max-width: none;
+        width: 100%;
+    }
+    @media screen and (max-width: 1199px) {
+        min-width: 265px;
+        max-width: 332px;
+        margin: 50px auto 0 auto;
+    }
+    &__head {
+        position: relative;
+        display: flex;
+    }
+    &__img-wrapper {
+        width: 80%;
+        padding: 0 20px;
+        margin: 0 auto;
+        @media (max-width: 599px) {
+            padding: 0 13px;
+        }
+    }
+    &__img {
+        width: 100%;
+    }
+    &__lvl {
+        width: 30%;
+        text-align: center;
+        position: absolute;
+        top: 0;
+        right: 5px;
+        &-number {
+            margin-top: 25px;
+            font-family: Work Sans;
+            font-style: normal;
+            font-weight: 800;
+            font-size: 120px;
+            line-height: 0.8;
+            color: rgba(255, 255, 255, 0.1);
+            @media screen and (max-width: 1359px) {
+                font-size: 96px;
+            }
+        }
+        &-text {
+            font-family: Work Sans;
+            font-style: normal;
+            font-weight: 800;
+            font-size: 54.1973px;
+            line-height: 1;
+            color: rgba(255, 255, 255, 0.1);
+            @media screen and (max-width: 1359px) {
+                font-size: 43px;
+            }
+        }
+    }
+    &__content {
+        padding: 10px 22px 20px;
+        @media (max-width: 599px) {
+            padding: 10px 18px 20px;
+        }
+    }
+    &__belt {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 -10px 25px;
+        &-block {
+            padding: 0 10px;
+            display: flex;
+            align-items: center;
+        }
+        &-name {
+            font-weight: bold;
+            font-size: 25px;
+            color: #ffffff;
+            line-height: 1;
+            @media (max-width: 1599px) {
+                font-size: 20px;
+            }
+        }
+        &-circle {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            margin-left: 10px;
+            flex: 0 0 auto;
+            @media (max-width: 1599px) {
+                width: 11px;
+                height: 11px;
+            }
+        }
+    }
+    &__badge {
+        padding: 3px 8px;
+        background: #1f2336;
+        border: 1.6129px solid #2dff82;
+        box-sizing: border-box;
+        backdrop-filter: blur(10.4839px);
+        border-radius: 10px;
+        font-weight: 500;
+        font-size: 14px;
+        text-align: center;
+        color: #2dff82;
+        flex: 0 0 auto;
+        @media (max-width: 1359px) {
+            font-size: 11px;
+        }
+    }
+    &__info {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 -10px;
+        &-block {
+            padding: 0 10px;
+        }
+        &-title {
+            font-weight: 500;
+            font-size: 14px;
+            color: #ffffff;
+            line-height: 117.5%;
+            margin-bottom: 15px;
+            @media (max-width: 1359px) {
+                font-size: 11px;
+            }
+        }
+        &-count {
+            font-weight: 700;
+            font-size: 18px;
+            text-align: right;
+            color: #ffffff;
+            line-height: 1;
+            margin-bottom: 10px;
+            @media (max-width: 1359px) {
+                font-size: 15px;
+            }
+        }
+    }
+    &__table {
+        display: flex;
+        margin: 0 -5px 10px;
+        &-column {
+            position: relative;
+            padding: 0 5px;
+            width: 33.3333333333%;
+            color: #ffffff;
+            &_green {
+                color: #2DFE81;
+                &:before {
+                    content: '';
+                    display: block;
+                    height: 100%;
+                    width: 1px;
+                    background: linear-gradient(0deg, transparent, #85878B);
+                    position: absolute;
+                    left: 0;
+                    top: 15px;
+                }
+            }
+            &_first {
+                .nft__table-cell {
+                    text-align: left;
+                    color: #868A91;
+                }
+                .nft__table-cell_last {
+                    color: #ffffff;
+                    font-weight: 900;
+                    font-size: 14px;
+                    @media (max-width: 1359px) {
+                        font-size: 11px;
+                    }
+                }
+            }
+        }
+        &-title {
+            font-weight: 700;
+            font-size: 16px;
+            text-align: center;
+            margin-top: 15px;
+            min-height: 38px;
+            @media (max-width: 1359px) {
+                font-size: 14px;
+            }
+        }
+        &-cell {
+            font-weight: 500;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 15px;
+            min-height: 32px;
+            @media (max-width: 1359px) {
+                font-size: 11px;
+            }
+        }
+    }
+}
+

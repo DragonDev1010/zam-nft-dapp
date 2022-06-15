@@ -1,0 +1,117 @@
+.modal__wallet {
+
+    .label {
+      font-family: "Work Sans", sans-serif;
+      font-weight: 600;
+      font-size: 15px;
+      line-height: 120%;
+      color: rgba(255, 255, 255, 0.61);
+      margin: 20px 0;
+
+    }
+
+  &-agreement {
+    display: flex;
+    .checkbox {
+      background: #16172A;
+      width: 28px;
+      height: 28px;
+      border-radius: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      flex-shrink: 0;
+      margin-right: 10px;
+      
+      svg {
+        display: none;
+        width: 15px;
+        height: 12px;
+      }
+
+      input {
+        position: absolute;
+        opacity: 0;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        &:checked + svg {
+          display: block;
+        }
+      }
+
+      &-label {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 16px;
+        color: #FFFFFF;
+
+        a {
+          color: #2DFF82;
+          text-decoration: underline;
+        }
+      }
+    }
+
+  }
+
+  &--wallets {
+    display: flex;
+
+    .wallet {
+      background: rgba(14, 16, 23, 0.76);
+      backdrop-filter: blur(13px);
+      border-radius: 15px;
+      display: flex;
+      flex-flow: column;
+      align-items: center;
+      width: 102px;
+      padding: 10px;
+      margin-right: 15px;
+      filter: grayscale(1);
+      border: 2px solid transparent;
+
+      &__name {
+        font-weight: 500;
+        font-size: 13px;
+        line-height: 120%;
+        text-align: center;
+        color: #FFFFFF;
+      }
+
+      img {
+        width: 42px;
+        height: 42px;
+        margin-bottom: 15px;
+
+      }
+
+      &.active {
+        filter: grayscale(0);
+        cursor: pointer;
+        &:hover {
+          border: 2px solid #2DFF82;
+        }
+      }
+      &.current {
+        filter: grayscale(0);
+        border: 2px solid #2DFF82;
+      }
+    }
+  }
+
+
+  &--error {
+    background: rgb(255, 36, 36, .5);
+    border-radius: 8px;
+    padding: 6px 20px;
+    color: #fff;
+    font-size: 14px;
+    margin-top: 35px;
+
+    a {
+      color: #fff;
+    }
+  }
+}
